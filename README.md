@@ -1,6 +1,6 @@
 # Fullstack Team Project
 
-This is the second ofthe fullstack team projects. This time, however, each team has free choice as to what it is you're going to build!  
+This is the second of the fullstack team projects. However, this time you have free choice as to what you want to build. Perhaps the most challenging task, then, is deciding, as a team, exactly what that is!
 
 ## Learning Objectives
 
@@ -31,18 +31,17 @@ This is the second ofthe fullstack team projects. This time, however, each team 
 
 ## Getting started
 
-1. Choose which application it is you want to build as a team.
+1. Choose, as a team, the application you want to build
 2. Complete your sprint planning stage
 3. Read the setup instructions below
 
 ## Setting up
 
-- One team member must fork the repository and ensure each team member has access to contribute to the fork.
-- Other team members will *clone* that fork. All work will be pushed to the single forked repository. At the end of the project, you can fork the fork so everybody has the finished project in their personal github accounts.
-- One team member must create a pull request to merge this `empty` branch into the `main` branch.
+- One team member must fork this repository and ensure each team member has access to contribute to the fork
+- Other team members will *clone* that fork. All work will be pushed to the single forked repository. At the end of the project, you can fork the fork so everybody has the finished project in their personal github accounts
 
 ## Starting advice
 
-- You need to have both a backend *and* a frontend in this same repository. For ideas about how to accomplish this, you may want to refer back to how the _scaffolded_ branch was set up in the prior [fullstack team project](https://github.com/boolean-uk/project-team-fullstack).
-- Running two sides of an application will require either having two terminals open, one running each, or using the `concurrently` npm package.
-- Using `create-react-app` and then moving files around is a completely acceptable way to initiate a project. In fact, that's how the `scaffolded` branch was set up.
+- You need to have both a backend *and* a frontend in this same repository. For ideas about how to accomplish this, you may want to refer back to how the _scaffolded_ branch was set up in the prior [fullstack team project](https://github.com/boolean-uk/project-team-fullstack)
+- Running two sides of an application will require either having two terminals open, one running each, or using the `concurrently` npm package
+- Using `create-react-app` and then moving files around is a completely acceptable way to initiate a project.
