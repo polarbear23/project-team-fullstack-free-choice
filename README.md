@@ -7,9 +7,14 @@ This is the second of the fullstack team projects. However, this time you have f
 - Use agile ceremonies including stand-ups, retrospectives, sprint planning and stakeholder demos to develop software as a team
 - Design and build a full-stack architecture that has a frontend application consuming data from a backend API
 - Use a source code management tool to integrate work in one codebase with multiple contributors
+- Explain and build a CI/CD pipeline for a software development project
+- Use a CI server that runs automated tests against requested changes before accepting the change
+- Continuously deploy code to a production environment 
 
 ## Project Requirements
 
+- Must have Continuous Integration to run code linting
+- Must continuously deploy the main branch when changes are merged in
 - Must contain a well thought out entity relationship diagram and application design built via user stories
 - Must be a full-stack application with a [ReactJS](https://reactjs.org/) frontend consuming data from an [ElephantSQL](https://www.elephantsql.com/) database that is exposed to the client via an API built using [Express](https://expressjs.com/) and [Prisma](https://www.prisma.io/)
 - Must not expose sensitive information
@@ -21,7 +26,7 @@ This is the second of the fullstack team projects. However, this time you have f
 
 ## Assessment
 
-- Students will work on feature branches and create pull requests to merge in to the `main` branch upon teacher approval. The team must discuss and provide feedback on the implementation in the PR before a teacher provides their feedback and final approval. [See pull-requests.md for the process.](./pull-requests.md)
+- Students will work on feature branches and create pull requests to merge in to the `main` branch upon teacher approval. The team must discuss and provide feedback on the implementation in the PR before a teacher provides their feedback and final approval. [See pull-requests.md for the process.](./PR-PROCESS.md)
 - Stakeholder demo’s at the end of each sprint (3 days)
     - Did you plan effectively for the current sprint?
     - Did you perform daily standups?
