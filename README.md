@@ -44,9 +44,3 @@ This is the second of the fullstack team projects. However, this time you have f
 
 - One team member must fork this repository and ensure each team member has access to contribute to the fork
 - Other team members will *clone* that fork. All work will be pushed to the single forked repository. At the end of the project, you can fork the fork so everybody has the finished project in their personal github accounts
-
-## Starting advice
-
-- You need to have both a backend *and* a frontend in this same repository. For ideas about how to accomplish this, you may want to refer back to how the _scaffolded_ branch was set up in the prior [fullstack team project](https://github.com/boolean-uk/project-team-fullstack)
-- Running two sides of an application will require either having two terminals open, one running each, or using the `concurrently` npm package
-- Using `create-react-app` and then moving files around is a completely acceptable way to initiate a project.
