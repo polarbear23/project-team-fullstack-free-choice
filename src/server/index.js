@@ -11,6 +11,9 @@ if (process.env.NODE_ENV !== 'development') {
 	app.use(express.static(path.resolve(__dirname, '../../build')));
 }
 
+const competitionRouter = require("./routers/competition");
+app.use("/competition", competitionRouter);
+
 app.use(cors());
 // Tell express to use a JSON parser middleware
 app.use(express.json());
