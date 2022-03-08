@@ -44,3 +44,9 @@ This is the second of the fullstack team projects. However, this time you have f
 
 - One team member must fork this repository and ensure each team member has access to contribute to the fork
 - Other team members will *clone* that fork. All work will be pushed to the single forked repository. At the end of the project, you can fork the fork so everybody has the finished project in their personal github accounts
+
+## Running the app
+
+- Add `NODE_ENV="development"` to your .env file
+- Type `npm run devstart` to run the app.
+- Type `npm run lint` to run the linter if you wish to check your code quality.

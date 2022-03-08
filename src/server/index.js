@@ -7,7 +7,9 @@ app.disable('x-powered-by');
 
 //This will create a middleware.
 //When you navigate to the root page, it will use the built react-app
-app.use(express.static(path.resolve(__dirname, '../../build')));
+if (process.env.NODE_ENV !== 'development') {
+	this.app.use(express.static(path.resolve(__dirname, '../../build')));
+}
 
 app.use(cors());
 // Tell express to use a JSON parser middleware
