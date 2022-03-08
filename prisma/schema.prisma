@@ -12,8 +12,66 @@ datasource db {
 }
 
 model Admin {
-  id       Int    @id @default(autoincrement())
-  username String @unique
-  password String
-  email    String @unique
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  password  String
+  email     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Competition {
+  id        Int      @id @default(autoincrement())
+  title     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Competitor {
+  id          Int      @id @default(autoincrement())
+  name        String
+  nationality String?
+  email       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Season {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Team {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Participant {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Placement {
+  id        Int      @id @default(autoincrement())
+  position  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PositionMapping {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Round {
+  id        Int      @id @default(autoincrement())
+  title     String
+  startsAt  DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
