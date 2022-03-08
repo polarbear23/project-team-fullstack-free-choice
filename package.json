@@ -15,7 +15,7 @@
     "devstart": "concurrently \"react-scripts start\" \"nodemon src/server/index.js\"",
     "start": "node src/server/index.js",
     "build": "react-scripts build",
-    "lint": "eslint",
+    "lint": "eslint src",
     "test": "jasmine",
     "eject": "react-scripts eject"
   },
