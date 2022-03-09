@@ -6,6 +6,106 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("DATABASE_SHADOW")
+}
+
+model Admin {
+  id          Int           @id @default(autoincrement())
+  username    String        @unique
+  password    String
+  email       String        @unique
+  competition Competition[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model Competition {
+  id          Int          @id @default(autoincrement())
+  title       String
+  admin       Admin        @relation(fields: [adminId], references: [id])
+  adminId     Int
+  seasons     Season[]
+  competitors Competitor[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model Competitor {
+  id                 Int         @id @default(autoincrement())
+  name               String
+  nationality        String?
+  email              String
+  competitorImageUrl String?
+  competition        Competition @relation(fields: [competitionId], references: [id])
+  competitionId      Int
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+}
+
+model Season {
+  id               Int               @id @default(autoincrement())
+  title            String
+  competition      Competition       @relation(fields: [competitionId], references: [id])
+  competitionId    Int
+  participants     Participant[]
+  teams            Team[]
+  rounds           Round[]
+  positionMappings PositionMapping[]
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+}
+
+model Team {
+  id           Int           @id @default(autoincrement())
+  name         String
+  season       Season        @relation(fields: [seasonId], references: [id])
+  seasonId     Int
+  participants Participant[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Participant {
+  id         Int         @id @default(autoincrement())
+  season     Season      @relation(fields: [seasonId], references: [id])
+  seasonId   Int
+  team       Team?       @relation(fields: [teamId], references: [id])
+  teamId     Int?
+  placements Placement[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+model Placement {
+  id            Int         @id @default(autoincrement())
+  position      Int
+  participant   Participant @relation(fields: [participantId], references: [id])
+  participantId Int
+  round         Round       @relation(fields: [roundId], references: [id])
+  roundId       Int
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+model PositionMapping {
+  id        Int      @id @default(autoincrement())
+  position  Int
+  mapping   Int
+  season    Season   @relation(fields: [seasonId], references: [id])
+  seasonId  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Round {
+  id         Int         @id @default(autoincrement())
+  title      String
+  startsAt   DateTime
+  season     Season      @relation(fields: [seasonId], references: [id])
+  seasonId   Int
+  placements Placement[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
 }
