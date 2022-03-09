@@ -1,12 +1,36 @@
-import React from 'react';
-import './App.css'
+import React, { useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 
-import WelcomePage from './component/WelcomePage'
+import Homepage from './components/Homepage'
+import Welcomepage from './components/Welcomepage'
+import Header from './components/Header'
+
+import './App.css';
 
 function App() {
+
+    const [isLoggedIn, setIsLoggedIn] = useState(true)
+
+    const findUser = () => {
+        setIsLoggedIn(true)
+    }
+
+    useEffect(() => {
+        findUser()
+    })
+
     return (
-        <div className="App">
-            < WelcomePage />
+        <div className="app">
+
+            <Header isLoggedIn={isLoggedIn} />
+
+            {!isLoggedIn && <Welcomepage />}
+            {isLoggedIn &&
+                <Routes>
+                    <Route path="/" element={<Homepage />} />
+                </Routes>
+            }
+
         </div>
         
     );
