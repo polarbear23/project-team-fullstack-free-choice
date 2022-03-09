@@ -16,20 +16,20 @@ model Admin {
   username    String        @unique
   password    String
   email       String        @unique
+  competition Competition[]
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
-  competition Competition[]
 }
 
 model Competition {
   id          Int          @id @default(autoincrement())
   title       String
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  Admin       Admin        @relation(fields: [adminId], references: [id])
+  admin       Admin        @relation(fields: [adminId], references: [id])
   adminId     Int
   seasons     Season[]
   competitors Competitor[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 }
 
 model Competitor {
@@ -38,73 +38,74 @@ model Competitor {
   nationality        String?
   email              String
   competitorImageUrl String?
+  competition        Competition @relation(fields: [competitionId], references: [id])
+  competitionId      Int
   createdAt          DateTime    @default(now())
   updatedAt          DateTime    @updatedAt
-  Competition        Competition @relation(fields: [competitionId], references: [id])
-  competitionId      Int
 }
 
 model Season {
   id               Int               @id @default(autoincrement())
-  createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @updatedAt
-  Competition      Competition       @relation(fields: [competitionId], references: [id])
+  title            String
+  competition      Competition       @relation(fields: [competitionId], references: [id])
   competitionId    Int
   participants     Participant[]
   teams            Team[]
   rounds           Round[]
   positionMappings PositionMapping[]
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
 }
 
 model Team {
   id           Int           @id @default(autoincrement())
   name         String
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  Season       Season        @relation(fields: [seasonId], references: [id])
+  season       Season        @relation(fields: [seasonId], references: [id])
   seasonId     Int
   participants Participant[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 }
 
 model Participant {
   id         Int         @id @default(autoincrement())
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
-  Season     Season      @relation(fields: [seasonId], references: [id])
+  season     Season      @relation(fields: [seasonId], references: [id])
   seasonId   Int
-  Team       Team?       @relation(fields: [teamId], references: [id])
+  team       Team?       @relation(fields: [teamId], references: [id])
   teamId     Int?
   placements Placement[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
 }
 
 model Placement {
   id            Int         @id @default(autoincrement())
   position      Int
+  participant   Participant @relation(fields: [participantId], references: [id])
+  participantId Int
+  round         Round       @relation(fields: [roundId], references: [id])
+  roundId       Int
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
-  Participant   Participant @relation(fields: [participantId], references: [id])
-  participantId Int
-  Round         Round       @relation(fields: [roundId], references: [id])
-  roundId       Int
 }
 
 model PositionMapping {
   id        Int      @id @default(autoincrement())
   position  Int
   mapping   Int
+  season    Season   @relation(fields: [seasonId], references: [id])
+  seasonId  Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Season    Season   @relation(fields: [seasonId], references: [id])
-  seasonId  Int
 }
 
 model Round {
   id         Int         @id @default(autoincrement())
   title      String
   startsAt   DateTime
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
-  Season     Season      @relation(fields: [seasonId], references: [id])
+  season     Season      @relation(fields: [seasonId], references: [id])
   seasonId   Int
   placements Placement[]
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
 }
