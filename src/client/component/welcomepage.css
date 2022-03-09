@@ -1,0 +1,18 @@
+body {
+    background-color: var(--clr-grey-2);
+    width: 70%;
+    margin: auto;
+}
+
+.user-buttons-grid-container {
+    display:grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 1rem;
+}
+
+.user-buttons {
+    width: 10rem;
+    height: 3rem;
+    border: none;
+}
+

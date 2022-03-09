@@ -1,11 +1,14 @@
 import React from 'react';
-import './App.css';
+import './App.css'
+
+import WelcomePage from './component/WelcomePage'
 
 function App() {
     return (
         <div className="App">
-            <h1>Hello, world!</h1>
+            < WelcomePage />
         </div>
+        
     );
 }
 

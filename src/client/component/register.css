@@ -1,0 +1,42 @@
+.register-form-container {
+    position: relative;
+    background-color: var(--clr-black-1);
+    height: 21rem;
+    width: 24rem;
+    z-index: -1;
+}
+
+.login-section-title{
+    color: var(--clr-white);
+    size: 3rem;
+    margin: auto;
+}
+
+.register-form {
+    position: absolute;
+    top: 2rem;
+    left: 10rem;
+    z-index: 1;
+    border: 1px solid black;
+    width: 24rem;
+    display: grid;
+    gap: 1rem;
+    background-color: var(--clr-white);
+}
+
+.register-form * {
+    margin-left: 1rem;
+}
+
+.register-submit-button {
+    width: 5rem;
+    height: 2.5rem;
+    margin: auto;
+    margin-bottom: 2rem;
+}
+
+input {
+    height: 3rem;
+    width: 70%;
+    background-color: var(--clr-grey-2)
+}
