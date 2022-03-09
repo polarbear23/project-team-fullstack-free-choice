@@ -15,6 +15,18 @@ const createFakeCompetition = () => {
     return { title, }
 }
 
+const createFakeSeason = () => {
+    const title = faker.lorem.sentence();
+
+    return { title }
+}
+
+const createFakeRound = () => {
+    const title = faker.lorem.sentence();
+
+    return { title }
+}
+
 const createFakeCompetitor = () => {
     const name = faker.name.firstName();
     const nationality = faker.address.country();
@@ -24,9 +36,24 @@ const createFakeCompetitor = () => {
     return { name, nationality, email, competitorImage }
 }
 
+const createFakePositionMapping = (position, mapping) => {
+    //temporary
+    return { position, mapping }
+}
+
+const createFakeTeam = () => {
+    const name = faker.lorem.sentence();
+
+    return { name }
+}
+
 
 module.exports = {
     createFakeAdmin,
     createFakeCompetition,
+    createFakeSeason,
+    createFakeRound,
     createFakeCompetitor,
+    createFakeTeam,
+    createFakePositionMapping,
 }
