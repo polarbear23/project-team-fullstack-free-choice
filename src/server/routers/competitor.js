@@ -1,10 +1,8 @@
-const express = require('express');
-const {
-    competitor
-} = requirre('../controllers/competitor');
+const express = require("express");
+const { competitor } = require("../controllers/competitor");
 
 const router = express.Router();
 
-router.post('/competitor', competitor);
+router.post("/competitor", competitor);
 
 module.exports = router;

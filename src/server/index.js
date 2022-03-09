@@ -15,6 +15,16 @@ const competitionRouter = require("./routers/competition");
 app.use("/competition", competitionRouter);
 const competitorRouter = require("./routers/competitor");
 app.use("/competitor", competitorRouter);
+const participantRouter = require("./routers/participant");
+app.use("/participant", participantRouter);
+const placementRouter = require("./routers/placement");
+app.use("/placement", placementRouter);
+const positionMappingRouter = require("./routers/positionMapping");
+app.use("/positionMapping", positionMappingRouter);
+const roundRouter = require("./routers/round");
+app.use("/round", roundRouter);
+const adminRouter = require("./routers/admin");
+app.use("/admin", adminRouter);
 
 app.use(cors());
 // Tell express to use a JSON parser middleware
