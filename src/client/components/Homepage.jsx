@@ -9,6 +9,17 @@ function Homepage() {
 
     //fetch competitions with adminId = logged-in user
     //save them to state and map through thier competitions, returning a CompetitionCard for each
+    const dummyData = [
+        {
+            id: 1
+        },
+        {
+            id: 2
+        },
+        {
+            id: 3
+        }
+    ]
 
     return (
         <main className="app-homepage">
@@ -17,9 +28,11 @@ function Homepage() {
             </Link>
 
             <div className="competition-display">
-                    <CompetitionCard />
-                    <CompetitionCard />
-                    <CompetitionCard />
+                {dummyData.map((competition, index) => {
+                    return (
+                        <CompetitionCard key={index} competitionId={competition.id} test={"test"} />
+                    )
+                })}
             </div>
         </main>
     )

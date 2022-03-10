@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 
 import './styling/competition-card.css'
 
-function CompetitionCard() {
+function CompetitionCard({ competitionId }) {
 
-    //const { competition } = props
+    console.log(competitionId)
 
     //find competitors with the 3 highest scores
     //(competitionId > many competitors > many participants > many placements > calculate and sum positionMapping)
@@ -37,7 +37,7 @@ function CompetitionCard() {
     },[])
 
     const handleClick = () => {
-        navigate('/competition/1') //view specific competition
+        navigate('/competition/1', {competitionId: competitionId}) //view specific competition
     }
 
     return (
