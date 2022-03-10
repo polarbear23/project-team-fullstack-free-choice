@@ -4,7 +4,7 @@ const { faker } = require('@faker-js/faker');
 const createFakeAdmin = () => {
     const username = faker.internet.userName();
     const password = faker.internet.password();
-    const email = faker.internet.email();
+    const email = faker.internet.email(username);
 
     return { username, password, email }
 }
@@ -47,6 +47,13 @@ const createFakeTeam = () => {
     return { name }
 }
 
+const createFakePlacement = (availablePositions) => {
+    const position = faker.datatype.number({ max: availablePositions.length });
+
+    return { position }
+}
+
+console.log(createFakePlacement([1, 2, 3, 4, 5]));
 
 module.exports = {
     createFakeAdmin,
@@ -56,4 +63,5 @@ module.exports = {
     createFakeCompetitor,
     createFakeTeam,
     createFakePositionMapping,
+    createFakePlacement
 }
