@@ -33,8 +33,8 @@ const createFakeCompetitors = (maxCompetitors) => {
         const name = faker.name.firstName();
         const nationality = faker.address.country();
         const email = faker.internet.email();
-        const competitorImage = faker.internet.avatar();
-        const competitor = { name, nationality, email, competitorImage }
+        const competitorImageUrl = faker.internet.avatar();
+        const competitor = { name, nationality, email, competitorImageUrl }
         fakeCompetitors.push(competitor);
     }
     return fakeCompetitors
