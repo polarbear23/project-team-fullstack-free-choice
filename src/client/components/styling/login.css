@@ -1,0 +1,74 @@
+.app-login {
+    height: 100%;
+    width: calc(100vw + 7vw);
+    position: absolute;
+    left: -7vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(207, 216, 220, 0.75);
+}
+
+.login-aside {
+    position: absolute;
+    width: 11rem;
+    margin: 7rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+}
+
+.login-container {
+    overflow: hidden;
+    height: 24rem;
+    width: 24rem;
+    background-color: var(--clr-black-1);
+}
+
+.login-aside-text {
+    color: var(--clr-white);
+}
+.login-aside-title {
+    font-size: 3rem;
+}
+
+.login-button {
+    height: 2.5rem;
+    width: 7rem;
+    border: none;
+    border-radius: 5px;
+    color: var(--clr-white);
+    font-weight: 500;
+}
+
+.login-redirect-button {
+    margin: auto;
+    background-color: var(--clr-grey-1);
+}
+
+.login-close-button {
+    text-align: right;
+}
+
+.login-form {
+    height: 20rem;
+    width: 30rem;
+    padding: 1rem;
+    position: absolute;
+    transform: translate(45%, 2rem);
+    display: grid;
+    gap: 1rem;
+    background-color: var(--clr-white);
+}
+
+.login-submit-button {
+    margin: 0 auto 2rem;
+    background-color: var(--clr-pink);
+}
+
+.login-form-input {
+    height: 3rem;
+    background-color: var(--clr-grey-2);
+    border: none;
+}
