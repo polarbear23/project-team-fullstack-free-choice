@@ -13,7 +13,7 @@ if (process.env.NODE_ENV !== 'development') {
 
 const competitionRouter = require('./routers/competition');
 app.use('/competition', competitionRouter);
-const competitorRouter = require("./routers/competitor");
+const competitorRouter = require('./routers/competitor');
 app.use('/competitor', competitorRouter);
 const participantRouter = require('./routers/participant');
 app.use('/participant', participantRouter);
