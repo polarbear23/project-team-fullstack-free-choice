@@ -5,7 +5,6 @@ import { postFormToServer } from '../utils/auth';
 import './styling/register.css';
 
 export const Register = (props) => {
-    // eslint-disable-next-line react/prop-types
     const { setIsLoggedIn, setFormToRender } = props;
 
     const initialForm = {
@@ -50,9 +49,7 @@ export const Register = (props) => {
                     </button>
                 </div>
                 <form className="register-form">
-                    <p className="register-close-button" onClick={handleClose}>
-                        X
-                    </p>
+                    <p className="register-close-button" onClick={handleClose}>X</p>
                     <input
                         className="register-form-input"
                         name="username"

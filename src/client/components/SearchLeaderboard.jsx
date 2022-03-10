@@ -18,16 +18,14 @@ export const SearchLeaderboard = () => {
 
     const handleSubmit = async () => {
         //const result = await postFormToServer();
-
         //setState result.leaderbaord
-
         //redirect to leaderboard
     };
 
     return (
         <form className="search-leaderboard-form" onSubmit={handleSubmit}>
             <input
-            className="search-leaderboard-form-input"
+                className="search-leaderboard-form-input"
                 name="username"
                 type="text"
                 placeholder="Search for a Leaderboard"

@@ -8,7 +8,9 @@ import { SearchLeaderboard } from './SearchLeaderboard';
 
 import './styling/welcome.css';
 
-export const Welcome = () => {
+export const Welcome = (props) => {
+    const { setIsLoggedIn } = props;
+
     const [formToRender, setFormToRender] = useState('');
 
     const handleClick = (event) => {
@@ -47,10 +49,16 @@ export const Welcome = () => {
                 </h2>
                 <SearchLeaderboard />
                 {formToRender === 'register' && (
-                    <Register setFormToRender={setFormToRender} />
+                    <Register
+                        setFormToRender={setFormToRender}
+                        setIsLoggedIn={setIsLoggedIn}
+                    />
                 )}
                 {formToRender === 'login' && (
-                    <Login setFormToRender={setFormToRender} />
+                    <Login
+                        setFormToRender={setFormToRender}
+                        setIsLoggedIn={setIsLoggedIn}
+                    />
                 )}
             </section>
         </>

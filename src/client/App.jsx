@@ -9,6 +9,7 @@ import './App.css';
 
 export const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const [user, setUser] = useState(null);
 
     const findUser = () => {
         setIsLoggedIn(false);
@@ -18,13 +19,20 @@ export const App = () => {
         findUser();
     });
 
+    useEffect(() => {
+        //get token from local storage
+        //decode token, get id
+        //fetch user then setUser
+        
+    },[isLoggedIn]);
+
     return (
         <div className="app">
-            <Header isLoggedIn={isLoggedIn} />
+            <Header isLoggedIn={isLoggedIn} user={user} setUser={setUser}/>
 
             {!isLoggedIn && (
                 <Routes>
-                    <Route path="/" element={<Welcome />} />
+                    <Route path="/" element={<Welcome setIsLoggedIn={setIsLoggedIn}/>} />
                 </Routes>
             )}
             {isLoggedIn && (
