@@ -1,39 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import Homepage from './components/Homepage'
-import Welcomepage from './components/Welcomepage'
-import Header from './components/Header'
+import Homepage from './components/Homepage';
+import { Welcome } from './components/Welcome';
+import Header from './components/Header';
 
 import './App.css';
 
-function App() {
-
-    const [isLoggedIn, setIsLoggedIn] = useState(true)
+export const App = () => {
+    const [isLoggedIn, setIsLoggedIn] = useState(true);
 
     const findUser = () => {
-        setIsLoggedIn(true)
-    }
+        setIsLoggedIn(false);
+    };
 
     useEffect(() => {
-        findUser()
-    })
+        findUser();
+    });
 
     return (
         <div className="app">
-
             <Header isLoggedIn={isLoggedIn} />
 
-            {!isLoggedIn && <Welcomepage />}
-            {isLoggedIn &&
+            {!isLoggedIn && (
+                <Routes>
+                    <Route path="/" element={<Welcome />} />
+                </Routes>
+            )}
+            {isLoggedIn && (
                 <Routes>
                     <Route path="/" element={<Homepage />} />
                 </Routes>
-            }
-
+            )}
         </div>
-        
     );
-}
+};
 
 export default App;

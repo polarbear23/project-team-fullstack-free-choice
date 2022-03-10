@@ -1,0 +1,11 @@
+.search-leaderboard-form {
+    width: 40rem;
+}
+
+.search-leaderboard-form-input {
+    width: 100%;
+    height: 4rem;
+    text-align: center;
+    border: none;
+    border-radius: 3px;
+}
