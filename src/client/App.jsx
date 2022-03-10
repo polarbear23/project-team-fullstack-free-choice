@@ -7,7 +7,7 @@ import Header from './components/Header';
 
 import './App.css';
 
-export const App = () => {
+const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(true);
     const [user, setUser] = useState(null);
 
