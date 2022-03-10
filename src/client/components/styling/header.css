@@ -7,7 +7,7 @@
     box-shadow: 0 6px 10px -4px var(--clr-grey-1);
     color: var(--clr-grey-2);
 
-    position: sticky;
+    position: fixed;
     top: 0;
     z-index: 100;
 }
