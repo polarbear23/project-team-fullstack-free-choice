@@ -5,7 +5,6 @@ import { postFormToServer } from '../utils/auth';
 import './styling/login.css';
 
 export const Login = (props) => {
-    // eslint-disable-next-line react/prop-types
     const { setIsLoggedIn, setFormToRender } = props;
 
     const initialForm = {
