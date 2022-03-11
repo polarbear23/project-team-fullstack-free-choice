@@ -29,6 +29,14 @@
 .header-profile {
     position: absolute;
     right: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.header-logout-button {
+    background-color: var(--clr-grey-2);
 }
 
 .app-header h2 {

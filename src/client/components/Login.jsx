@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 import { postFormToServer } from '../utils/auth';
 
+import { API_URL, LOCAL_STORAGE } from '../config';
+
 import './styling/login.css';
 
 export const Login = (props) => {
@@ -23,9 +25,11 @@ export const Login = (props) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const result = await postFormToServer('url');
+        const result = await postFormToServer(API_URL.LOGIN, form);
 
-        localStorage.setItem('token', result.token);
+        if (!result.token) return;
+
+        localStorage.setItem(LOCAL_STORAGE.TOKEN, result.token);
 
         setIsLoggedIn(true);
     };
@@ -35,22 +39,22 @@ export const Login = (props) => {
     const handleClose = () => setFormToRender('');
 
     return (
-        <section className="app-login">
-            <div className="login-container">
-                <div className="login-aside">
-                    <p className="login-aside-text login-aside-title">Login</p>
-                    <p className="login-aside-text">Don&apos;t have an account?</p>
+        <section className="app-welcomeform">
+            <div className="welcomeform-container">
+                <div className="welcomeform-aside">
+                    <h1>Login</h1>
+                    <h2>Don&apos;t have an account?</h2>
                     <button
-                        className="login-button login-redirect-button"
+                        className="welcomeform-button welcomeform-redirect-button"
                         onClick={handleRedirect}
                     >
                         Register
                     </button>
                 </div>
-                <form className="login-form">
-                    <p className="login-close-button" onClick={handleClose}>X</p>
+                <form className="welcomeform-form">
+                    <p className="welcomeform-close-button" onClick={handleClose}>X</p>
                     <input
-                        className="login-form-input"
+                        className="welcomeform-form-input"
                         name="username"
                         type="text"
                         placeholder="Enter Username"
@@ -59,7 +63,7 @@ export const Login = (props) => {
                         required
                     />
                     <input
-                        className="login-form-input"
+                        className="welcomeform-form-input"
                         name="password"
                         type="password"
                         placeholder="Enter Password"
@@ -68,7 +72,7 @@ export const Login = (props) => {
                         required
                     />
                     <button
-                        className="login-button login-submit-button"
+                        className="welcomeform-button welcomeform-submit-button"
                         onClick={handleSubmit}
                     >
                         Login

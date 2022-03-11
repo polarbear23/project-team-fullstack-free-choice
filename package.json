@@ -2,6 +2,9 @@
   "name": "project-team-fullstack-free-choice",
   "version": "0.1.0",
   "private": true,
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
   "dependencies": {
     "@babel/core": "^7.17.5",
     "@prisma/client": "^3.10.0",
@@ -42,6 +45,7 @@
     ]
   },
   "devDependencies": {
+    "@faker-js/faker": "^6.0.0-beta.0",
     "eslint": "^8.10.0",
     "eslint-plugin-react": "^7.29.3",
     "jasmine": "^4.0.2",

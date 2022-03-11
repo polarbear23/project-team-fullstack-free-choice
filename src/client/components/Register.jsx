@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 import { postFormToServer } from '../utils/auth';
 
+import { API_URL, LOCAL_STORAGE } from '../config';
+
 import './styling/register.css';
 
 export const Register = (props) => {
@@ -21,12 +23,14 @@ export const Register = (props) => {
         setForm({ ...form, [name]: value });
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const result = await postFormToServer('url');
+        const result = await postFormToServer(API_URL.REGISTER, form);
 
-        localStorage.setItem('token', result.token);
+        if (!result.token) return;
+
+        localStorage.setItem(LOCAL_STORAGE.TOKEN, result.token);
 
         setIsLoggedIn(true);
     };
@@ -36,22 +40,22 @@ export const Register = (props) => {
     const handleClose = () => setFormToRender('');
 
     return (
-        <section className="app-register">
-            <section className="register-container">
-                <div className="register-aside">
-                    <p className="register-aside-text register-aside-title">Register</p>
-                    <p className="register-aside-text">Have an account?</p>
+        <section className="app-welcomeform">
+            <section className="welcomeform-container">
+                <div className="welcomeform-aside">
+                    <h1>Register</h1>
+                    <h2>Have an account?</h2>
                     <button
-                        className="register-button register-redirect-button"
+                        className="welcomeform-button welcomeform-redirect-button"
                         onClick={handleRedirect}
                     >
                         Login
                     </button>
                 </div>
-                <form className="register-form">
-                    <p className="register-close-button" onClick={handleClose}>X</p>
+                <form className="welcomeform-form">
+                    <div className="welcomeform-close-button" onClick={handleClose}><h4>X</h4></div>
                     <input
-                        className="register-form-input"
+                        className="welcomeform-form-input"
                         name="username"
                         type="text"
                         placeholder="Enter Username"
@@ -60,7 +64,7 @@ export const Register = (props) => {
                         onChange={handleChange}
                     />
                     <input
-                        className="register-form-input"
+                        className="welcomeform-form-input"
                         name="password"
                         type="password"
                         placeholder="Enter Password"
@@ -69,7 +73,7 @@ export const Register = (props) => {
                         onChange={handleChange}
                     />
                     <input
-                        className="register-form-input"
+                        className="welcomeform-form-input"
                         name="email"
                         type="text"
                         placeholder="Enter Email"
@@ -78,7 +82,7 @@ export const Register = (props) => {
                         onChange={handleChange}
                     />
                     <button
-                        className="register-button register-submit-button"
+                        className="welcomeform-button welcomeform-submit-button"
                         onClick={handleSubmit}
                     >
                         Register

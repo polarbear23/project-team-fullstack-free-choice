@@ -1,4 +1,4 @@
-.app-register {
+.app-welcomeform {
     height: 100%;
     width: calc(100vw + 7vw);
     position: absolute;
@@ -7,9 +7,10 @@
     align-items: center;
     justify-content: center;
     background: rgba(207, 216, 220, 0.75);
+    z-index: 2;
 }
 
-.register-aside {
+.welcomeform-aside {
     position: absolute;
     width: 11rem;
     margin: 7rem 1rem;
@@ -19,56 +20,68 @@
     align-items: center;
 }
 
-.register-container {
+.welcomeform-container {
     overflow: hidden;
     height: 24rem;
     width: 24rem;
     background-color: var(--clr-black-1);
 }
 
-.register-aside-text {
-    color: var(--clr-white);
-}
-.register-aside-title {
-    font-size: 3rem;
-}
-
-.register-button {
-    height: 2.5rem;
-    width: 7rem;
-    border: none;
-    border-radius: 5px;
-    color: var(--clr-white);
-    font-weight: 500;
-}
-
-.register-redirect-button {
+.welcomeform-redirect-button {
     margin: auto;
     background-color: var(--clr-grey-1);
+    color: var(--clr-white);
+    font-size: 1.25rem;
+    padding: 15px 40px !important;
 }
 
-.register-close-button {
-    text-align: right;
+.welcomeform-close-button {
+    height: fit-content;
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 10px;
 }
 
-.register-form {
+.welcomeform-close-button:hover {
+    cursor: pointer;
+}
+
+.welcomeform-form {
     height: 20rem;
     width: 30rem;
     padding: 1rem;
     position: absolute;
     transform: translate(45%, 2rem);
     display: grid;
+    grid-template-columns: 1fr;
     gap: 1rem;
     background-color: var(--clr-white);
 }
 
-.register-submit-button {
-    margin: 0 auto 1rem;
+.welcomeform-submit-button {
+    color: var(--clr-white);
+    font-size: 1.5rem;
+    padding: 15px 40px !important;
     background-color: var(--clr-pink);
+    width: fit-content;
+    margin: 0 auto;
 }
 
-.register-form-input {
+.welcomeform-form-input {
     height: 3rem;
+    padding-left: 10px;
     background-color: var(--clr-grey-2);
     border: none;
+}
+
+.app-welcomeform h1 {
+    font-size: 3rem;
+    font-weight: 400;
+    color: var(--clr-white);
+}
+
+.app-welcomeform h2 {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--clr-grey-1)
 }
