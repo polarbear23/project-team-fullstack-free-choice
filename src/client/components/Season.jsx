@@ -11,6 +11,8 @@ export const Season = () => {
         <div className="season-page">
             <h2>Mario Kart</h2>
             <h1>Flower Cup</h1>
+            
+            {/*dropdown needs styled*/}
             <select className="select-round-dropdown" name="rounds">
                 <option value="1">{`Mario Circuit`}</option>
                 <option value="2">{`Coconut Mall`}</option>
