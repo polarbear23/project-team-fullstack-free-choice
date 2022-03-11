@@ -1,5 +1,6 @@
 .app-welcomepage,
 .app-welcomepage-blur {
+    position: relative;
     height: calc(100vh - 5rem);
     width: 100%;
     display: flex;
@@ -8,6 +9,10 @@
     justify-content: center;
     background-color: rgb(207, 216, 220);
     position: fixed;
+    background-image: url('./test.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: 50%;
 }
 
 .welcome-heading {
@@ -15,7 +20,8 @@
     margin: 2rem 0;
     font-size: 2.5rem;
     font-weight: 500;
-    color: var(--clr-grey-1)
+    color: var(--clr-grey-2);
+    z-index: 1;
 }
 
 .user-buttons-grid-container {
@@ -23,19 +29,28 @@
     grid-template-columns: repeat(2, auto);
     justify-content: center;
     gap: 7rem;
-}
-
-.user-buttons {
-    width: 15rem;
-    height: 4rem;
-    border: none;
-    border-radius: 5px;
+    z-index: 1
 }
 
 .user-buttons-register {
+    color: var(--clr-white);
     background-color: var(--clr-brown);
+    font-size: 1.7rem;
+    font-weight: 400;
 }
 
 .user-buttons-login {
+    color: var(--clr-white);
     background-color: var(--clr-pink);
+    font-size: 1.7rem;
+    font-weight: 400;
+}
+
+.welcome-background {
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0.5;
+    position: absolute;
+    z-index: 0;
 }
