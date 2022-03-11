@@ -2,11 +2,15 @@ import React from 'react';
 
 import './styling/season.css'
 
+import { CardTag } from './card/CardTag';
+import { RoundPodium } from './card/RoundPodium';
+
 export const Season = () => {
 
     return (
-        <div className="single-season">
-            <h1 className="competition-title">Flower Cup</h1>
+        <div className="season-page">
+            <h2>Mario Kart</h2>
+            <h1>Flower Cup</h1>
             <select className="select-round-dropdown" name="rounds">
                 <option value="1">{`Mario Circuit`}</option>
                 <option value="2">{`Coconut Mall`}</option>
@@ -14,49 +18,24 @@ export const Season = () => {
                 <option value="4">{`Wario's Gold Mine`}</option>
             </select>
 
-            <div className="round-card">
+            <div className="card round-card">
 
-                <aside className="title-tag">
-                    <div className="tag-container">
-                        <h2>Mario Circuit</h2>                       
-                    </div>
-                </aside>
+                <CardTag
+                    title={"Mario Circuit"}
+                />
 
-                <div className="card-display round-display">
+                <div className="card-display">
 
-                    <div className="round-legend">
-                        <h3>Position</h3>
-                        <h3>Team</h3>
-                        <h3>Points</h3>
-                        <h3>Total</h3>
+                    <div className="podium round-podium">
+                        <h4>Position</h4>
+                        <h4>Team</h4>
+                        <h4>Points</h4>
+                        <h4>Score</h4>
                     </div>
 
-                    <div className="card-podium">
+                    {/* This div gets mapped; participants sorted by score */}
+                    <RoundPodium />
 
-                        {/* This div gets mapped; participants sorted by score */}
-                        <div className="podium-place round-podium-place">
-
-                            <div className="participant-display round-participant-display">
-                                <p>1</p>
-                                <div className="participant-img"></div>
-
-                                <div className="participant-details">
-                                    <p className="participant-name">Steve</p>
-                                    <p className="participant-nationality">Canada</p>
-                                </div>
-                            </div>
-
-
-                            <h4 className="round-team">1</h4>
-                            <h4 className="round-score">1</h4>
-
-
-                            <div className="participant-score">
-                                <h3 className="score">127</h3>
-                            </div>
-                        </div>
-
-                    </div>
                 </div>
             </div>
         </div>

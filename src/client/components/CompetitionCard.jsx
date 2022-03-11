@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import './styling/competition-card.css'
+import './styling/card.css'
+
+import { CardTag } from './card/CardTag';
+import { PodiumParticipant } from './card/PodiumParticipant';
 
 export const CompetitionCard = ({ competitionId, user }) => {
 
@@ -41,46 +44,29 @@ export const CompetitionCard = ({ competitionId, user }) => {
     }
 
     return (
-        <div className="competition-card">
+        <div className="card competition-card">
 
-            <aside className="title-tag">
-                <div className="tag-container">
-                    <h2>Mario Kart</h2>
-                    
-                    <button className="competition-link-button" onClick={() => handleClick()}>
-                        View
-                    </button>
-                    
-                </div>
-            </aside>
+            <CardTag
+                title={"Mario Kart"}
+                handleClick={e => handleClick(e)}
+            />
 
             <div className="card-display">
 
                 <h3>Top 3</h3>
 
-                <div className="card-podium">
+                {podium.map((participant, index) => {
 
-                    {podium.map((participant, index) => {
+                    return (
+                        <div key={index} className="podium competition-podium">
 
-                        return (
-                            <div key={index} className="podium-place">
+                            <PodiumParticipant />
 
-                                <div className="participant-display">
-                                    <p>{index + 1}</p>
-                                    <div className="participant-img"></div>
+                            <div className="participant-score">{participant.score}</div>
+                        </div>
+                    )
+                })}
 
-                                    <div className="participant-details">
-                                        <p className="participant-name">{participant.name}</p>
-                                        <p className="participant-nationality">{participant.nationality}</p>
-                                    </div>
-                                </div>
-
-                                <div className="participant-score">{participant.score}</div>
-                            </div>
-                        )
-
-                    })}
-                </div>
             </div>
         </div>
     )
