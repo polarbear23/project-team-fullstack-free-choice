@@ -12,14 +12,15 @@ export const Header = (props) => {
         <div className="app-header">
             <nav className="header-nav">
                 <h1 className="header-logo">SteveNeverFirst</h1>
-                <Link to="/nathan" className="router-link">
-                    <h2 className="header-link">My Leaderboards</h2>
-                </Link>
-                {!isLoggedIn && (
+                {isLoggedIn && (<>
+                    <Link to="/nathan" className="router-link">
+                        <h2 className="header-link">My Leaderboards</h2>
+                    </Link>
+                
                     <div className="header-profile">
                         <h2>Hi, Steve!</h2>
                     </div>
-                )}
+                </>)}
             </nav>
         </div>
     );
