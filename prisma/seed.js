@@ -1,7 +1,7 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
-const { createFakeAdmin, createFakeCompetition, createFakeCompetitors, createFakeSeasons, createFakeTeam, createFakeRound } = require('../src/server/utils/faker');
-const MAX_NUMBER_ADMINS_TO_GENERATE = 10;
+const { createFakeAdmin, createFakeCompetition, createFakeCompetitors, createFakeSeasons, createFakeTeam, createFakeRound, createFakePlacement, createFakePositionMapping } = require('../src/server/utils/faker');
+const MAX_NUMBER_ADMINS_TO_GENERATE = 2;
 const MAX_NUMBER_COMPETITORS_TO_GENERATE = 10;
 const MAX_NUMBER_SEASONS_TO_GENERATE = 2;
 const MAX_TEAMS_TO_GENERATE = 5;
@@ -41,18 +41,18 @@ const createAdmin = async () => {
             }
 
         });
-
+        console.log("admin", admin);
         admins.push(admin);
     }
 
     return admins
 }
 
-const createTeamsAndParticipants = async (season, competitors) => {
+const createTeams = async (season) => {
     //console.log("seasons", seasons)
     //console.log("competitors", competitors)
     const teams = [];
-    const participants = [];
+
     for (let i = 0; i < MAX_TEAMS_TO_GENERATE; i++) {
         const fakeTeam = createFakeTeam();
         const team = await prisma.team.create({
@@ -68,6 +68,13 @@ const createTeamsAndParticipants = async (season, competitors) => {
         console.log("team", team)
         teams.push(team);
     }
+    return teams;
+
+}
+
+const createParticipants = async (season, competitors, teams) => {
+    const participants = [];
+
     for (let i = 0; i < competitors.length; i++) {
         const participant = await prisma.participant.create({
             data: {
@@ -85,20 +92,20 @@ const createTeamsAndParticipants = async (season, competitors) => {
                     connect: {
                         id: teams[Math.floor(Math.random() * MAX_TEAMS_TO_GENERATE)].id
                     }
-                }
+                },
             }
         })
         console.log("participant", participant);
         participants.push(participant);
     }
-
+    return participants
 }
 
 const createRounds = async (season) => {
     const rounds = [];
     for (let i = 0; i < MAX_ROUNDS_TO_GENERATE; i++) {
         const fakeRound = createFakeRound();
-        const round = await prisma.rounds.create({
+        const round = await prisma.round.create({
             data: {
                 title: fakeRound.title,
                 startsAt: fakeRound.startsAt,
@@ -116,6 +123,60 @@ const createRounds = async (season) => {
 
 }
 
+const createPlacements = async (participants, rounds) => {
+    const placements = [];
+
+    for (let i = 0; i < rounds.length; i++) {
+        const positions = Array.from({ length: participants.length }, (_, i) => i + 1); //fills an array up to max of participants [1,2,3 ... participants.length]
+        for (let j = 0; j < participants.length; j++) {
+            const fakePosition = createFakePlacement(positions);
+            const placement = await prisma.placement.create({
+                data: {
+                    position: fakePosition.position,//add fake position
+
+                    participant: {
+                        connect: {
+                            id: participants[j].id
+                        }
+                    },
+                    round: {
+                        connect: {
+                            id: rounds[i].id
+                        }
+                    },
+                }
+            });
+            const index = positions.indexOf(fakePosition.position);
+            positions.splice(index, 1);
+            console.log("placement", placement);
+            placements.push(placement);
+        }
+    }
+    return placements
+}
+
+const createPositionMappings = async (season, participants) => {
+    const positions = Array.from({ length: participants.length }, (_, i) => i + 1); //fills an array up to max of participants [1,2,3 ... participants.length]
+    const fakeMappings = createFakePositionMapping(positions);
+    const positionMappings = [];
+    for (let i = 0; i < fakeMappings.length; i++) {
+        const positionMapping = await prisma.positionMapping.create({
+            data: {
+                position: fakeMappings[i].position,
+                mapping: fakeMappings[i].mapping,
+                season: {
+                    connect: {
+                        id: season.id
+                    }
+                }
+            }
+        });
+        console.log("positionMapping", positionMapping);
+        positionMappings.push(positionMapping);
+    }
+    return positionMappings
+}
+
 
 const seed = async () => {
     const admins = await createAdmin();
@@ -124,13 +185,15 @@ const seed = async () => {
             const competitors = admins[i].competition[0].competitors;
             const season = admins[i].competition[0].seasons[j];
             const rounds = await createRounds(season);
-            await createTeamsAndParticipants(season, competitors, rounds);
+            const teams = await createTeams(season);
+            const participants = await createParticipants(season, competitors, teams);
+            await createPlacements(participants, rounds);
+            await createPositionMappings(season, participants);
         }
     }
-
-
     process.exit(0);
 }
+
 
 seed()
     .catch(async e => {
