@@ -48,9 +48,18 @@ const createFakeCompetitors = (maxCompetitors) => {
     }
     return fakeCompetitors
 }
-const createFakePositionMapping = (position, mapping) => {
-    //temporary
-    return { position, mapping }
+const createFakePositionMapping = (totalPositions) => {
+    let minValue = 170;
+    let maxValue = 200;
+    const mappings = totalPositions.map((position) => {
+        const mapping = faker.datatype.number({ min: minValue, max: maxValue });
+        if (minValue > 30) {
+            minValue = minValue - 30;
+            maxValue = maxValue - 30;
+        }
+        return { position, mapping }
+    });
+    return mappings
 }
 
 const createFakeTeam = () => {
@@ -62,8 +71,9 @@ const createFakeTeam = () => {
 }
 
 const createFakePlacement = (availablePositions) => {
-    const position = faker.datatype.number({ max: availablePositions.length });
-
+    const minimumIndex = 0;
+    const index = faker.datatype.number({ min: minimumIndex, max: availablePositions.length - 1 });
+    const position = availablePositions[index];
     return { position }
 }
 
