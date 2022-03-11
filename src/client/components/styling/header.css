@@ -1,0 +1,51 @@
+.app-header {
+    width: 100vw;
+    height: 5rem;
+    padding: 0 40px;
+
+    background-image: linear-gradient(to right, var(--clr-black-1), var(--clr-black-2));
+    box-shadow: 0 6px 10px -4px var(--clr-grey-1);
+    color: var(--clr-grey-2);
+
+    position: fixed;
+    top: 0;
+    z-index: 100;
+}
+
+.header-nav {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-logo {
+    position: absolute;
+    left: 0;
+}
+
+.header-profile {
+    position: absolute;
+    right: 0;
+}
+
+.app-header h2 {
+    font-weight: 300;
+    font-size: 2rem;
+    color: var(--clr-grey-2);
+}
+
+.app-header h1 {
+    font-size: 2.5rem;
+}
+
+.header-link {
+    text-decoration: "none";
+    transition-duration: 0.2s;
+}
+
+.header-link:hover {
+    text-shadow: 0 0 5px var(--clr-white);
+}
