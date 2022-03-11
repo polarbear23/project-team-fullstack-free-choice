@@ -1,49 +1,59 @@
+require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const passport = require('passport');
+const morgan = require('morgan');
+
+const { SERVER_STATUS } = require('./config.js');
 
 const app = express();
 app.disable('x-powered-by');
 
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(passport.initialize());
+app.use(morgan('dev'));
+
 //This will create a middleware.
 //When you navigate to the root page, it will use the built react-app
 if (process.env.NODE_ENV !== 'development') {
-  app.use(express.static(path.resolve(__dirname, '../../build')));
+    app.use(express.static(path.resolve(__dirname, '../../build')));
 }
 
-const competitionRouter = require('./routers/competition');
-app.use('/competition', competitionRouter);
-const competitorRouter = require('./routers/competitor');
-app.use('/competitor', competitorRouter);
-const participantRouter = require('./routers/participant');
-app.use('/participant', participantRouter);
-const placementRouter = require('./routers/placement');
-app.use('/placement', placementRouter);
-const positionMappingRouter = require('./routers/positionMapping');
-app.use('/positionMapping', positionMappingRouter);
-const roundRouter = require('./routers/round');
-app.use('/round', roundRouter);
+// const competitionRouter = require('./routers/competition');
+// app.use('/competition', competitionRouter);
+
+// const competitorRouter = require('./routers/competitor');
+// app.use('/competitor', competitorRouter);
+
+// const participantRouter = require('./routers/participant');
+// app.use('/participant', participantRouter);
+
+// const placementRouter = require('./routers/placement');
+// app.use('/placement', placementRouter);
+
+// const positionMappingRouter = require('./routers/positionMapping');
+// app.use('/positionMapping', positionMappingRouter);
+
+// const roundRouter = require('./routers/round');
+// app.use('/round', roundRouter);
+
 const adminRouter = require('./routers/admin');
 app.use('/admin', adminRouter);
 
-app.use(cors());
-// Tell express to use a JSON parser middleware
-app.use(express.json());
-// Tell express to use a URL Encoding middleware
-app.use(express.urlencoded({ extended: true }));
-
 app.get('/hello', (req, res) => {
-  res.send('Hello World!');
+    res.send(SERVER_STATUS.HELLO);
 });
 
-// Set up a default "catch all" route to use when someone visits a route
-// that we haven't built
 app.get('*', (req, res) => {
-  res.json({ ok: true });
+    res.json({ ok: true });
 });
 
 const port = process.env.PORT || 4000;
-// Start our API server
+
 app.listen(port, () => {
-  console.log(`\n Server is running on http://localhost:${port}\n`);
+    console.log(`\n ${SERVER_STATUS.STARTED} ${port}\n`);
 });
