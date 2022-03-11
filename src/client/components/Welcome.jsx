@@ -25,6 +25,7 @@ export const Welcome = (props) => {
     return (
         <>
             <section className={blurSection()}>
+                <div className="welcome-background"></div>
                 <h1 className="welcome-heading title">
                     Create Your own Leaderboards
                 </h1>

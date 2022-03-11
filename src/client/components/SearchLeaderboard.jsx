@@ -28,7 +28,7 @@ export const SearchLeaderboard = () => {
                 className="search-leaderboard-form-input"
                 name="username"
                 type="text"
-                placeholder="Search for a Leaderboard"
+                placeholder="Search for a leaderboard..."
                 value={form.username}
                 required
                 onChange={handleChange}
