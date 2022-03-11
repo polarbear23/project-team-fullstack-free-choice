@@ -26,7 +26,7 @@ const createAdmin = async (req, res) => {
         if (createdAdmin) {
             delete createdAdmin.password;
 
-            const token = createToken(createdAdmin.id);
+            const token = `Bearer ${createToken(createdAdmin.id)}`;
 
             return res.status(HTTP_RESPONSE.CREATED.CODE).json({ data: createdAdmin, token: token });
         }
@@ -37,6 +37,8 @@ const createAdmin = async (req, res) => {
 };
 
 const authenticateAdmin = async (req, res) => {
+    console.log(req.body)
+
     const { error } = loginSchema.validate(req.body);
 
     if (error) return res.status(HTTP_RESPONSE.BAD_REQUEST.CODE).json({ error: error.details[0] });
@@ -60,7 +62,7 @@ const authenticateAdmin = async (req, res) => {
 
         delete selectedAdmin.password;
 
-        const token = createToken(selectedAdmin.id);
+        const token = `Bearer ${createToken(selectedAdmin.id)}`;
 
         return res.status(HTTP_RESPONSE.CREATED.CODE).json({ data: selectedAdmin, token: token });
     } catch (error) {
@@ -69,7 +71,16 @@ const authenticateAdmin = async (req, res) => {
     }
 };
 
+const getAdminFromJWT = (req, res) => {
+    let {user} = req;
+
+    delete user.password;
+
+    res.json({ data: user });
+}
+
 module.exports = {
     authenticateAdmin,
     createAdmin,
+    getAdminFromJWT,
 };

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 import { postFormToServer } from '../utils/auth';
 
+import { API_URL, LOCAL_STORAGE } from '../config';
+
 import './styling/register.css';
 
 export const Register = (props) => {
@@ -21,12 +23,14 @@ export const Register = (props) => {
         setForm({ ...form, [name]: value });
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const result = await postFormToServer('url');
+        const result = await postFormToServer(API_URL.REGISTER, form);
 
-        localStorage.setItem('token', result.token);
+        if (!result.token) return;
+
+        localStorage.setItem(LOCAL_STORAGE.TOKEN, result.token);
 
         setIsLoggedIn(true);
     };

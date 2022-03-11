@@ -22,7 +22,7 @@ const loginSchema = joi.object({
         .min(3)
         .required(),
     password: joi.string()
-        .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$'))
+        .min(6)
         .required(),
 });
 

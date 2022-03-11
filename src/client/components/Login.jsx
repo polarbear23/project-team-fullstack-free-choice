@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 import { postFormToServer } from '../utils/auth';
 
+import { API_URL, LOCAL_STORAGE } from '../config';
+
 import './styling/login.css';
 
 export const Login = (props) => {
@@ -23,9 +25,11 @@ export const Login = (props) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const result = await postFormToServer('url');
+        const result = await postFormToServer(API_URL.LOGIN, form);
 
-        localStorage.setItem('token', result.token);
+        if (!result.token) return;
+
+        localStorage.setItem(LOCAL_STORAGE.TOKEN, result.token);
 
         setIsLoggedIn(true);
     };
