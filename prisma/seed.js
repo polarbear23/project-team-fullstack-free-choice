@@ -1,6 +1,15 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
-const { createFakeAdmin, createFakeCompetition, createFakeCompetitors, createFakeSeasons, createFakeTeam, createFakeRound, createFakePlacement, createFakePositionMapping } = require('../src/server/utils/faker');
+const {
+    createFakeAdmin,
+    createFakeCompetition,
+    createFakeCompetitors,
+    createFakeSeasons,
+    createFakeTeam,
+    createFakeRound,
+    createFakePlacement,
+    createFakePositionMapping
+} = require('../src/server/utils/faker');
 const MAX_NUMBER_ADMINS_TO_GENERATE = 2;
 const MAX_NUMBER_COMPETITORS_TO_GENERATE = 10;
 const MAX_NUMBER_SEASONS_TO_GENERATE = 2;
@@ -49,8 +58,6 @@ const createAdmin = async () => {
 }
 
 const createTeams = async (season) => {
-    //console.log("seasons", seasons)
-    //console.log("competitors", competitors)
     const teams = [];
 
     for (let i = 0; i < MAX_TEAMS_TO_GENERATE; i++) {

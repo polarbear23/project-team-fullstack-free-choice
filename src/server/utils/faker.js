@@ -11,7 +11,7 @@ const createFakeAdmin = () => {
 const createFakeCompetition = () => {
     const title = faker.lorem.sentence();
 
-    return { title, }
+    return { title }
 }
 
 const createFakeSeasons = (maxSeasons) => {
