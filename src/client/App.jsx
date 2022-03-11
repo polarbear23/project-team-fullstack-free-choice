@@ -8,22 +8,35 @@ import Header from './components/Header';
 import './App.css';
 
 const App = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState(null);
 
-    const findUser = () => {
-        setIsLoggedIn(false);
-    };
-
     useEffect(() => {
-        findUser();
-    });
+        localStorage.getItem('token') ? setIsLoggedIn(true) : setIsLoggedIn(false);
+    }, []);
 
-    useEffect(() => {
-        //get token from local storage
-        //decode token, get id
-        //fetch user then setUser
-        
+
+    useEffect(() => {        
+        if (!isLoggedIn) return;
+
+        const authenticateUser = async () => {
+            try {
+                const response = await fetch('http://localhost:4000/admin/get/', {
+                    method: 'GET',
+                    headers: { 
+                        Authorization: localStorage.getItem('token')
+                    }
+                })
+
+                const result = await response.json();
+
+                setUser(result.user)
+            } catch (error) {
+                console.log('error')
+            }
+        }
+
+        authenticateUser()
     },[isLoggedIn]);
 
     return (
