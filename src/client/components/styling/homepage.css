@@ -25,7 +25,8 @@
     font-weight: 400;
 }
 
-.create-competition-button:hover {
+.create-competition-button:hover,
+.create-season-button:hover {
     text-shadow: 0 0 5px var(--clr-white);
 }
 
@@ -55,13 +56,14 @@
 
 .card-podium {
     display: grid;
-    grid-auto-rows: 1fr;
+    grid-auto-rows: 100px;
     gap: 10px;
 }
 
 .podium-place {
     width: 100%;
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 100px;
     justify-content: space-between;
     align-items: center;
     font-size: 1.5rem;

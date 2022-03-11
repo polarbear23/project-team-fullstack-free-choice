@@ -3,14 +3,16 @@ import { Link } from 'react-router-dom';
 
 import './styling/header.css';
 
-function Header(props) {
-    const { isLoggedIn } = props;
+export const Header = (props) => {
+    const { isLoggedIn, user } = props;
+
+    console.log(user)
 
     return (
         <div className="app-header">
             <nav className="header-nav">
                 <h1 className="header-logo">SteveNeverFirst</h1>
-                <Link to="/" className="router-link">
+                <Link to="/nathan" className="router-link">
                     <h2 className="header-link">My Leaderboards</h2>
                 </Link>
                 {!isLoggedIn && (
@@ -22,5 +24,3 @@ function Header(props) {
         </div>
     );
 }
-
-export default Header;

@@ -1,14 +1,26 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import CompetitionCard from './CompetitionCard';
+import { CompetitionCard } from './CompetitionCard';
 
 import './styling/homepage.css'
 
-function Homepage() {
+export const Homepage = () => {
 
     //fetch competitions with adminId = logged-in user
     //save them to state and map through thier competitions, returning a CompetitionCard for each
+    const user = "nathan";
+    const dummyData = [
+        {
+            id: 1
+        },
+        {
+            id: 2
+        },
+        {
+            id: 3
+        }
+    ]
 
     return (
         <main className="app-homepage">
@@ -17,12 +29,18 @@ function Homepage() {
             </Link>
 
             <div className="competition-display">
-                    <CompetitionCard />
-                    <CompetitionCard />
-                    <CompetitionCard />
+                {dummyData.map((competition, index) => {
+                    return (
+                        <CompetitionCard
+                            key={index}
+                            competitionId={competition.id}
+                            user={user} 
+                        />
+                    )
+                })}
             </div>
+
+
         </main>
     )
 }
-
-export default Homepage

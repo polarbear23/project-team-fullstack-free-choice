@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import Homepage from './components/Homepage';
+import { Homepage } from './components/Homepage';
 import { Welcome } from './components/Welcome';
-import Header from './components/Header';
+import { Header } from './components/Header';
+
+import { Competition } from './components/Competition';
+import { Season } from './components/Season';
 
 import './App.css';
 
@@ -41,18 +44,31 @@ const App = () => {
 
     return (
         <div className="app">
-            <Header isLoggedIn={isLoggedIn} user={user} setUser={setUser}/>
+            <Header
+                isLoggedIn={isLoggedIn}
+                user={user}
+                setUser={setUser}
+            />
 
-            {!isLoggedIn && (
-                <Routes>
-                    <Route path="/" element={<Welcome setIsLoggedIn={setIsLoggedIn}/>} />
-                </Routes>
-            )}
-            {isLoggedIn && (
-                <Routes>
-                    <Route path="/" element={<Homepage />} />
-                </Routes>
-            )}
+
+            <Routes>
+                {!isLoggedIn &&
+                    <Route path="/"
+                        element={<Welcome setIsLoggedIn={setIsLoggedIn}/>}
+                    />
+                }
+                {isLoggedIn && <>
+                    <Route path="/:user"
+                        element={<Homepage user={user}/>}
+                    />
+                    <Route path="/:user/:competitionId"
+                        element={<Competition user={user}/>}
+                    />
+                    <Route path="/:user/:competitionId/:seasonId"
+                        element={<Season user={user}/>}
+                    />
+                </>}
+            </Routes>
         </div>
     );
 };
