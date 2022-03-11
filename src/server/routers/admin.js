@@ -1,10 +1,10 @@
 const express = require('express');
-const { register, login } = require('../controllers/admin');
-//change to {register, login}
+
+const { createAdmin, authenticateAdmin } = require('../controllers/admin');
+
 const router = express.Router();
 
-router.post('/register', register);
-router.post('/login', login);
+router.post('/register', createAdmin);
+router.post('/login', authenticateAdmin);
 
-//change to register/ login
 module.exports = router;

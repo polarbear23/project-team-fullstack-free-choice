@@ -1,52 +1,75 @@
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+const { checkPassword, hashPassword } = require('../utils/bcrypt');
+const { registerSchema, loginSchema } = require('../utils/joi');
+const { createToken } = require('../utils/jwt');
+const { prisma } = require('../utils/prisma');
 
-const register = async (req, res) => {
-  const { username, password } = req.body;
+const { HTTP_RESPONSE } = require('../config');
 
-  const hashedPassword = await bcrypt.hash(password, 10);
+const createAdmin = async (req, res) => {
+    const { error } = registerSchema.validate(req.body);
 
-  try {
-    await prisma.user.create({
-      data: {
-        username,
-        password: hashedPassword,
-      },
-    });
-    res.json({ data: 'Account created' });
-  } catch (e) {
-    console.error(e);
+    if (error) return res.status(HTTP_RESPONSE.BAD_REQUEST.CODE).json({ error: error.details[0] });
 
-    res.json({ error: 'Unable to process account request', data: '' });
-  }
+    let { username, password, email } = req.body;
+
+    password = await hashPassword(password);
+
+    try {
+        let createdAdmin = await prisma.admin.create({
+            data: {
+                username,
+                password,
+                email,
+            },
+        });
+
+        if (createdAdmin) {
+            delete createdAdmin.password;
+
+            const token = createToken(createdAdmin.id);
+
+            return res.status(HTTP_RESPONSE.CREATED.CODE).json({ data: createdAdmin, token: token });
+        }
+    } catch (error) {
+        console.log(error);
+        return res.status(HTTP_RESPONSE.INTERNAL_ERROR.CODE).json({ error: HTTP_RESPONSE.INTERNAL_ERROR.MESSAGE });
+    }
 };
 
-const login = async (req, res) => {
-  const { username, password } = req.body;
+const authenticateAdmin = async (req, res) => {
+    const { error } = loginSchema.validate(req.body);
 
-  const confirmedUser = await prisma.user.findUser({
-    where: {
-      username,
-    },
-  });
+    if (error) return res.status(HTTP_RESPONSE.BAD_REQUEST.CODE).json({ error: error.details[0] });
 
-  if (!confirmedUser) {
-    return res.status(401).json({ error: 'Invalid usename or password', data: null });
-  }
+    const { username, password } = req.body;
 
-  const passwordsMatch = await bcrypt.compare(password, confirmedUser.password);
+    try {
+        let selectedAdmin = await prisma.admin.findUnique({
+            where: {
+                username,
+            },
+        });
 
-  if (!passwordsMatch) {
-    return res.status(401).json({ error: 'Invalid usename or password', data: null });
-  }
-  
-  const token = jwt.sign({ username }, process.env.JWT_SECRET);
-  
-  res.json({ data: token })
+        if (!selectedAdmin)
+            return res.status(HTTP_RESPONSE.UNAUTHORIZED.CODE).json({ error: HTTP_RESPONSE.UNAUTHORIZED.MESSAGE });
+
+        const checkedPassword = checkPassword(selectedAdmin.password, password);
+
+        if (!checkedPassword)
+            return res.status(HTTP_RESPONSE.UNAUTHORIZED.CODE).json({ error: HTTP_RESPONSE.UNAUTHORIZED.MESSAGE });
+
+        delete selectedAdmin.password;
+
+        const token = createToken(selectedAdmin.id);
+
+        return res.status(HTTP_RESPONSE.CREATED.CODE).json({ data: selectedAdmin, token: token });
+    } catch (error) {
+        console.log(error);
+        return res.status(HTTP_RESPONSE.INTERNAL.CODE).json({ error: HTTP_RESPONSE.INTERNAL.MESSAGE });
+    }
 };
+
 module.exports = {
-    register,
-    login
+    authenticateAdmin,
+    createAdmin,
 };
