@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import { LOCAL_STORAGE } from '../config';
+
 import './styling/header.css';
 
 export const Header = (props) => {
@@ -9,14 +11,13 @@ export const Header = (props) => {
     const capitaliseFirstLetter = (string) => string.replace(/\b\w/g, (c) => c.toUpperCase());
 
     const handleClick = () => {
-        localStorage.removeItem('token');
+        localStorage.removeItem(LOCAL_STORAGE.TOKEN);
 
         setIsLoggedIn(false);
 
         setUser(null);
     };
     
-
     return (
         <div className="app-header">
             <nav className="header-nav">
