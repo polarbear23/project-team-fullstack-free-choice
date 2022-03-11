@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 import { postFormToServer } from '../utils/auth';
 
+import { API_URL } from '../config';
+
 import './styling/login.css';
 
 export const Login = (props) => {
@@ -23,7 +25,9 @@ export const Login = (props) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const result = await postFormToServer('url');
+        const result = await postFormToServer(API_URL.LOGIN, form);
+
+        if (!result.token) return;
 
         localStorage.setItem('token', result.token);
 
@@ -39,7 +43,9 @@ export const Login = (props) => {
             <div className="login-container">
                 <div className="login-aside">
                     <p className="login-aside-text login-aside-title">Login</p>
-                    <p className="login-aside-text">Don&apos;t have an account?</p>
+                    <p className="login-aside-text">
+                        Don&apos;t have an account?
+                    </p>
                     <button
                         className="login-button login-redirect-button"
                         onClick={handleRedirect}
@@ -48,7 +54,9 @@ export const Login = (props) => {
                     </button>
                 </div>
                 <form className="login-form">
-                    <p className="login-close-button" onClick={handleClose}>X</p>
+                    <p className="login-close-button" onClick={handleClose}>
+                        X
+                    </p>
                     <input
                         className="login-form-input"
                         name="username"

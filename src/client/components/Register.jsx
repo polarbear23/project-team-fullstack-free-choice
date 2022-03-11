@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 import { postFormToServer } from '../utils/auth';
 
+import { API_URL } from '../config';
+
 import './styling/register.css';
 
 export const Register = (props) => {
@@ -21,10 +23,12 @@ export const Register = (props) => {
         setForm({ ...form, [name]: value });
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const result = await postFormToServer('url');
+        const result = await postFormToServer(API_URL.REGISTER, form);
+
+        if (!result.token) return;
 
         localStorage.setItem('token', result.token);
 
@@ -39,7 +43,9 @@ export const Register = (props) => {
         <section className="app-register">
             <section className="register-container">
                 <div className="register-aside">
-                    <p className="register-aside-text register-aside-title">Register</p>
+                    <p className="register-aside-text register-aside-title">
+                        Register
+                    </p>
                     <p className="register-aside-text">Have an account?</p>
                     <button
                         className="register-button register-redirect-button"
@@ -49,7 +55,9 @@ export const Register = (props) => {
                     </button>
                 </div>
                 <form className="register-form">
-                    <p className="register-close-button" onClick={handleClose}>X</p>
+                    <p className="register-close-button" onClick={handleClose}>
+                        X
+                    </p>
                     <input
                         className="register-form-input"
                         name="username"
