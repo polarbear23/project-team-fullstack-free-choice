@@ -1,0 +1,37 @@
+.select-round-dropdown {
+    background-color: var(--clr-grey-1);
+    color: var(--clr-black-1);
+    font-size: 1.7rem;
+    font-weight: 400;
+    outline: none;
+    margin: 35px 0;
+    padding: 20px 100px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.round-card {
+    width: 1600px;
+    min-height: 700px;
+    height: fit-content;
+    margin-bottom: 100px;
+}
+
+.round-card .tag-container {
+    justify-content: start;
+}
+
+.round-display {
+    width: 1350px;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 100px 1fr;
+}
+
+.round-podium-place,
+.round-legend {
+    display: grid;
+    grid-template-columns: 350px 1fr 1fr 200px;
+}

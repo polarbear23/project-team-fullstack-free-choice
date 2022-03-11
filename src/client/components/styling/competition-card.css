@@ -1,4 +1,4 @@
-.competition-card {
+.competition-card, .season-card, .round-card {
     width: 800px;
     height: 450px;
 
@@ -42,7 +42,8 @@
     padding-bottom: 20px;
 }
 
-.competition-link-button {
+.competition-link-button,
+.season-expand-button {
     color: var(--clr-grey-1);
     background-color: var(--clr-black-1);
     outline: 3px solid var(--clr-grey-1);
@@ -53,7 +54,8 @@
     margin: 0 auto;
 }
 
-.competition-link-button:hover {
+.competition-link-button:hover,
+.season-expand-button:hover {
     color: var(--clr-grey-2);
     outline: 3px solid var(--clr-grey-2);
     opacity: 0.8;
