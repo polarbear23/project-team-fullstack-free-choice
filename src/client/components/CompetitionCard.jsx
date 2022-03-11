@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import './styling/competition-card.css'
 
-function CompetitionCard({ competitionId }) {
+export const CompetitionCard = ({ competitionId, user }) => {
 
     console.log(competitionId)
 
@@ -37,7 +37,7 @@ function CompetitionCard({ competitionId }) {
     },[])
 
     const handleClick = () => {
-        navigate('/competition/1', {competitionId: competitionId}) //view specific competition
+        navigate(`/${user}/${competitionId}`)
     }
 
     return (
@@ -85,5 +85,3 @@ function CompetitionCard({ competitionId }) {
         </div>
     )
 }
-
-export default CompetitionCard
