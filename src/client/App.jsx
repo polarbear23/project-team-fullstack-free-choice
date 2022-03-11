@@ -60,26 +60,6 @@ const App = () => {
                 setIsLoggedIn={setIsLoggedIn}
             />
             <Routes>
-<<<<<<< HEAD
-                {!isLoggedIn &&
-                    <Route path="/"
-                    element={<Competitors user={user}/>}
-                    />
-                }
-                {isLoggedIn && <>
-                    <Route path="/:user"
-                        element={<Homepage user={user}/>}
-                    />
-                    <Route path="/:user/:competitionId"
-                        element={<Competition user={user}/>}
-                    />
-                    <Route path="/:user/:competitionId/:seasonId"
-                        element={<Season user={user}/>}
-                    />
-                    <Route path="/:user/:competitorId"
-                    />
-                </>}
-=======
                 {!isLoggedIn && (
                     <>
                         <Route
@@ -108,7 +88,6 @@ const App = () => {
                         />
                     </>
                 )}
->>>>>>> main
             </Routes>
         </div>
     );
