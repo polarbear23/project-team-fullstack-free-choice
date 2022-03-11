@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { postFormToServer } from '../utils/auth';
 
-import { API_URL } from '../config';
+import { API_URL, LOCAL_STORAGE } from '../config';
 
 import './styling/register.css';
 
@@ -30,7 +30,7 @@ export const Register = (props) => {
 
         if (!result.token) return;
 
-        localStorage.setItem('token', result.token);
+        localStorage.setItem(LOCAL_STORAGE.TOKEN, result.token);
 
         setIsLoggedIn(true);
     };

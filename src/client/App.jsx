@@ -7,7 +7,7 @@ import { Header } from './components/Header';
 import { Competition } from './components/Competition';
 import { Season } from './components/Season';
 
-import { API_URL } from './config';
+import { API_URL, HTTP_METHOD, LOCAL_STORAGE } from './config';
 
 import './App.css';
 
@@ -18,7 +18,7 @@ const App = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        localStorage.getItem('token') ? setIsLoggedIn(true) : setIsLoggedIn(false);
+        localStorage.getItem(LOCAL_STORAGE.TOKEN) ? setIsLoggedIn(true) : setIsLoggedIn(false);
     }, []);
 
     useEffect(() => {
@@ -27,9 +27,9 @@ const App = () => {
         const authenticateUser = async () => {
             try {
                 const response = await fetch(API_URL.GET, {
-                    method: 'GET',
+                    method: HTTP_METHOD.GET,
                     headers: {
-                        Authorization: localStorage.getItem('token'),
+                        Authorization: localStorage.getItem(LOCAL_STORAGE.TOKEN),
                     },
                 });
 

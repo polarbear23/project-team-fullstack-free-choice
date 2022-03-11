@@ -6,6 +6,8 @@ import './styling/header.css';
 export const Header = (props) => {
     const { isLoggedIn, user, setIsLoggedIn, setUser } = props;
 
+    const capitaliseFirstLetter = (string) => string.replace(/\b\w/g, (c) => c.toUpperCase());
+
     const handleClick = () => {
         localStorage.removeItem('token');
 
@@ -13,6 +15,7 @@ export const Header = (props) => {
 
         setUser(null);
     };
+    
 
     return (
         <div className="app-header">
@@ -21,10 +24,10 @@ export const Header = (props) => {
                 <Link to={`/${user}`} className="router-link">
                     <h2 className="header-link">My Leaderboards</h2>
                 </Link>
-                {isLoggedIn && (
+                {isLoggedIn && user && (
                     <div className="header-profile">
-                        <h2>Hi, {user}</h2>
-                        <button onClick={handleClick}>logout</button>
+                        <h2>Hi, {capitaliseFirstLetter(user)}</h2>
+                        <button className="header-logout-button" onClick={handleClick}>Logout</button>
                     </div>
                 )}
             </nav>
