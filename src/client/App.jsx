@@ -8,6 +8,7 @@ import { Header } from './components/Header';
 import { Competition } from './components/Competition';
 import { Season } from './components/Season';
 
+import Competitors from './components/Competitors';
 import './App.css';
 
 const App = () => {
@@ -41,7 +42,7 @@ const App = () => {
             <Routes>
                 {!isLoggedIn &&
                     <Route path="/"
-                        element={<Welcome setIsLoggedIn={setIsLoggedIn}/>}
+                    element={<Competitors user={user}/>}
                     />
                 }
                 {isLoggedIn && <>
@@ -53,6 +54,8 @@ const App = () => {
                     />
                     <Route path="/:user/:competitionId/:seasonId"
                         element={<Season user={user}/>}
+                    />
+                    <Route path="/:user/:competitorId"
                     />
                 </>}
             </Routes>
