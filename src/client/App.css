@@ -1,3 +1,10 @@
-.App {
+.app {
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--clr-grey-2);
+    padding-top: 5rem;
+}
 
+.router-link {
+    text-decoration: none;
 }

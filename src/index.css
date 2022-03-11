@@ -9,7 +9,8 @@
 
     --clr-black-1: hsl(0, 1%, 19%);
     --clr-black-2: hsl(0, 0%, 38%);
-    --clr-grey: hsl(195, 10%, 53%);
+    --clr-grey-1: hsl(195, 10%, 53%);
+    --clr-grey-2: hsl(0, 0%, 92%);
     --clr-white: hsl(0, 0%, 100%);
 
     --ff-primary: 'Roboto';
@@ -20,5 +21,6 @@
     padding: 0;
     box-sizing: border-box;
     font-family: var(--ff-primary);
+    overflow-x: hidden;
 }
 
