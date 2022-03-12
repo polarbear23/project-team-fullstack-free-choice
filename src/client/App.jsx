@@ -18,7 +18,7 @@ const App = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        localStorage.getItem(LOCAL_STORAGE.TOKEN) ? setIsLoggedIn(true) : setIsLoggedIn(false);
+        if (localStorage.getItem(LOCAL_STORAGE.TOKEN)) setIsLoggedIn(true)
     }, []);
 
     useEffect(() => {
@@ -47,6 +47,7 @@ const App = () => {
     }, [isLoggedIn]);
 
     useEffect(() => {
+        if(!user) return
         navigate(`/${user}`);
     }, [user]);
 

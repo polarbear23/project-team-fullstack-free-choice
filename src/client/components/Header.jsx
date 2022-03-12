@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { LOCAL_STORAGE } from '../config';
 
@@ -7,6 +7,8 @@ import './styling/header.css';
 
 export const Header = (props) => {
     const { isLoggedIn, user, setIsLoggedIn, setUser } = props;
+
+    const navigate = useNavigate();
 
     const capitaliseFirstLetter = (string) => string.replace(/\b\w/g, (c) => c.toUpperCase());
 
@@ -16,6 +18,8 @@ export const Header = (props) => {
         setIsLoggedIn(false);
 
         setUser(null);
+
+        navigate(`/`);
     };
     
     return (

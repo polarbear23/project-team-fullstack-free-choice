@@ -41,7 +41,9 @@ const authenticateAdmin = async (req, res) => {
 
     const { error } = loginSchema.validate(req.body);
 
-    if (error) return res.status(HTTP_RESPONSE.BAD_REQUEST.CODE).json({ error: error.details[0] });
+    if (error) { 
+        console.log(error.details[0])
+        return res.status(HTTP_RESPONSE.BAD_REQUEST.CODE).json({ error: error.details[0] });}
 
     const { username, password } = req.body;
 
