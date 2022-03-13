@@ -37,8 +37,6 @@ const createAdmin = async (req, res) => {
 };
 
 const authenticateAdmin = async (req, res) => {
-    console.log(req.body)
-
     const { error } = loginSchema.validate(req.body);
 
     if (error) { 

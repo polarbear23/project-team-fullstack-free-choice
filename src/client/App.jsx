@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import { Homepage } from './components/Homepage';
@@ -11,18 +11,15 @@ import { API_URL, HTTP_METHOD, LOCAL_STORAGE } from './config';
 
 import './App.css';
 
-const App = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [user, setUser] = useState(null);
+export const UserContext = createContext();
+
+export const App = () => {
+    const [user, setUser] = useState('');
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (localStorage.getItem(LOCAL_STORAGE.TOKEN)) setIsLoggedIn(true)
-    }, []);
-
-    useEffect(() => {
-        if (!isLoggedIn) return;
+        if (!localStorage.getItem(LOCAL_STORAGE.TOKEN)) return;
 
         const authenticateUser = async () => {
             try {
@@ -35,62 +32,48 @@ const App = () => {
 
                 const result = await response.json();
 
-                if (result) {
-                    setUser(result.data.username);
-                }
+                if (result) setUser(result.data.username);
             } catch (error) {
                 console.log(error);
             }
         };
 
         authenticateUser();
-    }, [isLoggedIn]);
+    }, []);
 
     useEffect(() => {
-        if(!user) return
+        if (!user) return;
+
         navigate(`/${user}`);
     }, [user]);
 
     return (
-        <div className="app">
-            <Header
-                isLoggedIn={isLoggedIn}
-                user={user}
-                setUser={setUser}
-                setIsLoggedIn={setIsLoggedIn}
-            />
-            <Routes>
-                {!isLoggedIn && (
-                    <>
-                        <Route
-                            path="/"
-                            element={<Welcome setIsLoggedIn={setIsLoggedIn} />}
-                        />
-                        <Route
-                            path="*"
-                            element={<Welcome setIsLoggedIn={setIsLoggedIn} />}
-                        />
-                    </>
-                )}
-                {isLoggedIn && (
-                    <>
-                        <Route
-                            path={`/${user}`}
-                            element={<Homepage user={user} />}
-                        />
-                        <Route
-                            path="/:user/:competitionId"
-                            element={<Competition user={user} />}
-                        />
-                        <Route
-                            path="/:user/:competitionId/:seasonId"
-                            element={<Season user={user} />}
-                        />
-                    </>
-                )}
-            </Routes>
-        </div>
+        <UserContext.Provider value={{ user: user, setUser: setUser }}>
+            <div className="app">
+                <Header />
+                <Routes>
+                    {!user && (
+                        <>
+                            <Route path="/" element={<Welcome />} />
+                            <Route path="*" element={<Welcome />} />
+                        </>
+                    )}
+                    {user && (
+                        <>
+                            <Route
+                                path={`/${user}`} element={<Homepage />}
+                            />
+                            <Route
+                                path="/:user/:competitionId" element={<Competition />}
+                            />
+                            <Route
+                                path="/:user/:competitionId/:seasonId" element={<Season />}
+                            />
+                            <Route path="*" element={<Homepage />} />
+                        </>
+                    )}
+                </Routes>
+            </div>
+        </UserContext.Provider>
     );
 };
-
-export default App;
