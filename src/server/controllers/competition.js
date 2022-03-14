@@ -3,10 +3,15 @@ const { prisma } = require('../utils/prisma');
 
 const createCompetition = async (req, res) => {
     const { title, competitors } = req.body;
-
+    const id = req.user.id;
     const createdCompetition = await prisma.competition.create({
         data: {
             title: title,
+            admin: {
+                connect: {
+                    id: id
+                }
+            },
             competitors: {
                 createMany: {
                     data: competitors
@@ -16,6 +21,31 @@ const createCompetition = async (req, res) => {
     });
 
     return res.json({ data: createdCompetition });
+}
+
+const updateCompetitionTitle = async (req, res) => {
+    const { title, id } = req.body;
+    const updatedCompetition = await prisma.competition.create({
+        where: {
+            id: Number(id)
+        },
+        data: {
+            title: title,
+        }
+    });
+
+    return res.json({ data: updatedCompetition });
+}
+
+const deleteCompetitionById = async (req, res) => {
+    const { id } = req.body;
+    const deletedCompetition = await prisma.competition.delete({
+        where: {
+            id: Number(id)
+        }
+    })
+
+    return res.json({ data: deletedCompetition });
 }
 
 const getCompetitionById = async (req, res) => {
@@ -65,5 +95,7 @@ const getAllCompetitions = async (req, res) => {
 module.exports = {
     getAllCompetitions,
     createCompetition,
-    getCompetitionById
+    getCompetitionById,
+    updateCompetitionTitle,
+    deleteCompetitionById
 }
