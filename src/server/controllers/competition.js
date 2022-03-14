@@ -9,7 +9,7 @@ const createCompetition = async (req, res) => {
             title: title,
             admin: {
                 connect: {
-                    id: id
+                    id: Number(id)
                 }
             },
             competitors: {
