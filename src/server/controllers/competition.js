@@ -2,11 +2,16 @@ const { prisma } = require('../utils/prisma');
 
 
 const createCompetition = async (req, res) => {
-    const { title } = req.body;
+    const { title, competitors } = req.body;
 
     const createdCompetition = await prisma.competition.create({
         data: {
-            title: title
+            title: title,
+            competitors: {
+                createMany: {
+                    data: competitors
+                }
+            }
         }
     });
 
