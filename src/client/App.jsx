@@ -72,7 +72,7 @@ export const App = () => {
                             <Route path={`/${user}`} element={<Homepage />} />
                             <Route path="/:user/:competitionId" element={<Competition />} />
                             <Route path="/:user/:competitionId/:seasonId" element={<Season />} />
-                            <Route path="/:user/:competitionId/create" element={<CreateSeason user={user} />} />
+                            <Route path="/:user/:competitionId/create" element={<CreateSeason />} />
                             <Route path="*" element={<Homepage />} />
                         </>
                     )}

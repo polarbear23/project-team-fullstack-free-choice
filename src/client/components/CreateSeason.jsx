@@ -9,6 +9,7 @@ import { MappingForm } from './seasonform/MappingForm';
 export const CreateSeason = () => {
 
     const competitionId = 1;
+    const formTotalSteps = 5;
 
     const [form, setForm] = useState({
         competitionId: competitionId,
@@ -20,7 +21,8 @@ export const CreateSeason = () => {
     const [formStep, setFormStep] = useState(1)
 
     useEffect(() => {
-        if(formStep === 6) postForm()
+        const completedForm = formStep > formTotalSteps
+        if(completedForm) postForm()
     }, [formStep])
 
     const postForm = () => {
