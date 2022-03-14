@@ -4,7 +4,6 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const passport = require('passport');
-const morgan = require('morgan');
 
 const { SERVER_STATUS } = require('./config.js');
 
@@ -15,13 +14,19 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
-app.use(morgan('dev'));
+
 
 //This will create a middleware.
 //When you navigate to the root page, it will use the built react-app
 if (process.env.NODE_ENV !== 'development') {
     app.use(express.static(path.resolve(__dirname, '../../build')));
 }
+
+if (process.env.NODE_ENV === 'development') {
+    const morgan = require('morgan');
+    app.use(morgan('dev'));
+}
+
 
 const competitionRouter = require('./routers/competition');
 app.use('/competition', competitionRouter);
