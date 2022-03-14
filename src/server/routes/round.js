@@ -1,10 +1,11 @@
 const express = require('express');
-const {
-    round
-} = require('../controllers/round');
+//const passport = require('passport');
+
+const { createRound, getAllRoundsBySeasonId } = require('../controllers/round');
 
 const router = express.Router();
 
-router.post('/round', round);
+router.post('/', createRound);
+router.get('/', getAllRoundsBySeasonId);
 
 module.exports = router;

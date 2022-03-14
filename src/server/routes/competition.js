@@ -1,6 +1,7 @@
 const express = require('express');
-const { createCompetition, getCompetitionById, } = require('../controllers/competition');
 const passport = require('passport');
+
+const { createCompetition, getCompetitionById, } = require('../controllers/competition');
 
 const router = express.Router();
 
