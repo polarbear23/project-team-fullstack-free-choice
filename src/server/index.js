@@ -44,8 +44,8 @@ app.use('/competition', competitionRouter);
 // const positionMappingRouter = require('./routers/positionMapping');
 // app.use('/positionMapping', positionMappingRouter);
 
-// const roundRouter = require('./routers/round');
-// app.use('/round', roundRouter);
+const roundRouter = require('./routes/round');
+app.use('/round', roundRouter);
 
 const adminRouter = require('./routes/admin');
 app.use('/admin', adminRouter);

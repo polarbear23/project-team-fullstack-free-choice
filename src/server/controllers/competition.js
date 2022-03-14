@@ -1,6 +1,5 @@
 const { prisma } = require('../utils/prisma');
 
-
 const createCompetition = async (req, res) => {
     const { title, competitors } = req.body;
     const id = req.user.id;
