@@ -1,5 +1,4 @@
-.app-welcomepage,
-.app-welcomepage-blur {
+.app-welcomepage {
     position: relative;
     height: calc(100vh - 5rem);
     width: 100%;
@@ -9,7 +8,7 @@
     justify-content: center;
     background-color: rgb(207, 216, 220);
     position: fixed;
-    background-image: url('./test.jpg');
+    background-image: url('../../../../public/formula-one.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position-y: 50%;
