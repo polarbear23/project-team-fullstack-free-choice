@@ -29,7 +29,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 
-const competitionRouter = require('./routers/competition');
+const competitionRouter = require('./routes/competition');
 app.use('/competition', competitionRouter);
 
 // const competitorRouter = require('./routers/competitor');
@@ -47,7 +47,7 @@ app.use('/competition', competitionRouter);
 // const roundRouter = require('./routers/round');
 // app.use('/round', roundRouter);
 
-const adminRouter = require('./routers/admin');
+const adminRouter = require('./routes/admin');
 app.use('/admin', adminRouter);
 
 app.get('/hello', (req, res) => {
