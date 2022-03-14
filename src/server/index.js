@@ -23,8 +23,8 @@ if (process.env.NODE_ENV !== 'development') {
     app.use(express.static(path.resolve(__dirname, '../../build')));
 }
 
-// const competitionRouter = require('./routers/competition');
-// app.use('/competition', competitionRouter);
+const competitionRouter = require('./routers/competition');
+app.use('/competition', competitionRouter);
 
 // const competitorRouter = require('./routers/competitor');
 // app.use('/competitor', competitorRouter);
