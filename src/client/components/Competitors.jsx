@@ -5,29 +5,35 @@ function Competitors() {
     const [competitors, setCompetitors] = useState([]);
     const [newCompetitorName, setNewCompetitorName] = useState("");
     const [newCompetitorNationality, setNewCompetitorNationality] = useState("");  
-    const [errorMsg, setErrorMsg] = useState("");
+    const [newCompetitorEmail, setNewCompetitorEmail] = useState("");
+    const [newCompetitorProfilePic, setNewCompetitorProfilePic] = useState("");
+    const [statusMsg, setStatusMsg] = useState("");
     
     const handleChange = (e) => {
-        setNewCompetitionName({
-            ...newCompetitionName,
-            [e.target.name]: e.target.value,
-        })
+        setNewCompetitionName(
+            
+            e.target.value,
+        )
     }
+    console.log(competitors)
 
     const handleSubmit = (e) => {
+        console.log("CHECK 2")
         e.preventDefault();
           setCompetitors([
               ...competitors,        
                 {
                     competitorName: newCompetitorName,
                     competitorNationality: newCompetitorNationality,
+                    competitorEmail: newCompetitorEmail,
+                    competitorImageUrl: newCompetitorProfilePic,
                 }
             ])
-        
     }
     const handlePostSubmit = async (e) => {
+        console.log("CHECK")
         try {
-            let result = await fetch ("https://boolean-leaderboard.herokuapp.com", {
+            let result = await fetch ("https://boolean-leaderboard.herokuapp.com/competition", {
                 method: "POST",
                 body: JSON.stringify({
                     competitionName: newCompetitionName,
@@ -40,10 +46,12 @@ function Competitors() {
                 setNewCompetitionName("");
                 setNewCompetitorName("");
                 setNewCompetitorNationality("");
-                setErrorMsg("New competetion created")
+                setNewCompetitorEmail("");
+                setNewCompetitorProfilePic("");
+                setStatusMsg("New competetion created")
 
             } else {
-                setErrorMsg("Error detected");
+                setStatusMsg("Error detected");
             }
         } catch (error) {
             console.log(error);
@@ -51,44 +59,62 @@ function Competitors() {
     }
 
     return (
-        <div className = "Competition-Form">
-            <h2 className = "CompFormText"> Competition Name </h2>
-            <form className = "CompForm">
-                <label>
-                    Competition Name: {""}
-                    <input
-                        type = "text"
-                        name = "competitonName"
-                        value = {newCompetitionName}
-                        onChange = {handleChange}
-                   />
-                </label>
-            </form>
+        <div className = "competition-form">
             
-            <form onSubmit = {handleSubmit} className = "CompetitorForm">
-                <label>
-                    Competitor : ""
-                            
-                            <input
-                                type = "text"
-                                name = "competitorName"
-                                value = {newCompetitorName}
-                                onChange = {(e) =>  setNewCompetitorName(e.target.value)}
-                            />
-                            {/* Nationality: {''} */}
-                            <input
-                                type = "text"
-                                name = "competitorNationality"
-                                value = {newCompetitorNationality}
-                                onChange= {(e) => setNewCompetitorNationality(e.target.value)}
-                            />                 
-                </label>
-                <button type = "Submit" className = "SubmitCompetitor"> Create New Participant </button>
+                <form className = "comp-form">
+                <h2 className = "comp-form-text"> Create New Competition </h2>
+                    <label>
+                        Competition Name: {""}
+                        <input
+                            type = "text"
+                            name = "competitonName"
+                            value = {newCompetitionName}
+                            // onChange = {(e) => setNewCompetitionName(e.target.value)}
+                            onChange = {handleChange}
+                    />
+                    </label>
+                </form>
                 
-            </form>
+                <form onSubmit = {handleSubmit} className = "competitor-form">
+                    <label>
+                    <h3>Create New Competitor : </h3>
+                                Name: {""}
+                                <input
+                                    type = "text"
+                                    name = "competitorName"
+                                    value = {newCompetitorName}
+                                    onChange = {(e) =>  setNewCompetitorName(e.target.value)}
+                                />
+                                Nationality: {""}
+                                <input
+                                    type = "text"
+                                    name = "competitorNationality"
+                                    value = {newCompetitorNationality}
+                                    onChange= {(e) => setNewCompetitorNationality(e.target.value)}
+                                />
+                                Email: {""}
+                                <input
+                                    type = "text"
+                                    name = "competitorEmail"
+                                    value = {newCompetitorEmail} 
+                                    onChange = {(e) => setNewCompetitorEmail(e.target.value)}
+                                />
+                                Profile Picture: {""}
+                                <input
+                                    type = "file"
+                                    name = "competitorImageUrl"
+                                    accept = "image/png, image/jpeg"
+                                    value = {newCompetitorProfilePic}
+                                    onChange= {(e) => setNewCompetitorProfilePic(e.target.value)}
+                                />
+                    </label>
+                    <button type = "Submit" className = "submit-competitor" onSubmit = {handleSubmit}> Create New Participant </button>
+                    
+                </form>
+            <button  onClick = {handlePostSubmit}>Create New Competition</button>
 
         </div>
-    )
+    );
 }
 
 export default Competitors;

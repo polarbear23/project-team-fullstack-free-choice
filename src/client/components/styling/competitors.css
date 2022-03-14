@@ -1,0 +1,12 @@
+.comp-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 2fr;
+    justify-content: center;
+}
+
+.competitor-form {
+    display: grid;
+    grid-template-columns: 2fr;
+    grid-template-rows: 4fr;
+}

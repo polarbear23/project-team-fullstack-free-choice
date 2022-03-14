@@ -64,11 +64,11 @@ const App = () => {
                     <>
                         <Route
                             path="/"
-                            element={<Welcome setIsLoggedIn={setIsLoggedIn} />}
+                            element={<Competitors/>}
                         />
                         <Route
                             path="*"
-                            element={<Welcome setIsLoggedIn={setIsLoggedIn} />}
+                            element={<Competitors/>}
                         />
                     </>
                 )}
