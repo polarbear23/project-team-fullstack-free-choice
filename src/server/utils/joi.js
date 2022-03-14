@@ -7,7 +7,6 @@ const registerSchema = joi.object({
     password: joi.string()
         .min(6)
         .required(),
-    //repeat_password: joi.ref('password'),
     email: joi.string().
         email({ 
             minDomainSegments: 2,
@@ -24,7 +23,22 @@ const loginSchema = joi.object({
         .required(),
 });
 
+const seasonCreateSchema = joi.object({
+    title: joi.string()
+        .required(),
+    competitionId: joi.any()
+        .required(),
+    participants: joi.array()
+        .required(),
+    teams: joi.array()
+        .required(),
+    rounds: joi.array(),
+    postionMapping: joi.array()
+        .required(),
+})
+
 module.exports = {
     registerSchema,
     loginSchema,
+    seasonCreateSchema,
 }

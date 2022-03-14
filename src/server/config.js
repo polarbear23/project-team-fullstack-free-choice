@@ -1,4 +1,5 @@
 const HTTP_RESPONSE = {
+    OK: { CODE: 200 },
     CREATED: { CODE: 201 },
     BAD_REQUEST: { MESSAGE: 'Bad Request', CODE: 400 },
     UNAUTHORIZED: { MESSAGE: 'Unauthorized', CODE: 401 },
