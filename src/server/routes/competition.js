@@ -3,7 +3,6 @@ const passport = require('passport');
 
 const { createCompetition, getCompetitionById, } = require('../controllers/competition');
 
-
 const router = express.Router();
 
 router.post('/', passport.authenticate('jwt', { session: false }), createCompetition);
