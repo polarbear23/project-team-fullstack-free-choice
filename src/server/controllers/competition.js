@@ -55,7 +55,27 @@ const getCompetitionById = async (req, res) => {
             adminId: Number(id)
         },
         include: {
-
+            admin: true,
+            competitors: true,
+            seasons: {
+                include: {
+                    teams: {
+                        include: {
+                            participants: {
+                                include: {
+                                    placements: true
+                                }
+                            }
+                        }
+                    },
+                    rounds: {
+                        include: {
+                            placements: true
+                        }
+                    },
+                    positionMappings: true
+                }
+            },
         }
     })
 
