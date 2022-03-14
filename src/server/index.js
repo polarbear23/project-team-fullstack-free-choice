@@ -8,6 +8,7 @@ const passport = require('passport');
 const { SERVER_STATUS } = require('./config.js');
 
 const app = express();
+
 app.disable('x-powered-by');
 
 app.use(cors());
