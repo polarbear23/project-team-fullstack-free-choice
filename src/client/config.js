@@ -1,9 +1,10 @@
 /* eslint-disable no-undef */
+const SERVER_URL = process.env.REACT_APP_SERVER_URL
 
 const API_URL = {
-    GET: 'http://localhost:4000/admin/get',
-    REGISTER: 'http://localhost:4000/admin/register',
-    LOGIN: 'http://localhost:4000/admin/login',
+    GET: `${SERVER_URL}/admin/get`,
+    REGISTER: `${SERVER_URL}/admin/register`,
+    LOGIN: `${SERVER_URL}/admin/login`,
 };
 
 const HTTP_METHOD = {

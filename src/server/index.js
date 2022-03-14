@@ -8,6 +8,7 @@ const passport = require('passport');
 const { SERVER_STATUS } = require('./config.js');
 
 const app = express();
+
 app.disable('x-powered-by');
 
 app.use(cors());
@@ -27,8 +28,9 @@ if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
 
-// const competitionRouter = require('./routers/competition');
-// app.use('/competition', competitionRouter);
+
+const competitionRouter = require('./routes/competition');
+app.use('/competition', competitionRouter);
 
 // const competitorRouter = require('./routers/competitor');
 // app.use('/competitor', competitorRouter);
@@ -45,7 +47,7 @@ if (process.env.NODE_ENV === 'development') {
 // const roundRouter = require('./routers/round');
 // app.use('/round', roundRouter);
 
-const adminRouter = require('./routers/admin');
+const adminRouter = require('./routes/admin');
 app.use('/admin', adminRouter);
 
 app.get('/hello', (req, res) => {
