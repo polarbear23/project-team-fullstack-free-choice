@@ -4,18 +4,18 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const passport = require('passport');
-const morgan = require('morgan');
 
 const { SERVER_STATUS } = require('./config.js');
 
 const app = express();
+
 app.disable('x-powered-by');
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
-app.use(morgan('dev'));
+
 
 //This will create a middleware.
 //When you navigate to the root page, it will use the built react-app
@@ -23,8 +23,14 @@ if (process.env.NODE_ENV !== 'development') {
     app.use(express.static(path.resolve(__dirname, '../../build')));
 }
 
-// const competitionRouter = require('./routers/competition');
-// app.use('/competition', competitionRouter);
+if (process.env.NODE_ENV === 'development') {
+    const morgan = require('morgan');
+    app.use(morgan('dev'));
+}
+
+
+const competitionRouter = require('./routes/competition');
+app.use('/competition', competitionRouter);
 
 // const competitorRouter = require('./routers/competitor');
 // app.use('/competitor', competitorRouter);
@@ -38,10 +44,10 @@ if (process.env.NODE_ENV !== 'development') {
 // const positionMappingRouter = require('./routers/positionMapping');
 // app.use('/positionMapping', positionMappingRouter);
 
-// const roundRouter = require('./routers/round');
-// app.use('/round', roundRouter);
+const roundRouter = require('./routes/round');
+app.use('/round', roundRouter);
 
-const adminRouter = require('./routers/admin');
+const adminRouter = require('./routes/admin');
 app.use('/admin', adminRouter);
 
 app.get('/hello', (req, res) => {

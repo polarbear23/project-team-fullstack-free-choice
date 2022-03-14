@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { UserContext } from '../App';
 
 import { postFormToServer } from '../utils/auth';
-
 import { API_URL, LOCAL_STORAGE } from '../config';
 
-import './styling/login.css';
+import './styling/welcome-form.css';
 
 export const Login = (props) => {
-    const { setIsLoggedIn, setFormToRender } = props;
+    const { setFormToRender } = props;
+
+    const { user, setUser } = useContext(UserContext);
+
+    const navigate = useNavigate();
 
     const initialForm = {
         username: '',
@@ -16,22 +22,22 @@ export const Login = (props) => {
 
     const [form, setForm] = useState(initialForm);
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-
-        setForm({ ...form, [name]: value });
-    };
+    const handleChange = (event) => setForm({ ...form, [event.target.name]: event.target.value });
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         const result = await postFormToServer(API_URL.LOGIN, form);
 
-        if (!result.token) return;
+        if (!result || result.error) {
+            return;
+        }
 
         localStorage.setItem(LOCAL_STORAGE.TOKEN, result.token);
 
-        setIsLoggedIn(true);
+        setUser(result.data.username);
+
+        navigate(`/${user}`);
     };
 
     const handleRedirect = () => setFormToRender('register');
@@ -47,12 +53,17 @@ export const Login = (props) => {
                     <button
                         className="welcomeform-button welcomeform-redirect-button"
                         onClick={handleRedirect}
-                    >
+                    >   
                         Register
                     </button>
                 </div>
                 <form className="welcomeform-form">
-                    <p className="welcomeform-close-button" onClick={handleClose}>X</p>
+                    <div
+                        className="welcomeform-close-button"
+                        onClick={handleClose}
+                    >
+                        <h4>X</h4>
+                    </div>
                     <input
                         className="welcomeform-form-input"
                         name="username"
@@ -60,6 +71,7 @@ export const Login = (props) => {
                         placeholder="Enter Username"
                         value={form.username}
                         onChange={handleChange}
+                        minLength="3"
                         required
                     />
                     <input
@@ -69,6 +81,7 @@ export const Login = (props) => {
                         placeholder="Enter Password"
                         value={form.password}
                         onChange={handleChange}
+                        minLength="6"
                         required
                     />
                     <button

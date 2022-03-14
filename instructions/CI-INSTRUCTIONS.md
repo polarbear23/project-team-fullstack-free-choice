@@ -1,4 +1,4 @@
-![](./assets/CI_CD_Pipeline.png)
+![](../assets/CI_CD_Pipeline.png)
 
 # Continuous Integration, Delivery & Deployment
 

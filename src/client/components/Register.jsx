@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { UserContext } from '../App';
 
 import { postFormToServer } from '../utils/auth';
-
 import { API_URL, LOCAL_STORAGE } from '../config';
 
-import './styling/register.css';
+import './styling/welcome-form.css';
 
 export const Register = (props) => {
-    const { setIsLoggedIn, setFormToRender } = props;
+    const { setFormToRender } = props;
+
+    const { user, setUser } = useContext(UserContext);
+
+    const navigate = useNavigate();
 
     const initialForm = {
         username: '',
@@ -17,22 +23,22 @@ export const Register = (props) => {
 
     const [form, setForm] = useState(initialForm);
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-
-        setForm({ ...form, [name]: value });
-    };
+    const handleChange = (event) => setForm({ ...form, [event.target.name]: event.target.value });
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         const result = await postFormToServer(API_URL.REGISTER, form);
 
-        if (!result.token) return;
+        if (!result || result.error) {
+            return;
+        }
 
         localStorage.setItem(LOCAL_STORAGE.TOKEN, result.token);
 
-        setIsLoggedIn(true);
+        setUser(result.data.username);
+
+        navigate(`/${user}`);
     };
 
     const handleRedirect = () => setFormToRender('login');
@@ -53,23 +59,30 @@ export const Register = (props) => {
                     </button>
                 </div>
                 <form className="welcomeform-form">
-                    <div className="welcomeform-close-button" onClick={handleClose}><h4>X</h4></div>
+                    <div
+                        className="welcomeform-close-button"
+                        onClick={handleClose}
+                    >
+                        <h4>X</h4>
+                    </div>
                     <input
                         className="welcomeform-form-input"
                         name="username"
                         type="text"
-                        placeholder="Enter Username"
+                        placeholder="Enter Username (min 3 characters)"
                         value={form.username}
                         required
+                        minLength="3"
                         onChange={handleChange}
                     />
                     <input
                         className="welcomeform-form-input"
                         name="password"
                         type="password"
-                        placeholder="Enter Password"
+                        placeholder="Enter Password (min 6 characters)"
                         value={form.password}
                         required
+                        minLength="6"
                         onChange={handleChange}
                     />
                     <input

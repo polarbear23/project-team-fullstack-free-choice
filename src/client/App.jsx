@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import { Homepage } from './components/Homepage';
@@ -6,31 +6,33 @@ import { Welcome } from './components/Welcome';
 import { Header } from './components/Header';
 import { Competition } from './components/Competition';
 import { Season } from './components/Season';
+import { CreateSeason } from './components/CreateSeason';
 
 import Competitors from './components/Competitors';
 import { API_URL, HTTP_METHOD, LOCAL_STORAGE } from './config';
 
 import './App.css';
 
-const App = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [user, setUser] = useState(null);
+export const UserContext = createContext();
+
+export const App = () => {
+    const [user, setUser] = useState('');
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        localStorage.getItem(LOCAL_STORAGE.TOKEN) ? setIsLoggedIn(true) : setIsLoggedIn(false);
-    }, []);
+        const token = localStorage.getItem(LOCAL_STORAGE.TOKEN);
 
-    useEffect(() => {
-        if (!isLoggedIn) return;
+        if (!token) {
+            return;
+        }
 
         const authenticateUser = async () => {
             try {
                 const response = await fetch(API_URL.GET, {
                     method: HTTP_METHOD.GET,
                     headers: {
-                        Authorization: localStorage.getItem(LOCAL_STORAGE.TOKEN),
+                        Authorization: token,
                     },
                 });
 
@@ -45,52 +47,38 @@ const App = () => {
         };
 
         authenticateUser();
-    }, [isLoggedIn]);
+    }, []);
 
     useEffect(() => {
+        if (!user) {
+            return;
+        }
+
         navigate(`/${user}`);
     }, [user]);
 
     return (
-        <div className="app">
-            <Header
-                isLoggedIn={isLoggedIn}
-                user={user}
-                setUser={setUser}
-                setIsLoggedIn={setIsLoggedIn}
-            />
-            <Routes>
-                {!isLoggedIn && (
-                    <>
-                        <Route
-                            path="/"
-                            element={<Competitors/>}
-                        />
-                        <Route
-                            path="*"
-                            element={<Competitors/>}
-                        />
-                    </>
-                )}
-                {isLoggedIn && (
-                    <>
-                        <Route
-                            path={`/${user}`}
-                            element={<Homepage user={user} />}
-                        />
-                        <Route
-                            path="/:user/:competitionId"
-                            element={<Competition user={user} />}
-                        />
-                        <Route
-                            path="/:user/:competitionId/:seasonId"
-                            element={<Season user={user} />}
-                        />
-                    </>
-                )}
-            </Routes>
-        </div>
+        <UserContext.Provider value={{ user: user, setUser: setUser }}>
+            <div className="app">
+                <Header />
+                <Routes>
+                    {!user && (
+                        <>
+                            <Route path="/" element={<Welcome />} />
+                            <Route path="*" element={<Welcome />} />
+                        </>
+                    )}
+                    {user && (
+                        <>
+                            <Route path={`/${user}`} element={<Homepage />} />
+                            <Route path="/:user/:competitionId" element={<Competition />} />
+                            <Route path="/:user/:competitionId/:seasonId" element={<Season />} />
+                            <Route path="/:user/:competitionId/create" element={<CreateSeason />} />
+                            <Route path="*" element={<Homepage />} />
+                        </>
+                    )}
+                </Routes>
+            </div>
+        </UserContext.Provider>
     );
 };
-
-export default App;

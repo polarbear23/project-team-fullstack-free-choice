@@ -37,11 +37,11 @@ const createAdmin = async (req, res) => {
 };
 
 const authenticateAdmin = async (req, res) => {
-    console.log(req.body)
-
     const { error } = loginSchema.validate(req.body);
 
-    if (error) return res.status(HTTP_RESPONSE.BAD_REQUEST.CODE).json({ error: error.details[0] });
+    if (error) { 
+        console.log(error.details[0])
+        return res.status(HTTP_RESPONSE.BAD_REQUEST.CODE).json({ error: error.details[0] });}
 
     const { username, password } = req.body;
 
