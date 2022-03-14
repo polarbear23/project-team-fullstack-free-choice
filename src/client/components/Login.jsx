@@ -29,7 +29,9 @@ export const Login = (props) => {
 
         const result = await postFormToServer(API_URL.LOGIN, form);
 
-        if (!result.token || !result.data) return;
+        if (!result || result.error) {
+            return;
+        }
 
         localStorage.setItem(LOCAL_STORAGE.TOKEN, result.token);
 
@@ -51,7 +53,7 @@ export const Login = (props) => {
                     <button
                         className="welcomeform-button welcomeform-redirect-button"
                         onClick={handleRedirect}
-                    >
+                    >   
                         Register
                     </button>
                 </div>

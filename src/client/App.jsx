@@ -19,20 +19,26 @@ export const App = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!localStorage.getItem(LOCAL_STORAGE.TOKEN)) return;
+        const token = localStorage.getItem(LOCAL_STORAGE.TOKEN);
+
+        if (!token) {
+            return;
+        }
 
         const authenticateUser = async () => {
             try {
                 const response = await fetch(API_URL.GET, {
                     method: HTTP_METHOD.GET,
                     headers: {
-                        Authorization: localStorage.getItem(LOCAL_STORAGE.TOKEN),
+                        Authorization: token,
                     },
                 });
 
                 const result = await response.json();
 
-                if (result) setUser(result.data.username);
+                if (result) {
+                    setUser(result.data.username);
+                }
             } catch (error) {
                 console.log(error);
             }
@@ -42,7 +48,9 @@ export const App = () => {
     }, []);
 
     useEffect(() => {
-        if (!user) return;
+        if (!user) {
+            return;
+        }
 
         navigate(`/${user}`);
     }, [user]);
@@ -60,15 +68,9 @@ export const App = () => {
                     )}
                     {user && (
                         <>
-                            <Route
-                                path={`/${user}`} element={<Homepage />}
-                            />
-                            <Route
-                                path="/:user/:competitionId" element={<Competition />}
-                            />
-                            <Route
-                                path="/:user/:competitionId/:seasonId" element={<Season />}
-                            />
+                            <Route path={`/${user}`} element={<Homepage />} />
+                            <Route path="/:user/:competitionId" element={<Competition />} />
+                            <Route path="/:user/:competitionId/:seasonId" element={<Season />} />
                             <Route path="*" element={<Homepage />} />
                         </>
                     )}

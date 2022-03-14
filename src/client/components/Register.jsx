@@ -30,7 +30,9 @@ export const Register = (props) => {
 
         const result = await postFormToServer(API_URL.REGISTER, form);
 
-        if (!result.token) return;
+        if (!result || result.error) {
+            return;
+        }
 
         localStorage.setItem(LOCAL_STORAGE.TOKEN, result.token);
 
@@ -67,18 +69,20 @@ export const Register = (props) => {
                         className="welcomeform-form-input"
                         name="username"
                         type="text"
-                        placeholder="Enter Username"
+                        placeholder="Enter Username (min 3 characters)"
                         value={form.username}
                         required
+                        minLength="3"
                         onChange={handleChange}
                     />
                     <input
                         className="welcomeform-form-input"
                         name="password"
                         type="password"
-                        placeholder="Enter Password"
+                        placeholder="Enter Password (min 6 characters)"
                         value={form.password}
                         required
+                        minLength="6"
                         onChange={handleChange}
                     />
                     <input
