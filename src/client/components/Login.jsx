@@ -1,17 +1,25 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { UserContext } from '../App';
-
-import { postFormToServer } from '../utils/auth';
-import { API_URL, LOCAL_STORAGE } from '../config';
+import { postFormToServer } from '../utils/auth'
+import { StoreContext } from '../utils/store';
+import { API_URL, LOCAL_STORAGE, STORE_ACTIONS } from '../config';
 
 import './styling/welcome-form.css';
 
 export const Login = (props) => {
     const { setFormToRender } = props;
 
-    const { user, setUser } = useContext(UserContext);
+    const { state, dispatch } = useContext(StoreContext);
+
+    const { user } = state;
+
+    const handleDispatch = (type, payload) => {
+        dispatch({
+            type: type,
+            payload: payload,
+        });
+    };
 
     const navigate = useNavigate();
 
@@ -35,7 +43,7 @@ export const Login = (props) => {
 
         localStorage.setItem(LOCAL_STORAGE.TOKEN, result.token);
 
-        setUser(result.data.username);
+        handleDispatch(STORE_ACTIONS.USER, result.data.username);
 
         navigate(`/${user}`);
     };

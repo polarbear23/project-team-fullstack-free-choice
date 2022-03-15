@@ -1,44 +1,62 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { COMPETITION_API_URL, HTTP_METHOD } from '../config';
 
 import { CompetitionCard } from './CompetitionCard';
+
+import { API_URL, HTTP_METHOD, LOCAL_STORAGE, STORE_ACTIONS } from '../config';
+import { StoreContext } from '../utils/store';
 
 import './styling/homepage.css';
 
 export const Homepage = () => {
-  const [competitions, setCompetitions] = useState([]);
-  useEffect(() => {
-    console.log('!');
-    const getCompetitions = async () => {
-      const res = await fetch(`${COMPETITION_API_URL.GET}`, {
-        method: HTTP_METHOD.GET,
-        headers: {
-          Authorization: localStorage.getItem('token'),
-        },
-      });
-      const results = await res.json();
-      console.log('results', results);
-      setCompetitions(results.data);
+    const { state, dispatch } = useContext(StoreContext);
+
+    const { competitions } = state;
+
+    const handleDispatch = (type, payload) => {
+        dispatch({
+            type: type,
+            payload: payload,
+        });
     };
-    getCompetitions();
-  }, []);
 
-  const user = 'nathan';
+    useEffect(() => {
+        const token = localStorage.getItem(LOCAL_STORAGE.TOKEN);
 
-  return (
-    <main className="app-homepage">
-      <Link to="/create">
-        <button className="create-competition-button">Create Competition</button>
-      </Link>
+        const getCompetitions = async () => {
+            const response = await fetch(API_URL.COMPETITION_GET, {
+                method: HTTP_METHOD.GET,
+                headers: {
+                    Authorization: token,
+                },
+            });
+            const results = await response.json();
 
-      <div className="competition-display">
-        {competitions &&
-          competitions.map((competition, index) => {
-            return <CompetitionCard key={index} competitionId={competition.id} competition={competition} user={user} />;
-          })}
-      </div>
-    </main>
-  );
+            handleDispatch(STORE_ACTIONS.COMPETITIONS, results.data);
+        };
+
+        getCompetitions();
+    }, []);
+
+    return (
+        <main className="app-homepage">
+            <Link to="/create">
+                <button className="create-competition-button">
+                    Create Competition
+                </button>
+            </Link>
+
+            <div className="competition-display">
+                {competitions &&
+                    competitions.map((competition, index) => {
+                        return (
+                            <CompetitionCard
+                                key={index}
+                                competition={competition}
+                            />
+                        );
+                    })}
+            </div>
+        </main>
+    );
 };

@@ -5,12 +5,8 @@ const API_URL = {
     ADMIN_GET: `${SERVER_URL}/admin/get`,
     ADMIN_REGISTER: `${SERVER_URL}/admin/register`,
     ADMIN_LOGIN: `${SERVER_URL}/admin/login`,
-    COMPETITION_GET_BY_ID: `${SERVER_URL}/competition`,
+    COMPETITION_GET: `${SERVER_URL}/competition`,
 };
-
-const COMPETITION_API_URL = {
-    GET: `${SERVER_URL}/competition`
-}
 
 const HTTP_METHOD = {
     GET: 'GET',
@@ -24,9 +20,14 @@ const LOCAL_STORAGE = {
     TOKEN: 'token',
 };
 
+const STORE_ACTIONS = {
+    COMPETITION: 'competition',
+    USER: 'user'
+}
+
 module.exports = {
     API_URL,
     HTTP_METHOD,
     LOCAL_STORAGE,
-    COMPETITION_API_URL
+    STORE_ACTIONS
 };

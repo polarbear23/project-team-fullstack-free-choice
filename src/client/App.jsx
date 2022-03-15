@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import { Homepage } from './components/Homepage';
@@ -8,16 +8,26 @@ import { Competition } from './components/Competition';
 import { Season } from './components/Season';
 import { CreateSeason } from './components/CreateSeason';
 
-import { API_URL, HTTP_METHOD, LOCAL_STORAGE } from './config';
+import { API_URL, HTTP_METHOD, LOCAL_STORAGE, STORE_ACTIONS } from './config';
+import { StoreContext, reducer, initialState } from './utils/store';
 
 import './App.css';
 
-export const UserContext = createContext();
-
 export const App = () => {
-    const [user, setUser] = useState('');
+    const [state, dispatch] = useReducer(reducer, initialState);
+
+    const { user } = state;
+
+    console.log('state', {state})
 
     const navigate = useNavigate();
+
+    const handleDispatch = (type, payload) => {
+        dispatch({
+            type: type,
+            payload: payload,
+        });
+    };
 
     useEffect(() => {
         const token = localStorage.getItem(LOCAL_STORAGE.TOKEN);
@@ -26,7 +36,7 @@ export const App = () => {
             return;
         }
 
-        const authenticateUser = async () => {
+        const fetchUserFromToken = async () => {
             try {
                 const response = await fetch(API_URL.ADMIN_GET, {
                     method: HTTP_METHOD.GET,
@@ -37,15 +47,17 @@ export const App = () => {
 
                 const result = await response.json();
 
+                const { username } = result.data;
+
                 if (result) {
-                    setUser(result.data.username);
+                    handleDispatch(STORE_ACTIONS.USER, username);
                 }
             } catch (error) {
                 console.log(error);
             }
         };
 
-        authenticateUser();
+        fetchUserFromToken();
     }, []);
 
     useEffect(() => {
@@ -57,7 +69,7 @@ export const App = () => {
     }, [user]);
 
     return (
-        <UserContext.Provider value={{ user: user, setUser: setUser }}>
+        <StoreContext.Provider value={{ state: state, dispatch: dispatch }}>
             <div className="app">
                 <Header />
                 <Routes>
@@ -70,14 +82,23 @@ export const App = () => {
                     {user && (
                         <>
                             <Route path={`/${user}`} element={<Homepage />} />
-                            <Route path="/:user/:competitionId" element={<Competition />} />
-                            <Route path="/:user/:competitionId/:seasonId" element={<Season />} />
-                            <Route path="/:user/:competitionId/create" element={<CreateSeason />} />
+                            <Route
+                                path="/:user/:competitionId"
+                                element={<Competition />}
+                            />
+                            <Route
+                                path="/:user/:competitionId/:seasonId"
+                                element={<Season />}
+                            />
+                            <Route
+                                path="/:user/:competitionId/create"
+                                element={<CreateSeason />}
+                            />
                             <Route path="*" element={<Homepage />} />
                         </>
                     )}
                 </Routes>
             </div>
-        </UserContext.Provider>
+        </StoreContext.Provider>
     );
 };
