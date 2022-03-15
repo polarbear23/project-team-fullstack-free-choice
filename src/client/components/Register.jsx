@@ -28,7 +28,7 @@ export const Register = (props) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const result = await postFormToServer(API_URL.REGISTER, form);
+        const result = await postFormToServer(API_URL.ADMIN_REGISTER, form);
 
         if (!result || result.error) {
             return;

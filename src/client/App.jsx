@@ -28,7 +28,7 @@ export const App = () => {
 
         const authenticateUser = async () => {
             try {
-                const response = await fetch(API_URL.GET, {
+                const response = await fetch(API_URL.ADMIN_GET, {
                     method: HTTP_METHOD.GET,
                     headers: {
                         Authorization: token,

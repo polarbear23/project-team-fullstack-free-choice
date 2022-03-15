@@ -1,10 +1,11 @@
 /* eslint-disable no-undef */
-const SERVER_URL = process.env.REACT_APP_SERVER_URL
+const SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
 const API_URL = {
-    GET: `${SERVER_URL}/admin/get`,
-    REGISTER: `${SERVER_URL}/admin/register`,
-    LOGIN: `${SERVER_URL}/admin/login`,
+    ADMIN_GET: `${SERVER_URL}/admin/get`,
+    ADMIN_REGISTER: `${SERVER_URL}/admin/register`,
+    ADMIN_LOGIN: `${SERVER_URL}/admin/login`,
+    COMPETITION_GET_BY_ID: `${SERVER_URL}/competition`,
 };
 
 const HTTP_METHOD = {
@@ -16,8 +17,8 @@ const HTTP_METHOD = {
 };
 
 const LOCAL_STORAGE = {
-    TOKEN: 'token'
-}
+    TOKEN: 'token',
+};
 
 module.exports = {
     API_URL,

@@ -27,7 +27,7 @@ export const Login = (props) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const result = await postFormToServer(API_URL.LOGIN, form);
+        const result = await postFormToServer(API_URL.ADMIN_LOGIN, form);
 
         if (!result || result.error) {
             return;
