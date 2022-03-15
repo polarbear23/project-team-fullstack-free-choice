@@ -7,6 +7,10 @@ const API_URL = {
     LOGIN: `${SERVER_URL}/admin/login`,
 };
 
+const COMPETITION_API_URL = {
+    GET: `${SERVER_URL}/competition`
+}
+
 const HTTP_METHOD = {
     GET: 'GET',
     POST: 'POST',
@@ -23,4 +27,5 @@ module.exports = {
     API_URL,
     HTTP_METHOD,
     LOCAL_STORAGE,
+    COMPETITION_API_URL
 };
