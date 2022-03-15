@@ -8,55 +8,51 @@ import { PodiumParticipant } from './card/PodiumParticipant';
 
 export const CompetitionCard = ({ competitionId, user, competition }) => {
   const [seasonScores, setSeasonScores] = useState([]);
+  const [podium, setPodium] = useState([]);
+
   console.log(competition);
   //find competitors with the 3 highest scores
   //(competitionId > many competitors > many participants > many placements > calculate and sum positionMapping)
-  const calculateTotalScore = (seasons) => {
-    const scoresForEachSeason = [];
-    for (let i = 0; i < competition.seasons.length; i++) {
-      const { participants, positionMappings } = seasons[i];
-      const participantsToScores = [];
-      for (let j = 0; j < participants.length; j++) {
-        const participantScore = {
-          competitorId: participants[j].competitorId,
-          score: 0,
-        };
-        for (let k = 0; k < participants[j].placements.length; k++) {
-          for (let l = 0; l < positionMappings.length; l++) {
-            if (
-              positionMappings[l].position ===
-              participants[j].placements[k].position
-            ) {
-              participantScore.score =
-                participantScore.score + positionMappings[l].mapping;
-            }
+  const calculateTotalScore = (season) => {
+    const { participants, positionMappings } = season;
+    const scoresForSeason = [];
+    for (let i = 0; i < participants.length; i++) {
+      const participantScore = {
+        competitor: participants[i].competitor,
+        score: 0,
+      };
+      for (let j = 0; j < participants[j].placements.length; j++) {
+        for (let k = 0; k < positionMappings.length; k++) {
+          if (positionMappings[k].position === participants[i].placements[j].position) {
+            participantScore.score = participantScore.score + positionMappings[k].mapping;
           }
         }
-        participantsToScores.push(participantScore);
       }
-      scoresForEachSeason.push(
-        participantsToScores.sort((firstEl, secondEl) => {
-          if (firstEl.score < secondEl.score) {
-            return -1;
-          }
-          if (firstEl.score > secondEl.score) {
-            return 1;
-          }
-          return 0;
-        })
-      );
-      return scoresForEachSeason;
+      scoresForSeason.push(participantScore);
+      scoresForSeason.sort(compareScores);
     }
+    console.log(scoresForSeason);
+    return scoresForSeason;
+  };
+
+  const compareScores = (firstEl, secondEl) => {
+    if (firstEl.score > secondEl.score) {
+      return -1;
+    }
+    if (firstEl.score < secondEl.score) {
+      return 1;
+    }
+    return 0;
   };
 
   let navigate = useNavigate();
 
-  const [podium, setPodium] = useState([]);
-
   useEffect(() => {
     if (!competition) return;
-    const results = calculateTotalScore(competition.seasons);
-    console.log(results);
+    const scores = calculateTotalScore(competition.seasons[competition.seasons.length - 1]);
+    setSeasonScores(scores);
+    console.log(seasonScores);
+    setPodium([scores[0], scores[1], scores[2]]);
     //setPodium(competition);
   }, []);
 
@@ -66,17 +62,14 @@ export const CompetitionCard = ({ competitionId, user, competition }) => {
 
   return (
     <div className="card competition-card">
-      <CardTag title={'Mario Kart'} handleClick={(e) => handleClick(e)} />
-
+      <CardTag title={competition.title} handleClick={(e) => handleClick(e)} />
       <div className="card-display">
         <h3>Top 3</h3>
-
         {podium &&
           podium.map((participant, index) => {
             return (
               <div key={index} className="podium competition-podium">
-                <PodiumParticipant />
-
+                <PodiumParticipant participant={participant.competitor} index={index} />
                 <div className="participant-score">{participant.score}</div>
               </div>
             );

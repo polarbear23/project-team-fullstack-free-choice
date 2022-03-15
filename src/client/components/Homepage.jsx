@@ -9,8 +9,6 @@ import './styling/homepage.css';
 
 export const Homepage = () => {
   const [competitions, setCompetitions] = useState([]);
-  //fetch competitions with adminId = logged-in user
-  //save them to state and map through thier competitions, returning a CompetitionCard for each
   useEffect(() => {
     console.log('!');
     const getCompetitions = async () => {
@@ -32,22 +30,13 @@ export const Homepage = () => {
   return (
     <main className="app-homepage">
       <Link to="/create">
-        <button className="create-competition-button">
-          Create Competition
-        </button>
+        <button className="create-competition-button">Create Competition</button>
       </Link>
 
       <div className="competition-display">
         {competitions &&
           competitions.map((competition, index) => {
-            return (
-              <CompetitionCard
-                key={index}
-                competitionId={competition.id}
-                competition={competition}
-                user={user}
-              />
-            );
+            return <CompetitionCard key={index} competitionId={competition.id} competition={competition} user={user} />;
           })}
       </div>
     </main>
