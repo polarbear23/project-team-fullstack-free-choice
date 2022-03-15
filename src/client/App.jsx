@@ -6,6 +6,7 @@ import { Welcome } from './components/Welcome';
 import { Header } from './components/Header';
 import { Competition } from './components/Competition';
 import { Season } from './components/Season';
+import { CreateSeason } from './components/CreateSeason';
 
 import { API_URL, HTTP_METHOD, LOCAL_STORAGE } from './config';
 
@@ -71,6 +72,7 @@ export const App = () => {
                             <Route path={`/${user}`} element={<Homepage />} />
                             <Route path="/:user/:competitionId" element={<Competition />} />
                             <Route path="/:user/:competitionId/:seasonId" element={<Season />} />
+                            <Route path="/:user/:competitionId/create" element={<CreateSeason />} />
                             <Route path="*" element={<Homepage />} />
                         </>
                     )}

@@ -10,7 +10,7 @@ export const Competition = ({ user }) => {
 
     const navigate = useNavigate();
 
-    const competitionId = 1
+    const competitionId = 1;
 
     const handleClick = seasonName => {
         navigate(`/${user}/${competitionId}/${seasonName}`)
@@ -20,7 +20,7 @@ export const Competition = ({ user }) => {
         <div className="competition-page">
             
             <h1>Mario Kart</h1>
-            <button>Create new season</button>
+            <button onClick={() => handleClick("create")}>Create new season</button>
             <h2>Current Season</h2>
 
             {/* This div gets mapped BELOW "PREVIOUS SEASONS"; each season within a competition */}
