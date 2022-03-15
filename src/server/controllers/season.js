@@ -7,40 +7,37 @@ const createSeason = async (req, res) => {
     const { error } = seasonCreateSchema.validate(req.body);
 
     if (error) {
-        return res
-            .status(HTTP_RESPONSE.BAD_REQUEST.CODE)
-            .json({ error: error.details[0] });
+        return res.status(HTTP_RESPONSE.BAD_REQUEST.CODE).json({ error: error.details[0] });
     }
 
-    const {
-        title,
-        competitionId,
-        participants,
-        teams,
-        positionMappings,
-        rounds,
-    } = req.body;
+    const { title, competitionId, participants, teams, positionMappings } = req.body;
 
     const createdSeason = await prisma.season.create({
         data: {
-            title,
+            title: title,
             competitionId: Number(competitionId),
         },
     });
 
     const seasonId = createdSeason.id;
 
-    let connectedParticipants = [];
+    for (let i = 0; i < teams.length; i++) {
+        await prisma.team.create({
+            data: {
+                name: teams[i].name,
+                seasonId: seasonId,
+            },
+        });
+    }
 
     for (let i = 0; i < participants.length; i++) {
-        const connectedParticipant = await prisma.participant.create({
+        await prisma.participant.create({
             data: {
                 season: {
                     connect: {
                         id: seasonId,
                     },
                 },
-
                 competitor: {
                     connect: {
                         id: participants[i].competitorId,
@@ -48,48 +45,44 @@ const createSeason = async (req, res) => {
                 },
             },
         });
-        connectedParticipants.push(connectedParticipant);
     }
 
-    // for (let i = 0; i < req.body.teams.length; i++) {
-    //     await prisma.team.create({
-    //         data: {
-    //             seasonId: seasonId,
-    //             teams: {
-    //                 connect: {
-    //                     id: req.body.teams[i].id,
-    //                 },
-    //             },
-    //         },
-    //     });
-    // }
+    for (let i = 0; i < positionMappings.length; i++) {
+        await prisma.positionMapping.create({
+            data: {
+                position: i + 1,
+                mapping: positionMappings[i],
+                season: {
+                    connect: {
+                        id: seasonId,
+                    },
+                },
+            },
+        });
+    }
 
-    // for (let i = 0; i < req.body.participants.length; i++) {
-    //     await prisma.participant.create({
-    //         data: {
-    //             seasonId: seasonId,
-    //             competitor: {
-    //                 connect: {
-    //                     id: req.body.participants[i].id,
-    //                 },
-    //             },
-    //         },
-    //     });
-    // }
+    const selectedSeason = await getSeasonById(seasonId);
 
-    return res
-        .status(HTTP_RESPONSE.OK.CODE)
-        .json({ data: createdSeason, connectedParticipants });
+    return res.status(HTTP_RESPONSE.OK.CODE).json({ data: selectedSeason });
 };
 
-const getSeasonById = async (req, res) => {
+const getSeasonById = async (id) => {
     const selectedSeason = await prisma.season.findUnique({
         where: {
-            id: Number(req.params.id),
+            id: id,
+        },
+        include: {
+            participants: {
+                include: {
+                    competitor: true,
+                },
+            },
+            positionMappings: true,
+            teams: true,
         },
     });
 
-    return res.status(HTTP_RESPONSE.OK.CODE).json({ data: selectedSeason });
+    return selectedSeason;
 };
 
 const getSeasonsByCompetition = async (req, res) => {

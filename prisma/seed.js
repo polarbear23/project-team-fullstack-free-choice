@@ -1,5 +1,5 @@
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+const prisma = require('../src/server/utils/prisma')
+
 const {
     createFakeAdmin,
     createFakeCompetition,
@@ -10,6 +10,7 @@ const {
     createFakePlacement,
     createFakePositionMapping
 } = require('../src/server/utils/faker');
+
 const MAX_NUMBER_ADMINS_TO_GENERATE = 2;
 const MAX_NUMBER_COMPETITORS_TO_GENERATE = 10;
 const MAX_NUMBER_SEASONS_TO_GENERATE = 2;

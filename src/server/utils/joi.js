@@ -26,14 +26,13 @@ const loginSchema = joi.object({
 const seasonCreateSchema = joi.object({
     title: joi.string()
         .required(),
-    competitionId: joi.any()
+    competitionId: joi.any() //change to reflect incoming from front end
         .required(),
     participants: joi.array()
         .required(),
     teams: joi.array()
         .required(),
-    rounds: joi.array(),
-    postionMapping: joi.array()
+    positionMappings: joi.array()
         .required(),
 })
 
@@ -41,4 +40,4 @@ module.exports = {
     registerSchema,
     loginSchema,
     seasonCreateSchema,
-}
+};
