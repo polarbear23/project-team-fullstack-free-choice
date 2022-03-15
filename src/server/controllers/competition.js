@@ -74,7 +74,8 @@ const getCompetitionById = async (req, res) => {
                     },
                     participants: {
                         include: {
-                            placements: true
+                            placements: true,
+                            competitor: true
                         }
                     },
                     positionMappings: true
