@@ -5,7 +5,7 @@ import { PodiumParticipant } from './PodiumParticipant';
 export const SeasonPodium = (props) => {
     const { season } = props;
 
-    const { participants, positionMappings } = season;
+    const { participants, positionMappings, rounds } = season;
 
     const [seasonStandings, setSeasonStandings] = useState([]);
 
@@ -17,7 +17,7 @@ export const SeasonPodium = (props) => {
     //     map array
 
     useEffect(() => {
-        // console.log('season', { participants, positionMappings });
+        console.log('season', { participants, positionMappings, rounds });
 
         const standings = [];
 
@@ -50,6 +50,28 @@ export const SeasonPodium = (props) => {
 
         setSeasonStandings(standings);
     }, [season]);
+
+    // for each participant, get rounds, each round in its own array, populate with position
+
+    // const generateDataForRounds = (standing) => {
+    //     console.log('seasonStandings', { seasonStandings });
+
+    //     seasonStandings.map((standing) => {
+    //         console.log('id', standing.participant.id);
+
+    //         let array = [];
+
+    //         rounds.forEach((round) => {
+    //             console.log('round', round);
+
+    //             const placement = round.placements.filter((element) => element.participantId === standing.participant.id);
+
+    //             array.push(placement);
+
+    //             console.log('array', array);
+    //         });
+    //     });
+    // };
 
     return (
         <>

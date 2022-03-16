@@ -26,7 +26,7 @@ export const Competition = () => {
         setPreviousSeasons(seasons.slice(0, seasons.length - 1));
     }, [competitions]);
 
-    console.log(currentSeason, previousSeasons);
+    // console.log(currentSeason, previousSeasons);
 
     const handleClick = (id) => navigate(`/${user}/${competitions.id}/${id}`);
 
