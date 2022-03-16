@@ -1,5 +1,5 @@
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+const { prisma } = require('../src/server/utils/prisma');
+
 const {
     createFakeAdmin,
     createFakeCompetition,
@@ -8,8 +8,9 @@ const {
     createFakeTeam,
     createFakeRound,
     createFakePlacement,
-    createFakePositionMapping
+    createFakePositionMapping,
 } = require('../src/server/utils/faker');
+
 const MAX_NUMBER_ADMINS_TO_GENERATE = 2;
 const MAX_NUMBER_COMPETITORS_TO_GENERATE = 10;
 const MAX_NUMBER_SEASONS_TO_GENERATE = 2;
@@ -21,7 +22,9 @@ const createAdmin = async () => {
     for (let i = 0; i < MAX_NUMBER_ADMINS_TO_GENERATE; i++) {
         const fakeAdmin = createFakeAdmin();
         const fakeCompetition = createFakeCompetition();
-        const fakeCompetitors = createFakeCompetitors(MAX_NUMBER_COMPETITORS_TO_GENERATE);
+        const fakeCompetitors = createFakeCompetitors(
+            MAX_NUMBER_COMPETITORS_TO_GENERATE
+        );
         const fakeSeasons = createFakeSeasons(MAX_NUMBER_SEASONS_TO_GENERATE);
         const admin = await prisma.admin.create({
             data: {
@@ -32,30 +35,29 @@ const createAdmin = async () => {
                     create: {
                         title: fakeCompetition.title,
                         competitors: {
-                            createMany: { data: fakeCompetitors }
+                            createMany: { data: fakeCompetitors },
                         },
                         seasons: {
-                            createMany: { data: fakeSeasons }
-                        }
+                            createMany: { data: fakeSeasons },
+                        },
                     },
-                }
+                },
             },
             include: {
                 competition: {
                     include: {
                         seasons: true,
-                        competitors: true
-                    }
-                }
-            }
-
+                        competitors: true,
+                    },
+                },
+            },
         });
-        console.log("admin", admin);
+        console.log('admin', admin);
         admins.push(admin);
     }
 
-    return admins
-}
+    return admins;
+};
 
 const createTeams = async (season) => {
     const teams = [];
@@ -67,17 +69,16 @@ const createTeams = async (season) => {
                 name: fakeTeam.name,
                 season: {
                     connect: {
-                        id: season.id
-                    }
-                }
-            }
-        })
-        console.log("team", team)
+                        id: season.id,
+                    },
+                },
+            },
+        });
+        console.log('team', team);
         teams.push(team);
     }
     return teams;
-
-}
+};
 
 const createParticipants = async (season, competitors, teams) => {
     const participants = [];
@@ -87,26 +88,28 @@ const createParticipants = async (season, competitors, teams) => {
             data: {
                 season: {
                     connect: {
-                        id: season.id
-                    }
+                        id: season.id,
+                    },
                 },
                 competitor: {
                     connect: {
-                        id: competitors[i].id
-                    }
+                        id: competitors[i].id,
+                    },
                 },
                 team: {
                     connect: {
-                        id: teams[Math.floor(Math.random() * MAX_TEAMS_TO_GENERATE)].id
-                    }
+                        id: teams[
+                            Math.floor(Math.random() * MAX_TEAMS_TO_GENERATE)
+                        ].id,
+                    },
                 },
-            }
-        })
-        console.log("participant", participant);
+            },
+        });
+        console.log('participant', participant);
         participants.push(participant);
     }
-    return participants
-}
+    return participants;
+};
 
 const createRounds = async (season) => {
     const rounds = [];
@@ -118,52 +121,57 @@ const createRounds = async (season) => {
                 startsAt: fakeRound.startsAt,
                 season: {
                     connect: {
-                        id: season.id
-                    }
-                }
-            }
-        })
-        console.log("round", round);
+                        id: season.id,
+                    },
+                },
+            },
+        });
+        console.log('round', round);
         rounds.push(round);
     }
     return rounds;
-
-}
+};
 
 const createPlacements = async (participants, rounds) => {
     const placements = [];
 
     for (let i = 0; i < rounds.length; i++) {
-        const positions = Array.from({ length: participants.length }, (_, i) => i + 1); //fills an array up to max of participants [1,2,3 ... participants.length]
+        const positions = Array.from(
+            { length: participants.length },
+            (_, i) => i + 1
+        ); //fills an array up to max of participants [1,2,3 ... participants.length]
         for (let j = 0; j < participants.length; j++) {
             const fakePosition = createFakePlacement(positions);
             const placement = await prisma.placement.create({
                 data: {
-                    position: fakePosition.position,//add fake position
+                    position: fakePosition.position, //add fake position
 
                     participant: {
                         connect: {
-                            id: participants[j].id
-                        }
+                            id: participants[j].id,
+                        },
                     },
                     round: {
                         connect: {
-                            id: rounds[i].id
-                        }
+                            id: rounds[i].id,
+                        },
                     },
-                }
+                },
             });
             const index = positions.indexOf(fakePosition.position);
             positions.splice(index, 1);
-            console.log("placement", placement);
+            console.log('placement', placement);
             placements.push(placement);
         }
     }
-    return placements
-}
+    return placements;
+};
 
 const createPositionMappings = async (season, participants) => {
-    const positions = Array.from({ length: participants.length }, (_, i) => i + 1); //fills an array up to max of participants [1,2,3 ... participants.length]
+    const positions = Array.from(
+        { length: participants.length },
+        (_, i) => i + 1
+    ); //fills an array up to max of participants [1,2,3 ... participants.length]
     const fakeMappings = createFakePositionMapping(positions);
     const positionMappings = [];
     for (let i = 0; i < fakeMappings.length; i++) {
@@ -173,17 +181,16 @@ const createPositionMappings = async (season, participants) => {
                 mapping: fakeMappings[i].mapping,
                 season: {
                     connect: {
-                        id: season.id
-                    }
-                }
-            }
+                        id: season.id,
+                    },
+                },
+            },
         });
-        console.log("positionMapping", positionMapping);
+        console.log('positionMapping', positionMapping);
         positionMappings.push(positionMapping);
     }
-    return positionMappings
-}
-
+    return positionMappings;
+};
 
 const seed = async () => {
     const admins = await createAdmin();
@@ -193,17 +200,20 @@ const seed = async () => {
             const season = admins[i].competition[0].seasons[j];
             const rounds = await createRounds(season);
             const teams = await createTeams(season);
-            const participants = await createParticipants(season, competitors, teams);
+            const participants = await createParticipants(
+                season,
+                competitors,
+                teams
+            );
             await createPlacements(participants, rounds);
             await createPositionMappings(season, participants);
         }
     }
     process.exit(0);
-}
-
+};
 
 seed()
-    .catch(async e => {
+    .catch(async (e) => {
         console.error(e);
         await prisma.$disconnect();
     })

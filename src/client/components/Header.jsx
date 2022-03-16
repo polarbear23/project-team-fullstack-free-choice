@@ -1,23 +1,32 @@
 import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { UserContext } from '../App';
+import { StoreContext } from '../utils/store';
 
-import { LOCAL_STORAGE } from '../config';
+import { LOCAL_STORAGE, STORE_ACTIONS } from '../config';
 
 import './styling/header.css';
 
 export const Header = () => {
-    const { user, setUser } = useContext(UserContext);
+    const { state, dispatch } = useContext(StoreContext);
+
+    const { user } = state;
 
     const navigate = useNavigate();
+
+    const handleDispatch = (type, payload) => {
+        dispatch({
+            type: type,
+            payload: payload,
+        });
+    };
 
     const capitaliseFirstLetter = (string) => string.replace(/\b\w/g, (c) => c.toUpperCase());
 
     const handleClick = () => {
         localStorage.removeItem(LOCAL_STORAGE.TOKEN);
 
-        setUser(null);
+        handleDispatch(STORE_ACTIONS.USER, null);
 
         navigate(`/`);
     };
