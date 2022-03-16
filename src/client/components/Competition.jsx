@@ -26,9 +26,11 @@ export const Competition = () => {
         setPreviousSeasons(seasons.slice(0, seasons.length - 1));
     }, [competitions]);
 
-    // console.log(currentSeason, previousSeasons);
-
     const handleClick = (id) => navigate(`/${user}/${competitions.id}/${id}`);
+
+    const reversedRounds = (season) => season.rounds.sort((a, b) => b.id - a.id);
+
+    const calcRoundOffset = (season) => season.rounds[season.rounds.length - 1].id - 1;
 
     return (
         <div className="competition-page">
@@ -38,49 +40,51 @@ export const Competition = () => {
             <h2>Current Season</h2>
             {currentSeason.map((season, index) => {
                 return (
-                    <>
-                        <div className="card season-card" key={index}>
-                            <CardTag title={season.title} handleClick={() => handleClick(season.id)} />
-
-                            <div className="card-display">
-                                <div className="podium season-podium">
-                                    <h4>Pos</h4>
-                                    <div className="podium-rounds">
-                                        <div className="season-round">
-                                            <h5>Round 5</h5>
-                                            <h4>{`Mario Circuit`}</h4>
-                                        </div>
-                                    </div>
-                                    <h4>Score</h4>
+                    <div className="card season-card" key={index}>
+                        <CardTag title={season.title} handleClick={() => handleClick(season.id)} />
+                        <div className="card-display">
+                            <div className="podium season-podium">
+                                <h4>Pos</h4>
+                                <div className="podium-rounds">
+                                    {reversedRounds(season).map((round) => {
+                                        return (
+                                            <div className="season-round" key={round.id}>
+                                                <h5>Round {round.id - calcRoundOffset(season)}</h5>
+                                                <h4>{round.title}</h4>
+                                            </div>
+                                        );
+                                    })}
                                 </div>
-                                <SeasonPodium season={season} />
+                                <h4>Score</h4>
                             </div>
+                            <SeasonPodium season={season} />
                         </div>
-                    </>
+                    </div>
                 );
             })}
             <h2>Previous Seasons</h2>
             {previousSeasons.map((season, index) => {
                 return (
-                    <>
-                        <div className="card season-card" key={index}>
-                            <CardTag title={season.title} handleClick={() => handleClick(season.id)} />
-
-                            <div className="card-display">
-                                <div className="podium season-podium">
-                                    <h4>Pos</h4>
-                                    <div className="podium-rounds">
-                                        <div className="season-round">
-                                            <h5>Round 5</h5>
-                                            <h4>{`Mario Circuit`}</h4>
-                                        </div>
-                                    </div>
-                                    <h4>Score</h4>
+                    <div className="card season-card" key={index}>
+                        <CardTag title={season.title} handleClick={() => handleClick(season.id)} />
+                        <div className="card-display">
+                            <div className="podium season-podium">
+                                <h4>Pos</h4>
+                                <div className="podium-rounds">
+                                    {reversedRounds(season).map((round) => {
+                                        return (
+                                            <div className="season-round" key={round.id}>
+                                                <h5>Round {round.id - calcRoundOffset(season)}</h5>
+                                                <h4>{round.title}</h4>
+                                            </div>
+                                        );
+                                    })}
                                 </div>
-                                <SeasonPodium season={season} />
+                                <h4>Score</h4>
                             </div>
+                            <SeasonPodium season={season} />
                         </div>
-                    </>
+                    </div>
                 );
             })}
         </div>
