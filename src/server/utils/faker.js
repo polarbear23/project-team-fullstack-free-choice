@@ -9,7 +9,7 @@ const createFakeAdmin = () => {
 }
 
 const createFakeCompetition = () => {
-    const title = faker.lorem.sentence();
+    const title = faker.lorem.word();
 
     return { title }
 }
@@ -17,7 +17,7 @@ const createFakeCompetition = () => {
 const createFakeSeasons = (maxSeasons) => {
     const fakeSeasons = [];
     for (let i = 0; i < maxSeasons; i++) {
-        const title = faker.lorem.sentence();
+        const title = faker.lorem.word();
         const season = { title };
         fakeSeasons.push(season);
     }

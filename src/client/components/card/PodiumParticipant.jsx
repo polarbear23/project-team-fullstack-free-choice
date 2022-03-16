@@ -1,16 +1,17 @@
 import React from 'react';
 
-export const PodiumParticipant = () => {
+export const PodiumParticipant = ({ participant, index }) => {
+  return (
+    <div className="podium-participant">
+      <p>{index + 1}</p>
+      <div className="podium-img">
+        <img src={participant.competitorImageUrl} height="75px" alt="" />
+      </div>
 
-    return (
-        <div className="podium-participant">
-            <p>1</p>
-            <div className="podium-img"></div>
-
-            <div className="participant-details">
-                <h3>Steve</h3>
-                <h4>Canada</h4>
-            </div>
-        </div>
-    )
-}
+      <div className="participant-details">
+        <h3>{participant.name}</h3>
+        <h4>{participant.nationality}</h4>
+      </div>
+    </div>
+  );
+};

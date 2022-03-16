@@ -73,6 +73,12 @@ const getCompetitionById = async (req, res) => {
                             placements: true
                         }
                     },
+                    participants: {
+                        include: {
+                            placements: true,
+                            competitor: true
+                        }
+                    },
                     positionMappings: true
                 }
             },
