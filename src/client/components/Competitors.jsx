@@ -73,45 +73,44 @@ export const Competitors = () => {
         
           <h3>Create New Competitor </h3>
           <label htmlFor="">Name
-          
-          <input
-            type="text"
-            name="competitorName"
-            value={newCompetitorName}
-            onChange={(e) => setNewCompetitorName(e.target.value)}
-            className="input-field"
-          />
+            <input
+              type="text"
+              name="competitorName"
+              value={newCompetitorName}
+              onChange={(e) => setNewCompetitorName(e.target.value)}
+              className="input-field"
+            />
           </label>
           <br />
           <label htmlFor="">Nationality         
-          <input
-            type="text"
-            name="competitorNationality"
-            value={newCompetitorNationality}
-            onChange={(e) => setNewCompetitorNationality(e.target.value)}
-            className="input-field"
-          />
+            <input
+              type="text"
+              name="competitorNationality"
+              value={newCompetitorNationality}
+              onChange={(e) => setNewCompetitorNationality(e.target.value)}
+              className="input-field"
+            />
           </label>
           <br />
           <label htmlFor="">Email         
-          <input
-            type="text"
-            name="competitorEmail"
-            value={newCompetitorEmail}
-            onChange={(e) => setNewCompetitorEmail(e.target.value)}
-            className="input-field"
-          />
+            <input
+              type="text"
+              name="competitorEmail"
+              value={newCompetitorEmail}
+              onChange={(e) => setNewCompetitorEmail(e.target.value)}
+              className="input-field"
+            />
           </label>
           <br />
           <label htmlFor="">Profile Picture
-          <input
-            type="file"
-            name="competitorImageUrl"
-            accept="image/png, image/jpeg"
-            value={newCompetitorProfilePic}
-            onChange={(e) => setNewCompetitorProfilePic(e.target.value)}
-            className="input-field"
-          />
+            <input
+              type="file"
+              name="competitorImageUrl"
+              accept="image/png, image/jpeg"
+              value={newCompetitorProfilePic}
+              onChange={(e) => setNewCompetitorProfilePic(e.target.value)}
+              className="input-field"
+            />
           </label>
         
         <button
@@ -119,7 +118,7 @@ export const Competitors = () => {
           className="submit-competitor"
           onSubmit={handleSubmit}
         >
- Create New Participant
+          Create New Participant
         </button>
       </form>
       <button
