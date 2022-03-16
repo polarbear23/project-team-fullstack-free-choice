@@ -75,6 +75,7 @@ export const App = () => {
                             <Route path="/:user/:competitionId/:seasonId" element={<Season />} />
                             <Route path="/:user/:competitionId/create" element={<CreateSeason />} />
                             <Route path="*" element={<Homepage />} />
+                            <Route path="/create" element={<Competitors />} />
                         </>
                     )}
                 </Routes>

@@ -1,4 +1,4 @@
-.comp-form {
+/* .comp-form {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 2fr;
@@ -9,4 +9,53 @@
     display: grid;
     grid-template-columns: 2fr;
     grid-template-rows: 4fr;
+} */
+/* .comp-form-text {
+    display: flex;
+    justify-content: center;
+    margin-top: 5rem;
+};
+
+input {
+    text-align: inherit;
+    margin-left: 10rem;
+    place-content: start;
+    height: 2rem;
+    width:10rem;
+    justify-content: center;
+}; */
+
+.competitor-form {
+    
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
 }
+
+button.submit-competitor {
+    background: gray;
+}
+
+button.submit-completed-competition {
+    background: gray;
+    justify-content: center;
+    margin-top: 5rem;
+    align-self: center;
+    margin-left: 1rem;
+}
+
+.comp-form {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    margin-left: 1rem;
+}
+
+.input-field {
+    display: grid;
+    grid-template-rows: repeat(1rem);
+}
+

@@ -14,10 +14,10 @@ export const Season = () => {
             
             {/*dropdown needs styled*/}
             <select className="select-round-dropdown" name="rounds">
-                <option value="1">{`Mario Circuit`}</option>
-                <option value="2">{`Coconut Mall`}</option>
-                <option value="3">{`DK Summit`}</option>
-                <option value="4">{`Wario's Gold Mine`}</option>
+                <option className="dropdown-option" value="1">{`Mario Circuit`}</option>
+                <option className="dropdown-option" value="2">{`Coconut Mall`}</option>
+                <option className="dropdown-option" value="3">{`DK Summit`}</option>
+                <option className="dropdown-option" value="4">{`Wario's Gold Mine`}</option>
             </select>
 
             <div className="card round-card">
