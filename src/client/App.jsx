@@ -7,10 +7,11 @@ import { Header } from './components/Header';
 import { Competition } from './components/Competition';
 import { Season } from './components/Season';
 import { CreateSeason } from './components/CreateSeason';
+import { Competitors } from './components/Competitors';
 
-import Competitors from './components/Competitors';
 import { API_URL, HTTP_METHOD, LOCAL_STORAGE, STORE_ACTIONS } from './config';
 import { StoreContext, reducer, initialState } from './utils/store';
+
 import './App.css';
 
 export const App = () => {

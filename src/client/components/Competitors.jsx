@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import "./styling/competitors.css";
 
-const Competitors = () => {
+export const Competitors = () => {
   const [newCompetitionName, setNewCompetitionName] = useState("");
   const [competitors, setCompetitors] = useState([]);
   const [newCompetitorName, setNewCompetitorName] = useState("");
@@ -64,16 +64,16 @@ const Competitors = () => {
             type="text"
             name="competitonName"
             value={newCompetitionName}
-            // onChange = {(e) => setNewCompetitionName(e.target.value)}
             onChange={handleChange}
           />
         </label>
       </form>
 
       <form onSubmit={handleSubmit} className="competitor-form">
-        <label>
+        
           <h3>Create New Competitor </h3>
-          Name: {""}
+          <label htmlFor="">Name
+          
           <input
             type="text"
             name="competitorName"
@@ -81,8 +81,9 @@ const Competitors = () => {
             onChange={(e) => setNewCompetitorName(e.target.value)}
             className="input-field"
           />
+          </label>
           <br />
-          Nationality: {""}
+          <label htmlFor="">Nationality         
           <input
             type="text"
             name="competitorNationality"
@@ -90,8 +91,9 @@ const Competitors = () => {
             onChange={(e) => setNewCompetitorNationality(e.target.value)}
             className="input-field"
           />
+          </label>
           <br />
-          Email: {""}
+          <label htmlFor="">Email         
           <input
             type="text"
             name="competitorEmail"
@@ -99,8 +101,9 @@ const Competitors = () => {
             onChange={(e) => setNewCompetitorEmail(e.target.value)}
             className="input-field"
           />
+          </label>
           <br />
-          Profile Picture: {""}
+          <label htmlFor="">Profile Picture
           <input
             type="file"
             name="competitorImageUrl"
@@ -109,14 +112,14 @@ const Competitors = () => {
             onChange={(e) => setNewCompetitorProfilePic(e.target.value)}
             className="input-field"
           />
-        </label>
+          </label>
+        
         <button
           type="Submit"
           className="submit-competitor"
           onSubmit={handleSubmit}
         >
-          {" "}
-          Create New Participant{" "}
+ Create New Participant
         </button>
       </form>
       <button
@@ -128,5 +131,3 @@ const Competitors = () => {
     </div>
   );
 };
-
-export default Competitors;
