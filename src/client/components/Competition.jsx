@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { StoreContext } from '../utils/store';
 
-import { UserContext } from '../App';
 import { CardTag } from './card/CardTag';
 import { SeasonPodium } from './card/SeasonPodium';
 
@@ -12,7 +12,7 @@ import './styling/competition.css';
 export const Competition = (props) => {
     const { competition } = props;
 
-    const { user } = useContext(UserContext);
+    const { user } = useContext(StoreContext);
 
     const [currentSeason, setCurrentSeason] = useState([]);
     const [previousSeasons, setPreviousSeasons] = useState([]);
