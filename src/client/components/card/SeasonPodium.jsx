@@ -5,7 +5,7 @@ import { PodiumParticipant } from './PodiumParticipant';
 export const SeasonPodium = (props) => {
     const { season } = props;
 
-    const { participants, rounds, teams, positionMappings } = season;
+    const { participants, positionMappings } = season;
 
     const [seasonStandings, setSeasonStandings] = useState([]);
 
@@ -17,7 +17,7 @@ export const SeasonPodium = (props) => {
     //     map array
 
     useEffect(() => {
-        console.log('season', { participants, rounds, teams, positionMappings });
+        // console.log('season', { participants, positionMappings });
 
         const standings = [];
 
