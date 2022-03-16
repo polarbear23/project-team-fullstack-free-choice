@@ -50,6 +50,9 @@ app.use('/round', roundRouter);
 const adminRouter = require('./routes/admin');
 app.use('/admin', adminRouter);
 
+const seasonRouter = require('./routes/season');
+app.use('/season', seasonRouter);
+
 app.get('/hello', (req, res) => {
     res.send(SERVER_STATUS.HELLO);
 });
