@@ -67,7 +67,7 @@ const authenticateAdmin = async (req, res) => {
         return res.status(HTTP_RESPONSE.CREATED.CODE).json({ data: selectedAdmin, token: token });
     } catch (error) {
         console.log(error);
-       // return res.status(HTTP_RESPONSE.INTERNAL.CODE).json({ error: HTTP_RESPONSE.INTERNAL.MESSAGE });
+        return res.status(HTTP_RESPONSE.INTERNAL.CODE).json({ error: HTTP_RESPONSE.INTERNAL.MESSAGE });
     }
 };
 
