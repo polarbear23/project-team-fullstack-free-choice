@@ -51,6 +51,7 @@ export const CompetitionCard = (props) => {
   };
 
   const setZeroTotalScores = (competitors) => {
+    console.log(competitors);
     const scores = competitors.map((competitor) => {
       return {
         competitor: competitor,
@@ -78,9 +79,9 @@ export const CompetitionCard = (props) => {
       const scores = calculateTotalScore(competition.seasons[competition.seasons.length - 1]);
       setPodium([scores[0], scores[1], scores[2]]);
     }
-    if (competition.seasons.length < 0) {
-      const scores = setZeroTotalScores(competition);
-      setPodium([scores[0], scores[1], scores[2]]);
+    if (!competition.seasons.length) {
+      const scores = setZeroTotalScores(competition.competitors);
+      scores.length > 2 ? setPodium([scores[0], scores[1], scores[2]]) : setPodium([...scores]);
     }
   }, []);
 
