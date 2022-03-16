@@ -15,7 +15,7 @@ const MAX_NUMBER_ADMINS_TO_GENERATE = 2;
 const MAX_NUMBER_COMPETITORS_TO_GENERATE = 10;
 const MAX_NUMBER_SEASONS_TO_GENERATE = 2;
 const MAX_TEAMS_TO_GENERATE = 5;
-const MAX_ROUNDS_TO_GENERATE = 3;
+const MAX_ROUNDS_TO_GENERATE = 4;
 
 const createAdmin = async () => {
     const admins = [];

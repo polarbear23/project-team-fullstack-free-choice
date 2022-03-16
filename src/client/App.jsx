@@ -19,8 +19,6 @@ export const App = () => {
 
     const { user } = state;
 
-    console.log('state', {state})
-
     const navigate = useNavigate();
 
     const handleDispatch = (type, payload) => {

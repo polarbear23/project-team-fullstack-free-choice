@@ -29,7 +29,7 @@ function randomDate(start, end) {
 }
 
 const createFakeRound = () => {
-    const title = faker.lorem.sentence();
+    const title = faker.lorem.word();
     const startsAt = randomDate(new Date(2021, 0, 1), new Date())
 
     return { title, startsAt }
