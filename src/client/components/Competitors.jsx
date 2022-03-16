@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import "./styling/competitors.css";
+import './styling/competitors.css';
 
 export const Competitors = () => {
-  const [newCompetitionName, setNewCompetitionName] = useState("");
+  const [newCompetitionName, setNewCompetitionName] = useState('');
   const [competitors, setCompetitors] = useState([]);
-  const [newCompetitorName, setNewCompetitorName] = useState("");
-  const [newCompetitorNationality, setNewCompetitorNationality] = useState("");
-  const [newCompetitorEmail, setNewCompetitorEmail] = useState("");
-  const [newCompetitorProfilePic, setNewCompetitorProfilePic] = useState("");
+  const [newCompetitorName, setNewCompetitorName] = useState('');
+  const [newCompetitorNationality, setNewCompetitorNationality] = useState('');
+  const [newCompetitorEmail, setNewCompetitorEmail] = useState('');
+  const [newCompetitorProfilePic, setNewCompetitorProfilePic] = useState('');
 
   const handleChange = (e) => {
     setNewCompetitionName(e.target.value);
@@ -32,21 +32,21 @@ export const Competitors = () => {
       competitors: competitors,
     };
     try {
-      const response = await fetch("http://localhost:4000/competition", {
-        method: "POST",
+      const response = await fetch('http://localhost:4000/competition', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
-          Authorization: localStorage.getItem("token"),
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('token'),
         },
         body: JSON.stringify(newObject),
       });
 
       if (response.ok) {
-        setNewCompetitionName("");
-        setNewCompetitorName("");
-        setNewCompetitorNationality("");
-        setNewCompetitorEmail("");
-        setNewCompetitorProfilePic("");
+        setNewCompetitionName('');
+        setNewCompetitorName('');
+        setNewCompetitorNationality('');
+        setNewCompetitorEmail('');
+        setNewCompetitorProfilePic('');
       }
     } catch (error) {
       console.log(error);
@@ -58,32 +58,20 @@ export const Competitors = () => {
       <form className="comp-form">
         <h2 className="comp-form-text"> Create New Competition </h2>
         <label className="comp-name">
-          Competition Name: {""}
-          <input
-            className="comp-name-input"
-            type="text"
-            name="competitonName"
-            value={newCompetitionName}
-            onChange={handleChange}
-          />
+          Competition Name: {''}
+          <input className="input-field" type="text" name="competitonName" value={newCompetitionName} onChange={handleChange} />
         </label>
       </form>
 
       <form onSubmit={handleSubmit} className="competitor-form">
-        
-          <h3>Create New Competitor </h3>
-          <label htmlFor="">Name
-          
-          <input
-            type="text"
-            name="competitorName"
-            value={newCompetitorName}
-            onChange={(e) => setNewCompetitorName(e.target.value)}
-            className="input-field"
-          />
-          </label>
-          <br />
-          <label htmlFor="">Nationality         
+        <h3>Create New Competitor </h3>
+        <label htmlFor="">
+          Name
+          <input type="text" name="competitorName" value={newCompetitorName} onChange={(e) => setNewCompetitorName(e.target.value)} className="input-field" />
+        </label>
+        <br />
+        <label htmlFor="">
+          Nationality
           <input
             type="text"
             name="competitorNationality"
@@ -91,9 +79,10 @@ export const Competitors = () => {
             onChange={(e) => setNewCompetitorNationality(e.target.value)}
             className="input-field"
           />
-          </label>
-          <br />
-          <label htmlFor="">Email         
+        </label>
+        <br />
+        <label htmlFor="">
+          Email
           <input
             type="text"
             name="competitorEmail"
@@ -101,9 +90,10 @@ export const Competitors = () => {
             onChange={(e) => setNewCompetitorEmail(e.target.value)}
             className="input-field"
           />
-          </label>
-          <br />
-          <label htmlFor="">Profile Picture
+        </label>
+        <br />
+        <label htmlFor="">
+          Profile Picture
           <input
             type="file"
             name="competitorImageUrl"
@@ -112,20 +102,13 @@ export const Competitors = () => {
             onChange={(e) => setNewCompetitorProfilePic(e.target.value)}
             className="input-field"
           />
-          </label>
-        
-        <button
-          type="Submit"
-          className="submit-competitor"
-          onSubmit={handleSubmit}
-        >
- Create New Participant
+        </label>
+
+        <button type="Submit" className="submit-competitor" onSubmit={handleSubmit}>
+          Create New Participant
         </button>
       </form>
-      <button
-        className="submit-completed-competition"
-        onClick={handlePostSubmit}
-      >
+      <button className="submit-completed-competition" onClick={handlePostSubmit}>
         Create New Competition
       </button>
     </div>
