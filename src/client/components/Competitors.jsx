@@ -14,6 +14,8 @@ export const Competitors = () => {
     setNewCompetitionName(e.target.value);
   };
 
+  console.log(competitors)
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setCompetitors([

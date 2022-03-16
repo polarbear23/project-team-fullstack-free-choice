@@ -1,11 +1,14 @@
 import React from 'react';
 
 export const PodiumParticipant = ({ participant, index }) => {
+
   return (
     <div className="podium-participant">
       <p>{index + 1}</p>
       <div className="podium-img">
-        <img src={participant.competitorImageUrl} height="75px" alt="" />
+        {participant.competitorImageUrl &&
+            <img src={participant.competitorImageUrl} height="75px" alt="" />
+        }
       </div>
 
       <div className="participant-details">

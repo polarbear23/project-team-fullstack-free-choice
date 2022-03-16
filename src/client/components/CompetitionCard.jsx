@@ -61,7 +61,7 @@ export const CompetitionCard = (props) => {
     };
 
     useEffect(() => {
-        if (!competition) {
+        if (!competition || !competition.seasons.length) {
             return;
         }
 
