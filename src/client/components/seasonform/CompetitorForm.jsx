@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 export const CompetitorForm = ({ form, setForm, formStep, setFormStep, competitors }) => {
     const currentFormStep = 2;
-    
+    const minimumParticipants = 3;
 
     
 
@@ -21,7 +21,7 @@ export const CompetitorForm = ({ form, setForm, formStep, setFormStep, competito
     const nextStep = () => {
         if (formStep !== currentFormStep) return;
         const participants = competitors.filter((competitor, i) => checked[i])
-        if (participants.length < 2) return
+        if (participants.length < minimumParticipants) return
         setForm({...form, participants: participants})
         setFormStep(currentFormStep + 1)
     }

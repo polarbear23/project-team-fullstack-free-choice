@@ -8,8 +8,9 @@ export const SeasonPodium = (props) => {
     const { season } = props;
 
     const { participants, positionMappings, rounds } = season;
-
+    console.log(season)
     const [seasonStandings, setSeasonStandings] = useState([]);
+    if (seasonStandings) console.log(seasonStandings)
 
     useEffect(() => {
         let standings = participants.map((participant) => {
@@ -42,8 +43,11 @@ export const SeasonPodium = (props) => {
         setSeasonStandings(standings);
     }, [season]);
 
-    const generateDataForRounds = (standing) =>
-        rounds.map((round) => round.placements.filter((placement) => placement.participantId === standing.participant.id));
+    const generateDataForRounds = (standing) => {
+        const arr = rounds.map((round) => round.placements.filter((placement) => placement.participantId === standing.participant.id));
+        console.log(arr)
+        return arr;
+    }
 
     return (
         <>

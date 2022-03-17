@@ -48,9 +48,14 @@ export const Competition = () => {
 
     const handleClick = (id) => navigate(`/${user}/${selectedCompetition[0].id}/${id}`);
 
-    const reversedRounds = (season) => season.rounds.sort((a, b) => b.id - a.id);
+    const reversedRounds = (season) => {
+        const { rounds } = season;
+        const newRounds = [...rounds];
+        newRounds.sort((a, b) => b.id - a.id);
+        return newRounds;
+    };
 
-    const calcRoundOffset = (season) => season.rounds[season.rounds.length - 1].id - 1;
+    const calcRoundOffset = (season, index) => season.rounds.length - index;
 
     return (
         <>
@@ -68,10 +73,10 @@ export const Competition = () => {
                                     <div className="podium season-podium">
                                         <h4>Pos</h4>
                                         <div className="podium-rounds">
-                                            {reversedRounds(season).map((round) => {
+                                            {reversedRounds(season).map((round, index) => {
                                                 return (
                                                     <div className="season-round" key={round.id}>
-                                                        <h5>Round {round.id - calcRoundOffset(season)}</h5>
+                                                        <h5>Round {calcRoundOffset(season, index)}</h5>
                                                         <h4>{round.title}</h4>
                                                     </div>
                                                 );
@@ -93,10 +98,10 @@ export const Competition = () => {
                                     <div className="podium season-podium">
                                         <h4>Pos</h4>
                                         <div className="podium-rounds">
-                                            {reversedRounds(season).map((round) => {
+                                            {reversedRounds(season).map((round, index) => {
                                                 return (
                                                     <div className="season-round" key={round.id}>
-                                                        <h5>Round {round.id - calcRoundOffset(season)}</h5>
+                                                        <h5>Round {calcRoundOffset(season, index)}</h5>
                                                         <h4>{round.title}</h4>
                                                     </div>
                                                 );

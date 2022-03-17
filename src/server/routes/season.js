@@ -1,11 +1,12 @@
 const express = require('express');
 const passport = require('passport')
 
-const { createSeason, getSeasonsByCompetition } = require('../controllers/season');
+const { createSeason, getSeasonsByCompetition, getSeasonById } = require('../controllers/season');
 
 const router = express.Router();
 
 router.post('/create', passport.authenticate('jwt', { session: false }), createSeason);
 router.get('/', getSeasonsByCompetition);
+router.post('/id', passport.authenticate('jwt', { session: false }), getSeasonById)
 
 module.exports = router;

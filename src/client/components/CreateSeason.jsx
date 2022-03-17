@@ -72,6 +72,7 @@ export const CreateSeason = () => {
         }
 
         navigate(`/${state.user}/${competitionId}`, {replace: true});
+        location.reload();
     };
 
     const scrollerStyling = {

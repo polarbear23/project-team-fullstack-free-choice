@@ -7,7 +7,9 @@ const API_URL = {
     ADMIN_LOGIN: `${SERVER_URL}/admin/login`,
     COMPETITION_GET: `${SERVER_URL}/competition`,
     COMPETITION_POST: `${SERVER_URL}/competition`,
-    SEASON_POST: `${SERVER_URL}/season/create`
+    SEASON_POST: `${SERVER_URL}/season/create`,
+    SEASON_GET_ID: `${SERVER_URL}/season/id`,
+    ROUND_POST: `${SERVER_URL}/round`
 };
 
 const HTTP_METHOD = {

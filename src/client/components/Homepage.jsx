@@ -10,6 +10,8 @@ import { API_URL, HTTP_METHOD, LOCAL_STORAGE, STORE_ACTIONS } from '../config';
 import './styling/homepage.css';
 
 export const Homepage = () => {
+
+
     const { state, dispatch } = useContext(StoreContext);
     const { user } = state;
 
