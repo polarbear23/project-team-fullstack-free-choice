@@ -5,6 +5,7 @@ const { HTTP_RESPONSE } = require('../config');
 
 const createSeason = async (req, res) => {
     const { error } = seasonCreateSchema.validate(req.body);
+    console.log(req.body)
 
     if (error) {
         return res.status(HTTP_RESPONSE.BAD_REQUEST.CODE).json({ error: error.details[0] });

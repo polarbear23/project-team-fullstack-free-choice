@@ -9,7 +9,7 @@ export const TeamForm = ({ form, setForm, formStep, setFormStep }) => {
 
     const addTeam = () => {
         if (!team || teams.includes(team)) return
-        setTeams([...teams, team])
+        setTeams([...teams, {name: team}])
         setTeam("")
     }
 
@@ -23,17 +23,29 @@ export const TeamForm = ({ form, setForm, formStep, setFormStep }) => {
     return (
         <div className="form-team">
             <label>
-                Create Team
+                <h2>Create Team</h2>
                 <input
                     name="title"
                     type="text"
                     value={team}
                     onChange={e => handleChange(e.target)}
                 />
+                <button onClick={() => addTeam()}>New Team</button>
             </label>
-            <button onClick={() => addTeam()}>New Team</button>
-            <button onClick={() => previousStep()}>Previous</button>
-            <button onClick={() => nextStep()}>Next</button>
+            
+            <ul>
+            {teams.map((team, index) => {
+                return (
+                    <li key={index}>{team.name}</li>
+                )
+            })}
+            </ul>
+            
+            <div className="season-form-buttons">
+                
+                <button onClick={() => previousStep()}>Previous</button>
+                <button onClick={() => nextStep()}>Next</button>
+            </div>
         </div>
     )
 }

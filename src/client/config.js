@@ -6,6 +6,7 @@ const API_URL = {
     ADMIN_REGISTER: `${SERVER_URL}/admin/register`,
     ADMIN_LOGIN: `${SERVER_URL}/admin/login`,
     COMPETITION_GET: `${SERVER_URL}/competition`,
+    SEASON_POST: `${SERVER_URL}/season/create`
 };
 
 const HTTP_METHOD = {
