@@ -6,11 +6,11 @@ export const ParticipantForm = ({ form, setForm, formStep, setFormStep }) => {
 
     const handleChange = e => {
         const updatedParticipants = [ ...shadowParticipants ]
-        if (updatedParticipants.some(p => p.name === e.id)) {
+        if (updatedParticipants.some(p => p.id === e.id)) {
             const i = updatedParticipants.findIndex(p => p.name === e.id)
-            updatedParticipants[i] = { name: e.id, team: e.value}
+            updatedParticipants[i] = { competitorId: e.id, team: e.value}
         } else {
-            updatedParticipants.push({ name: e.id, team: e.value})
+            updatedParticipants.push({ competitorId: e.id, team: e.value})
         }
         
         setShadowParticipants(updatedParticipants)
@@ -24,18 +24,18 @@ export const ParticipantForm = ({ form, setForm, formStep, setFormStep }) => {
     const previousStep = () => setFormStep(currentFormStep - 1)
 
     return (
-        <div className="form-competitor">
-            <label>Choose participants</label>
+        <div className="form-participant">
+            <label><h2>Choose participants</h2></label>
             <ul>
                 {form.participants.map((participant, index) => {
                     return (
                         <li key={index}>
                             <label htmlFor={participant.name}>{participant.name}</label>
-                            <select id={participant.name} onChange={e => handleChange(e.target)}>
+                            <select id={participant.id} onChange={e => handleChange(e.target)}>
                                 <option value={null} hidden={true} defaultValue>Choose team</option>
                                 {form.teams.map((team, index) => {
                                     return (
-                                        <option key={index} value={team}>{team}</option>
+                                        <option key={index} value={team.name}>{team.name}</option>
                                     )
                                     
                                 })}
@@ -45,8 +45,10 @@ export const ParticipantForm = ({ form, setForm, formStep, setFormStep }) => {
                 })}
             </ul>
 
-            <button onClick={() => previousStep()}>Previous</button>
-            <button onClick={() => nextStep()}>Next</button>
+            <div className="season-form-buttons">
+                <button onClick={() => previousStep()}>Previous</button>
+                <button onClick={() => nextStep()}>Next</button>
+            </div>
         </div>
     )
 }

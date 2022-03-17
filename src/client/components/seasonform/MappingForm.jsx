@@ -23,8 +23,8 @@ export const MappingForm = ({ form, setForm, formStep, setFormStep }) => {
     const previousStep = () => setFormStep(currentFormStep - 1)
 
     return (
-        <div className="form-competitor">
-            <label>Points per placement</label>
+        <div className="form-mapping">
+            <label><h2>Points per placement</h2></label>
             <ul>
             {form.participants.map((participant, index) => {
                     return (
@@ -42,8 +42,10 @@ export const MappingForm = ({ form, setForm, formStep, setFormStep }) => {
                 })}
             </ul>
 
-            <button onClick={() => previousStep()}>Previous</button>
-            <button onClick={() => nextStep()}>Next</button>
+            <div className="season-form-buttons">
+                <button onClick={() => previousStep()}>Previous</button>
+                <button onClick={() => nextStep()}>Next</button>
+            </div>
         </div>
     )
 }

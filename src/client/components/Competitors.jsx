@@ -1,18 +1,21 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import { PodiumParticipant } from './card/PodiumParticipant';
 
-import "./styling/competitors.css";
+import './styling/competitors.css';
 
 export const Competitors = () => {
-  const [newCompetitionName, setNewCompetitionName] = useState("");
+  const [newCompetitionName, setNewCompetitionName] = useState('');
   const [competitors, setCompetitors] = useState([]);
-  const [newCompetitorName, setNewCompetitorName] = useState("");
-  const [newCompetitorNationality, setNewCompetitorNationality] = useState("");
-  const [newCompetitorEmail, setNewCompetitorEmail] = useState("");
-  const [newCompetitorProfilePic, setNewCompetitorProfilePic] = useState("");
+  const [newCompetitorName, setNewCompetitorName] = useState('');
+  const [newCompetitorNationality, setNewCompetitorNationality] = useState('');
+  const [newCompetitorEmail, setNewCompetitorEmail] = useState('');
+  const [newCompetitorProfilePic, setNewCompetitorProfilePic] = useState('');
 
   const handleChange = (e) => {
     setNewCompetitionName(e.target.value);
   };
+
+  console.log(competitors)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -32,21 +35,21 @@ export const Competitors = () => {
       competitors: competitors,
     };
     try {
-      const response = await fetch("http://localhost:4000/competition", {
-        method: "POST",
+      const response = await fetch('http://localhost:4000/competition', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
-          Authorization: localStorage.getItem("token"),
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('token'),
         },
         body: JSON.stringify(newObject),
       });
 
       if (response.ok) {
-        setNewCompetitionName("");
-        setNewCompetitorName("");
-        setNewCompetitorNationality("");
-        setNewCompetitorEmail("");
-        setNewCompetitorProfilePic("");
+        setNewCompetitionName('');
+        setNewCompetitorName('');
+        setNewCompetitorNationality('');
+        setNewCompetitorEmail('');
+        setNewCompetitorProfilePic('');
       }
     } catch (error) {
       console.log(error);
@@ -54,23 +57,16 @@ export const Competitors = () => {
   };
 
   return (
-    <div className="competition-form">
+    <div className="competition-form-page">
       <form className="comp-form">
         <h2 className="comp-form-text"> Create New Competition </h2>
         <label className="comp-name">
-          Competition Name: {""}
-          <input
-            className="comp-name-input"
-            type="text"
-            name="competitonName"
-            value={newCompetitionName}
-            onChange={handleChange}
-          />
+          Competition Name:
+          <input className="input-field" type="text" name="competitonName" value={newCompetitionName} onChange={handleChange} />
         </label>
       </form>
-
-      <form onSubmit={handleSubmit} className="competitor-form">
-        
+      <div className="competition-form">
+        <form onSubmit={handleSubmit} className="competitor-form">
           <h3>Create New Competitor </h3>
           <label htmlFor="">Name
             <input
@@ -120,13 +116,16 @@ export const Competitors = () => {
         >
           Create New Participant
         </button>
-      </form>
-      <button
-        className="submit-completed-competition"
-        onClick={handlePostSubmit}
-      >
-        Create New Competition
-      </button>
+      </div>
+      <div className="competitors-list">
+        {competitors.map((competitor, index) => {
+          return (
+            <div key={index} className="podium competitors-podium-form competitors-slide-left">
+              <PodiumParticipant key={index} participant={competitor} index={index} />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

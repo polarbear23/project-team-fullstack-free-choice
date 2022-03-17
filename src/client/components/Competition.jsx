@@ -21,6 +21,10 @@ export const Competition = () => {
     useEffect(() => {
         const { seasons } = competitions[0];
 
+        if (!seasons) {
+            return;
+        }
+
         setCurrentSeason(seasons.slice(seasons.length - 1));
 
         setPreviousSeasons(seasons.slice(0, seasons.length - 1));

@@ -15,7 +15,7 @@ export const TitleForm = ({ form, setForm, formStep, setFormStep }) => {
     return (
         <div className="form-title">
             <label>
-                Season Title
+                <h2>Season Title</h2>
                 <input
                     name="title"
                     type="text"

@@ -11,13 +11,6 @@ export const SeasonPodium = (props) => {
 
     const [seasonStandings, setSeasonStandings] = useState([]);
 
-    //     for each participant,
-    //     find team,
-    //     find position per round,
-    //     build array,
-    //     sort by points
-    //     map array
-
     useEffect(() => {
         let standings = participants.map((participant) => {
             let participantPositions = [];
@@ -49,34 +42,26 @@ export const SeasonPodium = (props) => {
         setSeasonStandings(standings);
     }, [season]);
 
-    //     for each participant, get position per round
-
     const generateDataForRounds = (standing) =>
         rounds.map((round) => round.placements.filter((placement) => placement.participantId === standing.participant.id));
 
     return (
         <>
-            {seasonStandings.length > 0 && (
+            {seasonStandings.length && (
                 <>
                     {seasonStandings.map((standing, index) => {
                         return (
-                            <>
-                                <div className="podium season-podium" key={standing.id}>
-                                    <PodiumParticipant participant={standing.participant.competitor} index={index} />
-                                    <div className="round-breakdown">
-                                        {generateDataForRounds(standing).map((round) => {
-                                            return (
-                                                <>
-                                                    <h4 key={round.id}>{round[0].position}</h4>
-                                                </>
-                                            );
-                                        })}
-                                    </div>
-                                    <div className="participant-score">
-                                        <h3>{standing.points}</h3>
-                                    </div>
+                            <div className="podium season-podium" key={standing.id}>
+                                <PodiumParticipant participant={standing.participant.competitor} index={index} />
+                                <div className="round-breakdown">
+                                    {generateDataForRounds(standing).map((round) => (
+                                        <h4 key={round.id}>{round[0].position}</h4>
+                                    ))}
                                 </div>
-                            </>
+                                <div className="participant-score">
+                                    <h3>{standing.points}</h3>
+                                </div>
+                            </div>
                         );
                     })}
                 </>
