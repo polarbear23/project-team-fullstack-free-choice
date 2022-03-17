@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
 import './styling/season.css';
@@ -10,9 +11,11 @@ import { StoreContext } from '../utils/store';
 import { STORE_ACTIONS } from '../config'
 
 export const Season = () => {
+    const navigate = useNavigate();
+
     const { state, dispatch } = useContext(StoreContext);
 
-    const { selectedCompetition, selectedSeason, selectedRound } = state;
+    const { user, selectedCompetition, selectedSeason, selectedRound } = state;
 
     const [sortedParticipants, setSortedPartitcipants] = useState([]);
 
@@ -68,13 +71,17 @@ export const Season = () => {
         setSortedPartitcipants(array);
     }, [selectedRound]);
 
+    const handleClick = () => {
+        navigate(`/${user}/${selectedCompetition[0].id}/${selectedSeason[0].id}/create`)
+    }
+
     return (
         <>
             {selectedSeason.length && (
                 <div className="season-page">
                     <h2>{selectedCompetition[0].title}</h2>
                     <h1>{selectedSeason[0].title}</h1>
-
+                    <button onClick={() => handleClick()}>New Round</button>
                     <select className="select-round-dropdown" name="rounds" onChange={onChangeHandler}>
                         {selectedSeason[0].rounds.map((round) => (
                             <option className="dropdown-option" value={round.id} key={round.id}>
@@ -99,6 +106,7 @@ export const Season = () => {
                             </div>
                         </div>
                     )}
+                    
                 </div>
             )}
         </>

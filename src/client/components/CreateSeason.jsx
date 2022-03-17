@@ -14,6 +14,7 @@ import './styling/create-season.css'
 
 export const CreateSeason = () => {
     const { state } = useContext(StoreContext);
+    const { user, selectedCompetition } = state;
     const [token, setToken] = useState()
     const navigate = useNavigate();
 
@@ -74,7 +75,7 @@ export const CreateSeason = () => {
             setFormStep(1)
         }
 
-        navigate(`/${state.user}/${state.competitions[0].id}`)
+        navigate(`/${user}/${selectedCompetition.id}`)
     }
 
     const scrollerStyling = {
