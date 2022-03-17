@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { StoreContext } from "../utils/store";
 import { API_URL, HTTP_METHOD, LOCAL_STORAGE } from "../config";
 
-export const Rounds = ({toggleFetch, setToggleFetch}) => {
+export const Rounds = () => {
+    const navigate = useNavigate();
     const { state } = useContext(StoreContext);
-    console.log(state)
+
 
     const [participants, setParticipants] = useState([])
     const [placements, setPlacements] = useState([])
@@ -16,14 +18,16 @@ export const Rounds = ({toggleFetch, setToggleFetch}) => {
 
     const token = localStorage.getItem(LOCAL_STORAGE.TOKEN);
 
-    console.log(form)
+    console.log("ROUND PARTICIPANTS", participants)
 
     const fetchSeason = async() => {
-        const response = await fetch(API_URL.SEASON_GET, {
-            method: HTTP_METHOD.GET,
+        const response = await fetch(API_URL.SEASON_GET_ID, {
+            method: HTTP_METHOD.POST,
             headers: {
+                'Content-Type': 'application/json',
                 Authorization: token,
-            }
+            },
+            body: JSON.stringify({ id: state.selectedSeason[0].id})
         });
         const results = await response.json();
         return results.data.participants;
@@ -40,7 +44,8 @@ export const Rounds = ({toggleFetch, setToggleFetch}) => {
         });
         const results = await response.json();
         console.log(results)
-        setToggleFetch(!toggleFetch)
+        navigate(`/${state.user}/${state.selectedCompetition[0].id}`)
+        location.reload();
     }
 
     const constructForm = async() => {

@@ -7,6 +7,6 @@ const router = express.Router();
 
 router.post('/create', passport.authenticate('jwt', { session: false }), createSeason);
 router.get('/', getSeasonsByCompetition);
-router.get('/id', passport.authenticate('jwt', { session: false }), getSeasonById)
+router.post('/id', passport.authenticate('jwt', { session: false }), getSeasonById)
 
 module.exports = router;

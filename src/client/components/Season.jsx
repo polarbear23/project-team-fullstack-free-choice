@@ -8,105 +8,106 @@ import { CardTag } from './card/CardTag';
 import { RoundPodium } from './card/RoundPodium';
 
 import { StoreContext } from '../utils/store';
-import { STORE_ACTIONS } from '../config'
+import { STORE_ACTIONS } from '../config';
 
 export const Season = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const { state, dispatch } = useContext(StoreContext);
+  const { state, dispatch } = useContext(StoreContext);
 
-    const { user, selectedCompetition, selectedSeason, selectedRound } = state;
-    console.log("selectedSeason", selectedSeason)
-    const [sortedParticipants, setSortedPartitcipants] = useState([]);
+  const { user, selectedCompetition, selectedSeason, selectedRound } = state;
 
-    const params = useParams();
+  const [sortedParticipants, setSortedPartitcipants] = useState([]);
 
-    const handleDispatch = (type, payload) => {
-        dispatch({
-            type: type,
-            payload: payload,
-        });
-    };
+  const params = useParams();
 
-    useEffect(() => {
-        const seasonId = Number(params.seasonId);
+  const handleDispatch = (type, payload) => {
+    dispatch({
+      type: type,
+      payload: payload,
+    });
+  };
 
-        const filteredSeason = selectedCompetition[0].seasons.filter((season) => season.id === seasonId);
+  useEffect(() => {
+    const seasonId = Number(params.seasonId);
 
-        handleDispatch(STORE_ACTIONS.SELECTED_SEASON, filteredSeason);
-    }, []);
+    const filteredSeason = selectedCompetition[0].seasons.filter((season) => season.id === seasonId);
 
-    useEffect(() => {
-        if (!selectedSeason.length) return;
+    handleDispatch(STORE_ACTIONS.SELECTED_SEASON, filteredSeason);
+  }, []);
 
-        handleDispatch(STORE_ACTIONS.SELECTED_ROUND, [selectedSeason[0].rounds[0]]);
-    }, [selectedSeason]);
+  useEffect(() => {
+    if (!selectedSeason.length) return;
 
-    const onChangeHandler = (event) => {
-        const filteredRound = selectedSeason[0].rounds.filter((round) => round.id === Number(event.target.value));
+    handleDispatch(STORE_ACTIONS.SELECTED_ROUND, [selectedSeason[0].rounds[0]]);
+  }, [selectedSeason]);
 
-        handleDispatch(STORE_ACTIONS.SELECTED_ROUND, filteredRound);
-    };
+  const onChangeHandler = (event) => {
+    const filteredRound = selectedSeason[0].rounds.filter((round) => round.id === Number(event.target.value));
 
-    useEffect(() => {
-        if (!selectedRound.length) return;
+    handleDispatch(STORE_ACTIONS.SELECTED_ROUND, filteredRound);
+  };
 
-        const placements = [...selectedRound[0].placements];
+  useEffect(() => {
+    if (!selectedRound[0]) return;
 
-        placements.sort((a, b) => a.position - b.position);
+    const placements = [...selectedRound[0].placements];
 
-        const array = [];
+    placements.sort((a, b) => a.position - b.position);
 
-        placements.map((placement) => {
-            selectedSeason[0].participants.map((participant) => {
-                if (placement.participantId === participant.id) {
-                    const newObject = { placement, participant };
-                    array.push(newObject);
-                }
-            });
-        });
+    const array = [];
 
-        setSortedPartitcipants(array);
-    }, [selectedRound]);
+    placements.map((placement) => {
+      selectedSeason[0].participants.map((participant) => {
+        if (placement.participantId === participant.id) {
+          const newObject = { placement, participant };
+          array.push(newObject);
+        }
+      });
+    });
 
-    const handleClick = () => {
-        navigate(`/${user}/${selectedCompetition[0].id}/${selectedSeason[0].id}/create`)
-    }
+    setSortedPartitcipants(array);
+  }, [selectedRound]);
 
-    return (
-        <>
-            {selectedSeason.length && (
-                <div className="season-page">
-                    <h2>{selectedCompetition[0].title}</h2>
-                    <h1>{selectedSeason[0].title}</h1>
-                    <button onClick={() => handleClick()}>New Round</button>
-                    <select className="select-round-dropdown" name="rounds" onChange={onChangeHandler}>
-                        {selectedSeason[0].rounds.map((round) => (
-                            <option className="dropdown-option" value={round.id} key={round.id}>
-                                {round.title}
-                            </option>
-                        ))}
-                    </select>
-                    {selectedRound.length && (
-                        <div className="card round-card">
-                            <CardTag title={selectedRound[0].title} />
+  const handleClick = () => {
+    navigate(`/${user}/${selectedCompetition[0].id}/${selectedSeason[0].id}/create`);
+  };
 
-                            <div className="card-display">
-                                <div className="podium round-podium">
-                                    <h4>Position</h4>
-                                    <h4 className="team-score">Team</h4>
-                                    <h4 className="team-score">Team Points</h4>
-                                    <h4>Points</h4>
-                                </div>
-                                {sortedParticipants.map((element, index) => (
-                                    <RoundPodium element={element} index={index} key={index} season={selectedSeason[0]} round={selectedRound} />
-                                ))}
-                            </div>
-                        </div>
-                    )}
-                    
+  return (
+    <>
+      {selectedSeason.length && (
+        <div className="season-page">
+          <h2>{selectedCompetition[0].title}</h2>
+          <h1>{selectedSeason[0].title}</h1>
+          <button onClick={() => handleClick()}>New Round</button>
+          {selectedRound[0] && (
+            <select className="select-round-dropdown" name="rounds" onChange={onChangeHandler}>
+              {selectedSeason[0].rounds.map((round) => (
+                <option className="dropdown-option" value={round.id} key={round.id}>
+                  {round.title}
+                </option>
+              ))}
+            </select>
+          )}
+
+          {selectedRound[0] && (
+            <div className="card round-card">
+              <CardTag title={selectedRound[0].title} />
+              <div className="card-display">
+                <div className="podium round-podium">
+                  <h4>Position</h4>
+                  <h4 className="team-score">Team</h4>
+                  <h4 className="team-score">Team Points</h4>
+                  <h4>Points</h4>
                 </div>
-            )}
-        </>
-    );
+                {sortedParticipants.map((element, index) => (
+                  <RoundPodium element={element} index={index} key={index} season={selectedSeason[0]} round={selectedRound} />
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+    </>
+  );
 };

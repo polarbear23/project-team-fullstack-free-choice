@@ -75,16 +75,38 @@ const createSeason = async (req, res) => {
         });
     }
 
-    const selectedSeason = await getSeasonById(seasonId);
+    const selectedSeason = await getSeasonAfterPost(seasonId);
 
     return res.status(HTTP_RESPONSE.OK.CODE).json({ data: selectedSeason });
 };
 
-const getSeasonById = async (req, res) => {
-    const id = req.user.id;
+const getSeasonAfterPost = async (req) => {
+    const id = req;
+
     const selectedSeason = await prisma.season.findUnique({
         where: {
-            id: id,
+            id: Number(id),
+        },
+        include: {
+            participants: {
+                include: {
+                    competitor: true,
+                },
+            },
+            positionMappings: true,
+            teams: true,
+        },
+    });
+
+    return selectedSeason;
+};
+
+const getSeasonById = async (req, res) => {
+    const { id } = req.body
+
+    const selectedSeason = await prisma.season.findUnique({
+        where: {
+            id: Number(id),
         },
         include: {
             participants: {

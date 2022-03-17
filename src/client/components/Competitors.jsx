@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { StoreContext } from "../utils/store";
 import { PodiumParticipant } from './card/PodiumParticipant';
 import { API_URL } from '../config';
 
 import './styling/competitors.css';
 
-export const Competitors = ({toggleFetch, setToggleFetch}) => {
+export const Competitors = () => {
+    const { state } = useContext(StoreContext);
+    const navigate = useNavigate();
+
   const [newCompetitionName, setNewCompetitionName] = useState('');
   const [competitors, setCompetitors] = useState([]);
   const [newCompetitorName, setNewCompetitorName] = useState('');
@@ -51,7 +57,8 @@ export const Competitors = ({toggleFetch, setToggleFetch}) => {
         setNewCompetitorNationality('');
         setNewCompetitorEmail('');
         setNewCompetitorProfilePic('');
-        setToggleFetch(!toggleFetch)
+        navigate(`/${state.user}/${state.selectedCompetition[0].id}`)
+        location.reload();
       }
     } catch (error) {
       console.log(error);

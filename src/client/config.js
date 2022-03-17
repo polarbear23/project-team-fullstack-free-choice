@@ -8,7 +8,7 @@ const API_URL = {
     COMPETITION_GET: `${SERVER_URL}/competition`,
     COMPETITION_POST: `${SERVER_URL}/competition`,
     SEASON_POST: `${SERVER_URL}/season/create`,
-    SEASON_GET: `${SERVER_URL}/season/id`,
+    SEASON_GET_ID: `${SERVER_URL}/season/id`,
     ROUND_POST: `${SERVER_URL}/round`
 };
 
