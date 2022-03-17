@@ -8,6 +8,7 @@ import { Competition } from './components/Competition';
 import { Season } from './components/Season';
 import { CreateSeason } from './components/CreateSeason';
 import { Competitors } from './components/Competitors';
+import Rounds from './components/Rounds';
 
 import { API_URL, HTTP_METHOD, LOCAL_STORAGE, STORE_ACTIONS } from './config';
 import { StoreContext, reducer, initialState } from './utils/store';
@@ -94,7 +95,7 @@ export const App = () => {
                                 element={<CreateSeason />}
                             />
                             <Route path="*" element={<Homepage />} />
-                            <Route path="/create" element={<Competitors />} />
+                            <Route path="/create" element={<Rounds />} />
                         </>
                     )}
                 </Routes>
