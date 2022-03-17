@@ -61,9 +61,7 @@ const Rounds = () => {
       }),
     });
     const resJson = await result.json();
-    if (result.ok) {
-        setSelectedSeason("")};
-        setS
+    if (result.ok) {}       
   };
 
   return (
@@ -71,7 +69,7 @@ const Rounds = () => {
       <div className="participants-by-id">
         {placeholderParticipants.map((participant) => {
           return (
-            <label htmlFor={`participant ${participant.participantId}`}>
+            <label htmlFor={`position ${participant.participantId}`}>
               {`participant ${participant.participantId}`}
               <select name={`participant ${participant.participantId}`}>
                 {availablePositions.map((position) => {
