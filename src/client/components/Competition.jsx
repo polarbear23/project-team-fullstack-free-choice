@@ -39,9 +39,7 @@ export const Competition = () => {
 
         const { seasons } = selectedCompetition[0];
 
-        if (!seasons) {
-            return;
-        }
+        if (!seasons) return;
 
         setCurrentSeason(seasons.slice(seasons.length - 1));
 
