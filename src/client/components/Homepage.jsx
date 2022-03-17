@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 
 import { CompetitionCard } from './CompetitionCard';
 
-import { API_URL, HTTP_METHOD, LOCAL_STORAGE, STORE_ACTIONS } from '../config';
 import { StoreContext } from '../utils/store';
+import { API_URL, HTTP_METHOD, LOCAL_STORAGE, STORE_ACTIONS } from '../config';
+
 
 import './styling/homepage.css';
 
