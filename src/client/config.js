@@ -22,8 +22,11 @@ const LOCAL_STORAGE = {
 };
 
 const STORE_ACTIONS = {
-    COMPETITION: 'competition',
-    USER: 'user'
+    COMPETITIONS: 'competition',
+    USER: 'user',
+    SELECTED_COMPETITION: 'selectedCompetition',
+    SELECTED_SEASON: 'selectedSeason',
+    SELECTED_ROUND: 'selectedRound'
 }
 
 module.exports = {

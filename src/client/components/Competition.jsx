@@ -1,25 +1,44 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { CardTag } from './card/CardTag';
 import { SeasonPodium } from './card/SeasonPodium';
 
 import { StoreContext } from '../utils/store';
+import { STORE_ACTIONS } from '../config'
 
 import './styling/competition.css';
 
 export const Competition = () => {
-    const { state } = useContext(StoreContext);
+    const { state, dispatch } = useContext(StoreContext);
 
-    const { competitions, user } = state;
+    const { competitions, user, selectedCompetition } = state;
 
     const [currentSeason, setCurrentSeason] = useState([]);
     const [previousSeasons, setPreviousSeasons] = useState([]);
 
     const navigate = useNavigate();
 
+    const params = useParams();
+
+    const handleDispatch = (type, payload) => {
+        dispatch({
+            type: type,
+            payload: payload,
+        });
+    };
+
     useEffect(() => {
-        const { seasons } = competitions[0];
+        const selectedCompetition = competitions.filter((competition) => competition.id === Number(params.competitionId));
+
+        handleDispatch(STORE_ACTIONS.SELECTED_COMPETITION, selectedCompetition);
+    }, []);
+
+    useEffect(() => {
+        if(!selectedCompetition.length) return;
+
+        console.log('currentCompetition', selectedCompetition);
+        const { seasons } = selectedCompetition[0];
 
         if (!seasons) {
             return;
@@ -28,9 +47,9 @@ export const Competition = () => {
         setCurrentSeason(seasons.slice(seasons.length - 1));
 
         setPreviousSeasons(seasons.slice(0, seasons.length - 1));
-    }, [competitions]);
+    }, [selectedCompetition]);
 
-    const handleClick = (id) => navigate(`/${user}/${competitions.id}/${id}`);
+    const handleClick = (id) => navigate(`/${user}/${selectedCompetition[0].id}/${id}`);
 
     const reversedRounds = (season) => season.rounds.sort((a, b) => b.id - a.id);
 
