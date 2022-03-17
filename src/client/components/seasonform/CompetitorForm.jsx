@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
-export const CompetitorForm = ({ form, setForm, formStep, setFormStep }) => {
+
+
+export const CompetitorForm = ({ form, setForm, formStep, setFormStep, competitors }) => {
     const currentFormStep = 2;
-    const competitors = [
-        { name: "Nathan" },
-        { name: "Bravin" },
-        { name: "Conor" },
-        { name: "Seeb" },
-    ];
+    
+
+    
+
     const [checked, setChecked] = useState(Array(competitors.length).fill(false));
 
     const handleChange = e => {
@@ -15,6 +15,8 @@ export const CompetitorForm = ({ form, setForm, formStep, setFormStep }) => {
         newChecked[e.id] = !newChecked[e.id];
         setChecked(newChecked)
     }
+
+
 
     const nextStep = () => {
         if (formStep !== currentFormStep) return;
@@ -25,10 +27,9 @@ export const CompetitorForm = ({ form, setForm, formStep, setFormStep }) => {
     }
     const previousStep = () => setFormStep(currentFormStep - 1)
 
-
     return (
         <div className="form-competitor">
-            <label>Choose participants</label>
+            <label><h2>Choose participants</h2></label>
             <ul>
                 {competitors.map((competitor, index) => {
                     return (
@@ -45,8 +46,10 @@ export const CompetitorForm = ({ form, setForm, formStep, setFormStep }) => {
                 })}
             </ul>
 
-            <button onClick={() => previousStep()}>Previous</button>
-            <button onClick={() => nextStep()}>Next</button>
+            <div className="season-form-buttons">
+                <button onClick={() => previousStep()}>Previous</button>
+                <button onClick={() => nextStep()}>Next</button>
+            </div>
         </div>
     )
 }
