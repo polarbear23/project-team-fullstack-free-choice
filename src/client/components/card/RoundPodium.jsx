@@ -41,12 +41,10 @@ export const RoundPodium = (props) => {
             return teamObj;
         });
 
-        let totalScore = 0;
-
-        teamScores.forEach((score) => {
+        const totalScore = teamScores.map((score) => {
             if (score.team.id === participant.teamId) {
                 const initialValue = 0;
-                totalScore = score.score.reduce((previousValue, currentValue) => previousValue + currentValue, initialValue);
+                return score.score.reduce((previousValue, currentValue) => previousValue + currentValue, initialValue);
             }
         });
 
