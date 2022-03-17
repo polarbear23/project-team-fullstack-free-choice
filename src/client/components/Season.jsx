@@ -27,9 +27,7 @@ export const Season = () => {
     }, []);
 
     useEffect(() => {
-        if (!selectedSeason.length) {
-            return;
-        }
+        if (!selectedSeason.length) return;
 
         setSelectedRound([selectedSeason[0].rounds[0]]);
     }, [selectedSeason]);
@@ -43,9 +41,7 @@ export const Season = () => {
     };
 
     useEffect(() => {
-        if (!selectedRound.length) {
-            return;
-        }
+        if (!selectedRound.length) return;
 
         const placements = [...selectedRound[0].placements];
 
