@@ -12,3 +12,11 @@
     text-transform: uppercase;
 }
 
+.season-page button {
+    background-color: var(--clr-blue);
+    font-size: 1.5rem;
+}
+
+.season-page select {
+    background-color: var(--clr-white);
+}
