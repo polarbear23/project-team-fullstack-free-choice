@@ -16,7 +16,7 @@ export const Season = () => {
     const { state, dispatch } = useContext(StoreContext);
 
     const { user, selectedCompetition, selectedSeason, selectedRound } = state;
-
+    console.log("selectedSeason", selectedSeason)
     const [sortedParticipants, setSortedPartitcipants] = useState([]);
 
     const params = useParams();

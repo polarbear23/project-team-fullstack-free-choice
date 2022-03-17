@@ -4,7 +4,7 @@ import { API_URL } from '../config';
 
 import './styling/competitors.css';
 
-export const Competitors = () => {
+export const Competitors = ({toggleFetch, setToggleFetch}) => {
   const [newCompetitionName, setNewCompetitionName] = useState('');
   const [competitors, setCompetitors] = useState([]);
   const [newCompetitorName, setNewCompetitorName] = useState('');
@@ -51,6 +51,7 @@ export const Competitors = () => {
         setNewCompetitorNationality('');
         setNewCompetitorEmail('');
         setNewCompetitorProfilePic('');
+        setToggleFetch(!toggleFetch)
       }
     } catch (error) {
       console.log(error);
@@ -69,17 +70,13 @@ export const Competitors = () => {
       <div className="competition-form">
         <form onSubmit={handleSubmit} className="competitor-form">
           <h3>Create New Competitor </h3>
-          <label htmlFor="">Name
-            <input
-              type="text"
-              name="competitorName"
-              value={newCompetitorName}
-              onChange={(e) => setNewCompetitorName(e.target.value)}
-              className="input-field"
-            />
+          <label htmlFor="">
+            Name
+            <input type="text" name="competitorName" value={newCompetitorName} onChange={(e) => setNewCompetitorName(e.target.value)} className="input-field" />
           </label>
           <br />
-          <label htmlFor="">Nationality         
+          <label htmlFor="">
+            Nationality
             <input
               type="text"
               name="competitorNationality"
@@ -89,7 +86,8 @@ export const Competitors = () => {
             />
           </label>
           <br />
-          <label htmlFor="">Email         
+          <label htmlFor="">
+            Email
             <input
               type="text"
               name="competitorEmail"
@@ -99,7 +97,8 @@ export const Competitors = () => {
             />
           </label>
           <br />
-          <label htmlFor="">Profile Picture
+          <label htmlFor="">
+            Profile Picture
             <input
               type="file"
               name="competitorImageUrl"
@@ -109,13 +108,12 @@ export const Competitors = () => {
               className="input-field"
             />
           </label>
+          <button type="Submit" className="submit-competitor" onSubmit={handleSubmit}>
+            Create New Participant
+          </button>
         </form>
-        <button
-          type="Submit"
-          className="submit-competitor"
-          onSubmit={handleSubmit}
-        >
-          Create New Participant
+        <button className="submit-completed-competition" onClick={handlePostSubmit}>
+          Create New Competition
         </button>
       </div>
       <div className="competitors-list">

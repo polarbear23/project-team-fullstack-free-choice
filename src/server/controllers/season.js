@@ -80,7 +80,8 @@ const createSeason = async (req, res) => {
     return res.status(HTTP_RESPONSE.OK.CODE).json({ data: selectedSeason });
 };
 
-const getSeasonById = async (id) => {
+const getSeasonById = async (req, res) => {
+    const id = req.user.id;
     const selectedSeason = await prisma.season.findUnique({
         where: {
             id: id,
@@ -96,7 +97,7 @@ const getSeasonById = async (id) => {
         },
     });
 
-    return selectedSeason;
+    return res.status(HTTP_RESPONSE.OK.CODE).json({ data: selectedSeason})
 };
 
 const getSeasonsByCompetition = async (req, res) => {

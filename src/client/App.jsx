@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import { Homepage } from './components/Homepage';
@@ -8,7 +8,7 @@ import { Competition } from './components/Competition';
 import { Season } from './components/Season';
 import { CreateSeason } from './components/CreateSeason';
 import { Competitors } from './components/Competitors';
-import Rounds from './components/Rounds';
+import { Rounds } from './components/Rounds';
 
 import { API_URL, HTTP_METHOD, LOCAL_STORAGE, STORE_ACTIONS } from './config';
 import { StoreContext, reducer, initialState } from './utils/store';
@@ -17,6 +17,7 @@ import './App.css';
 
 export const App = () => {
     const [state, dispatch] = useReducer(reducer, initialState);
+    const [toggleFetch, setToggleFetch] = useState(true)
 
     const { user } = state;
 
@@ -81,7 +82,7 @@ export const App = () => {
                     )}
                     {user && (
                         <>
-                            <Route path={`/${user}`} element={<Homepage />} />
+                            <Route path={`/${user}`} element={<Homepage toggleFetch={toggleFetch} />} />
                             <Route
                                 path="/:user/:competitionId"
                                 element={<Competition />}
@@ -97,12 +98,12 @@ export const App = () => {
                         
 
 
-                            <Route path="/:user/create" element={<Competitors />} />
+                            <Route path="/:user/create" element={<Competitors toggleFetch={toggleFetch} setToggleFetch={setToggleFetch}/>} />
 
                             {/* Route for creating a round within a season */}
-                            <Route path="/:user/:competitionId/:seasonId/create" element={<Rounds />} />
+                            <Route path="/:user/:competitionId/:seasonId/create" element={<Rounds toggleFetch={toggleFetch} setToggleFetch={setToggleFetch}/>} />
 
-                            <Route path="*" element={<Homepage />} />
+                            <Route path="*" element={<Homepage toggleFetch={toggleFetch} />} />
                         </>
                     )}
                 </Routes>
