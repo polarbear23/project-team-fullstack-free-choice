@@ -1,6 +1,4 @@
-import React from 'react';
-
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import { Login } from './Login';
 import { Register } from './Register';
@@ -8,23 +6,15 @@ import { SearchLeaderboard } from './SearchLeaderboard';
 
 import './styling/welcome.css';
 
-export const Welcome = (props) => {
-    const { setIsLoggedIn } = props;
-
+export const Welcome = () => {
     const [formToRender, setFormToRender] = useState('');
 
-    const handleClick = (event) => {
-        const { id } = event.target;
-
-        setFormToRender(id);
-    };
-
-    const blurSection = () =>
-        formToRender ? 'app-welcomepage-blur' : 'app-welcomepage';
+    const handleClick = (event) => setFormToRender(event.target.id);
 
     return (
         <>
-            <section className={blurSection()}>
+            <section className="app-welcomepage">
+                <div className="welcome-background"></div>
                 <h1 className="welcome-heading title">
                     Create Your own Leaderboards
                 </h1>
@@ -49,16 +39,10 @@ export const Welcome = (props) => {
                 </h2>
                 <SearchLeaderboard />
                 {formToRender === 'register' && (
-                    <Register
-                        setFormToRender={setFormToRender}
-                        setIsLoggedIn={setIsLoggedIn}
-                    />
+                    <Register setFormToRender={setFormToRender} />
                 )}
                 {formToRender === 'login' && (
-                    <Login
-                        setFormToRender={setFormToRender}
-                        setIsLoggedIn={setIsLoggedIn}
-                    />
+                    <Login setFormToRender={setFormToRender} />
                 )}
             </section>
         </>

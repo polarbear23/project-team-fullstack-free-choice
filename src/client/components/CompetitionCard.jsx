@@ -1,87 +1,107 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import './styling/competition-card.css'
+import { CardTag } from './card/CardTag';
+import { PodiumParticipant } from './card/PodiumParticipant';
 
-export const CompetitionCard = ({ competitionId, user }) => {
+import { StoreContext } from '../utils/store';
 
-    console.log(competitionId)
+import './styling/card.css';
 
-    //find competitors with the 3 highest scores
-    //(competitionId > many competitors > many participants > many placements > calculate and sum positionMapping)
+export const CompetitionCard = (props) => {
+  const { competition } = props;
 
-    let navigate = useNavigate();
+  const { state } = useContext(StoreContext);
 
-    const dummyData = [
-        {
-            name: "Steve",
-            nationality: "Great Britian",
-            score: 127
-        },
-        {
-            name: "Nathan",
-            nationality: "France",
-            score: 103
-        },
-        {
-            name: "Edward",
-            nationality: "Canada",
-            score: 94
+  const { user } = state;
+
+  const [podium, setPodium] = useState([]);
+
+  const navigate = useNavigate();
+
+  // find competitors with the 3 highest scores
+  // (competitionId > many competitors > many participants > many placements > calculate and sum positionMapping)
+
+  const calculateTotalScore = (season) => {
+    const { participants, positionMappings } = season;
+
+    const scoresForSeason = [];
+
+    for (let i = 0; i < participants.length; i++) {
+      const initialScore = 0;
+
+      const participantScore = {
+        competitor: participants[i].competitor,
+        score: initialScore,
+      };
+
+      for (let j = 0; j < participants[j].placements.length; j++) {
+        for (let k = 0; k < positionMappings.length; k++) {
+          if (positionMappings[k].position === participants[i].placements[j].position) {
+            participantScore.score = participantScore.score + positionMappings[k].mapping;
+          }
         }
-    ]
+      }
 
-    const [podium, setPodium] = useState([])
-
-    useEffect(() => {
-        setPodium(dummyData)
-    },[])
-
-    const handleClick = () => {
-        navigate(`/${user}/${competitionId}`)
+      scoresForSeason.push(participantScore);
+      scoresForSeason.sort(compareScores);
     }
 
-    return (
-        <div className="competition-card">
+    return scoresForSeason;
+  };
 
-            <aside className="title-tag">
-                <div className="tag-container">
-                    <h2>Mario Kart</h2>
-                    
-                    <button className="competition-link-button" onClick={() => handleClick()}>
-                        View
-                    </button>
-                    
-                </div>
-            </aside>
+  const setZeroTotalScores = (competitors) => {
+    console.log(competitors);
+    const scores = competitors.map((competitor) => {
+      return {
+        competitor: competitor,
+        score: 0,
+      };
+    });
+    return scores;
+  };
 
-            <div className="card-display">
+  const compareScores = (firstEl, secondEl) => {
+    if (firstEl.score > secondEl.score) {
+      return -1;
+    }
+    if (firstEl.score < secondEl.score) {
+      return 1;
+    }
+    return 0;
+  };
 
-                <h3>Top 3</h3>
+  useEffect(() => {
+    if (!competition) {
+      return;
+    }
+    if (competition.seasons.length > 0) {
+      const scores = calculateTotalScore(competition.seasons[competition.seasons.length - 1]);
+      setPodium([scores[0], scores[1], scores[2]]);
+    }
+    if (!competition.seasons.length) {
+      const scores = setZeroTotalScores(competition.competitors);
+      scores.length > 2 ? setPodium([scores[0], scores[1], scores[2]]) : setPodium([...scores]);
+    }
+  }, []);
 
-                <div className="card-podium">
+  const handleClick = () => navigate(`/${user}/${competition.id}`);
 
-                    {podium.map((participant, index) => {
-
-                        return (
-                            <div key={index} className="podium-place">
-
-                                <div className="participant-display">
-                                    <p>{index + 1}</p>
-                                    <div className="participant-img"></div>
-
-                                    <div className="participant-details">
-                                        <p className="participant-name">{participant.name}</p>
-                                        <p className="participant-nationality">{participant.nationality}</p>
-                                    </div>
-                                </div>
-
-                                <div className="participant-score">{participant.score}</div>
-                            </div>
-                        )
-
-                    })}
-                </div>
-            </div>
-        </div>
-    )
-}
+  return (
+    <div className="card competition-card">
+      <CardTag title={competition.title} handleClick={handleClick} />
+      <div className="card-display">
+        <h3>Top 3</h3>
+        {podium &&
+          podium.map((participant, index) => {
+            return (
+              <div key={index} className="podium competition-podium">
+                <PodiumParticipant participant={participant.competitor} index={index} />
+                <div className="participant-score">{participant.score}</div>
+              </div>
+            );
+          })}
+      </div>
+    </div>
+  );
+};

@@ -1,87 +1,96 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import './styling/competition.css'
+import { CardTag } from './card/CardTag';
+import { SeasonPodium } from './card/SeasonPodium';
 
-export const Competition = ({ user }) => {
+import { StoreContext } from '../utils/store';
+
+import './styling/competition.css';
+
+export const Competition = () => {
+    const { state } = useContext(StoreContext);
+
+    const { competitions, user } = state;
+
+    const [currentSeason, setCurrentSeason] = useState([]);
+    const [previousSeasons, setPreviousSeasons] = useState([]);
 
     const navigate = useNavigate();
 
-    const competitionId = 1
+    useEffect(() => {
+        const { seasons } = competitions[0];
 
-    const handleClick = seasonName => {
-        navigate(`/${user}/${competitionId}/${seasonName}`)
-    }
+        if (!seasons) {
+            return;
+        }
+
+        setCurrentSeason(seasons.slice(seasons.length - 1));
+
+        setPreviousSeasons(seasons.slice(0, seasons.length - 1));
+    }, [competitions]);
+
+    const handleClick = (id) => navigate(`/${user}/${competitions.id}/${id}`);
+
+    const reversedRounds = (season) => season.rounds.sort((a, b) => b.id - a.id);
+
+    const calcRoundOffset = (season) => season.rounds[season.rounds.length - 1].id - 1;
 
     return (
-        <div className="single-competition">
-            
-            <h1 className="competition-title">Mario Kart</h1>
-            <button className="create-season-button">Create new season</button>
-            <h2 className="current-season-title">Current Season</h2>
+        <div className="competition-page">
+            <h1>Mario Kart</h1>
+            <button onClick={() => handleClick('create')}>Create new season</button>
 
-            {/* This div gets mapped BELOW "PREVIOUS SEASONS"; each season within a competition */}
-            <div className="season-card">
-
-                <aside className="title-tag">
-                    <div className="tag-container">
-                        <h2>Flower Cup</h2>
-                        
-                        <button className="season-expand-button" onClick={() => handleClick("flower-cup")}>
-                            View
-                        </button>
-                        
-                    </div>
-                </aside>
-
-                <div className="card-display season-display">
-
-                    <div className="card-legend">
-                        <div className="season-rounds">
-
-                            {/* This div gets mapped; 4 most recent rounds */}
-                            <div className="season-round">
-                                <h4>Round 5</h4>
-                                <h3>{`Mario Circuit`}</h3>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div className="card-podium">
-
-                        {/* This div gets mapped; participants sorted by score */}
-                        <div className="podium-place season-podium-place">
-
-                            <div className="participant-display season-participant-display">
-                                <p>1</p>
-                                <div className="participant-img"></div>
-
-                                <div className="participant-details">
-                                    <p className="participant-name">Steve</p>
-                                    <p className="participant-nationality">Canada</p>
+            <h2>Current Season</h2>
+            {currentSeason.map((season, index) => {
+                return (
+                    <div className="card season-card" key={index}>
+                        <CardTag title={season.title} handleClick={() => handleClick(season.id)} />
+                        <div className="card-display">
+                            <div className="podium season-podium">
+                                <h4>Pos</h4>
+                                <div className="podium-rounds">
+                                    {reversedRounds(season).map((round) => {
+                                        return (
+                                            <div className="season-round" key={round.id}>
+                                                <h5>Round {round.id - calcRoundOffset(season)}</h5>
+                                                <h4>{round.title}</h4>
+                                            </div>
+                                        );
+                                    })}
                                 </div>
+                                <h4>Score</h4>
                             </div>
-
-                            <div className="round-breakdown">
-                                {/* This gets mapped; participant's palcement for 4 most recent rounds */}
-                                <h4 className="participant-round-placement">1</h4>
-                            </div>
-
-                            <div className="participant-score">
-                                <h3 className="score">127</h3>
-                            </div>
+                            <SeasonPodium season={season} />
                         </div>
-
                     </div>
-                </div>
-            </div>
-
-            <h2 className="current-season-title">Previous Seasons</h2>
-
-            
+                );
+            })}
+            <h2>Previous Seasons</h2>
+            {previousSeasons.map((season, index) => {
+                return (
+                    <div className="card season-card" key={index}>
+                        <CardTag title={season.title} handleClick={() => handleClick(season.id)} />
+                        <div className="card-display">
+                            <div className="podium season-podium">
+                                <h4>Pos</h4>
+                                <div className="podium-rounds">
+                                    {reversedRounds(season).map((round) => {
+                                        return (
+                                            <div className="season-round" key={round.id}>
+                                                <h5>Round {round.id - calcRoundOffset(season)}</h5>
+                                                <h4>{round.title}</h4>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                                <h4>Score</h4>
+                            </div>
+                            <SeasonPodium season={season} />
+                        </div>
+                    </div>
+                );
+            })}
         </div>
-        
-    )
-}
-
+    );
+};

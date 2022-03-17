@@ -1,63 +1,104 @@
-import React, { useState, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React, { useEffect, useReducer } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import { Homepage } from './components/Homepage';
 import { Welcome } from './components/Welcome';
 import { Header } from './components/Header';
-
 import { Competition } from './components/Competition';
 import { Season } from './components/Season';
+import { CreateSeason } from './components/CreateSeason';
+import { Competitors } from './components/Competitors';
+
+import { API_URL, HTTP_METHOD, LOCAL_STORAGE, STORE_ACTIONS } from './config';
+import { StoreContext, reducer, initialState } from './utils/store';
 
 import './App.css';
 
-const App = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
-    const [user, setUser] = useState("nathan");
+export const App = () => {
+    const [state, dispatch] = useReducer(reducer, initialState);
 
-    const findUser = () => {
-        setIsLoggedIn(true);
+    const { user } = state;
+
+    const navigate = useNavigate();
+
+    const handleDispatch = (type, payload) => {
+        dispatch({
+            type: type,
+            payload: payload,
+        });
     };
 
     useEffect(() => {
-        findUser();
-    });
+        const token = localStorage.getItem(LOCAL_STORAGE.TOKEN);
+
+        if (!token) {
+            return;
+        }
+
+        const fetchUserFromToken = async () => {
+            try {
+                const response = await fetch(API_URL.ADMIN_GET, {
+                    method: HTTP_METHOD.GET,
+                    headers: {
+                        Authorization: token,
+                    },
+                });
+
+                const result = await response.json();
+
+                const { username } = result.data;
+
+                if (result) {
+                    handleDispatch(STORE_ACTIONS.USER, username);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchUserFromToken();
+    }, []);
 
     useEffect(() => {
-        //get token from local storage
-        //decode token, get id
-        //fetch user then setUser
-        
-    },[isLoggedIn]);
+        if (!user) {
+            return;
+        }
+
+        navigate(`/${user}`);
+    }, [user]);
 
     return (
-        <div className="app">
-            <Header
-                isLoggedIn={isLoggedIn}
-                user={user}
-                setUser={setUser}
-            />
-
-
-            <Routes>
-                {!isLoggedIn &&
-                    <Route path="/"
-                        element={<Welcome setIsLoggedIn={setIsLoggedIn}/>}
-                    />
-                }
-                {isLoggedIn && <>
-                    <Route path="/:user"
-                        element={<Homepage user={user}/>}
-                    />
-                    <Route path="/:user/:competitionId"
-                        element={<Competition user={user}/>}
-                    />
-                    <Route path="/:user/:competitionId/:seasonId"
-                        element={<Season user={user}/>}
-                    />
-                </>}
-            </Routes>
-        </div>
+        <StoreContext.Provider value={{ state: state, dispatch: dispatch }}>
+            <div className="app">
+                <Header />
+                <Routes>
+                    {!user && (
+                        <>
+                            <Route path="/" element={<Welcome />} />
+                            <Route path="*" element={<Welcome />} />
+                        </>
+                    )}
+                    {user && (
+                        <>
+                            <Route path={`/${user}`} element={<Homepage />} />
+                            <Route
+                                path="/:user/:competitionId"
+                                element={<Competition />}
+                            />
+                            <Route
+                                path="/:user/:competitionId/:seasonId"
+                                element={<Season />}
+                            />
+                            <Route
+                                path="/:user/:competitionId/create"
+                                element={<CreateSeason />}
+                            />
+                            <Route path="*" element={<Homepage />} />
+                            <Route path="/create" element={<Competitors />} />
+                        </>
+                    )}
+                </Routes>
+            </div>
+        </StoreContext.Provider>
     );
 };
-
-export default App;

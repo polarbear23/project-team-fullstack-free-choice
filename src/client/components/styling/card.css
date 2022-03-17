@@ -1,0 +1,130 @@
+.card {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    align-items: center;
+}
+
+.competition-card {
+    width: 800px;
+    height: 475px;
+}
+
+.season-card {
+    width: 1600px;
+    height: 700px;
+    margin-bottom: 100px;
+}
+
+.round-card {
+    width: 1600px;
+    min-height: 700px;
+    height: fit-content;
+    margin-bottom: 100px;
+}
+
+.card-display {
+    height: 100%;
+    background-color: var(--clr-white);
+    box-shadow: 4px 4px 20px -5px var(--clr-grey-1);
+    padding: 20px;
+    display: grid;
+    grid-template-rows: 100px;
+}
+
+.card-display h3 {
+    color: var(--clr-grey-1);
+    font-size: 3rem;
+    font-weight: 300;
+}
+
+.card-display h4 {
+    color: var(--clr-grey-1);
+    font-size: 2rem;
+    font-weight: 300;
+}
+
+.card-display h5 {
+    color: var(--clr-black-1);
+    font-size: 1rem;
+}
+
+.podium {
+    height: 7.5rem;
+    width: 100%;
+    display: grid;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+.competition-podium {
+    grid-template-columns: 1fr 100px;
+}
+
+.season-podium {
+    grid-template-columns: 350px 1fr 200px;
+}
+
+.round-podium {
+    grid-template-columns: 350px 1fr 1fr 200px;
+}
+
+.podium-participant {
+    display: grid;
+    grid-template-columns: 2rem 5rem 1fr;
+    gap: 10px;
+    align-items: center;
+}
+
+.podium-pos {
+    width: 2rem;
+}
+
+.podium-img {
+    border: 1px solid var(--clr-black-1);
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.participant-details > h3 {
+    color: var(--clr-black-1) !important;
+    font-size: 2.5rem !important;
+}
+
+.participant-details > h4 {
+    color: var(--clr-grey-1) !important;
+    font-size: 1.5rem !important;
+}
+
+.podium-rounds {
+    display: flex;
+    gap: 20px;
+}
+
+.season-round {
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+}
+
+.participant-score {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    align-items: center;
+    text-align: center;
+}
+
+.round-breakdown {
+    width: 100%;
+    display: flex;
+    gap: 20px;
+}
+
+.team-score {
+    text-align: center;
+}
