@@ -48,9 +48,14 @@ export const Competition = () => {
 
     const handleClick = (id) => navigate(`/${user}/${selectedCompetition[0].id}/${id}`);
 
-    const reversedRounds = (season) => season.rounds.sort((a, b) => b.id - a.id);
+    const reversedRounds = (season) => {
+        const { rounds } = season;
+        const newRounds = [...rounds];
+        newRounds.sort((a, b) => b.id - a.id);
+        return newRounds;
+    };
 
-    const calcRoundOffset = (season) => season.rounds[season.rounds.length - 1].id - 1;
+    const calcRoundOffset = (season) => season.rounds[0].id - 1;
 
     return (
         <>
