@@ -30,7 +30,7 @@ export const Competition = () => {
         setPreviousSeasons(seasons.slice(0, seasons.length - 1));
     }, [competitions]);
 
-    const handleClick = (id) => navigate(`/${user}/${competitions.id}/${id}`);
+    const handleClick = (id) => navigate(`/${user}/${competitions[0].id}/${id}`);
 
     const reversedRounds = (season) => season.rounds.sort((a, b) => b.id - a.id);
 
