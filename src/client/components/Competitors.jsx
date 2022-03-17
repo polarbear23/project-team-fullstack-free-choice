@@ -108,7 +108,7 @@ export const Competitors = () => {
               className="input-field"
             />
           </label>
-        
+        </form>
         <button
           type="Submit"
           className="submit-competitor"
