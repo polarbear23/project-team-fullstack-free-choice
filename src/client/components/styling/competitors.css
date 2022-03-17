@@ -1,61 +1,120 @@
+.comp-form {
+  padding-left: 7rem;
+  padding-top: 3rem;
+  padding-right: 7rem;
+  background-color: gray;
+  border-radius: 0 0 1rem 0;
+  animation: comp-form-slide-right 1s ease-in-out;
+}
+
 .competitor-form {
-  border-radius: 2rem;
-  display: grid;
-  align-items: center;
-  justify-content: center;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  border-radius: 0 0 2rem 2rem;
+  animation: competitors-form-slide-down 1s ease-in-out;
 }
 
 .competitor-form > h3 {
   margin-bottom: 1rem;
+  font-size: 2rem;
 }
 
-.input-field {
-  margin-top: 1rem;
+label {
+  font-size: 1.5rem;
+}
+
+.comp-name {
+  font-size: 1.5rem;
+}
+
+.comp-form-text {
+  font-size: 2rem;
 }
 
 button.submit-competitor {
   background: gray;
   color: whitesmoke;
+  width: 100%;
   margin-top: 2rem;
+  font-size: 1.5rem;
 }
 
 button.submit-completed-competition {
   background: gray;
   color: whitesmoke;
-  justify-content: center;
-  margin-top: 5rem;
-  align-self: center;
-  margin-left: 1rem;
+  margin-top: 2rem;
+  font-size: 1.5rem;
+  border-radius: 0 0 2rem 2rem;
+  width: 100%;
 }
 
 .competition-form {
+  padding: 3rem;
+}
+
+.competition-form-page {
   display: grid;
-  background-color: var(--clr-blue);
-  align-items: center;
-  justify-content: center;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  grid-template-columns: 1fr 1fr 1fr;
 }
 
 .input-field {
   height: 1.8rem;
-  width: 15rem;
-  border-radius: 1rem;
+  width: 100%;
 }
 
 .comp-form > h2 {
   margin-bottom: 1rem;
 }
 
-.comp-form {
-  margin-top: 3rem;
-  margin-bottom: 3rem;
-  margin-left: 1rem;
-}
-
 .input-field {
   display: grid;
+  margin-top: 1rem;
   grid-template-rows: repeat(1rem);
+}
+
+.competitors-list {
+  padding-top: 3rem;
+  background-color: gray;
+  border-radius: 0 0 0 1rem;
+}
+
+.competitors-podium-form {
+  margin-left: 3rem;
+  margin-right: 3rem;
+  margin-bottom: 2rem;
+  background-color: white;
+  border-radius: 1rem;
+  padding-left: 3rem;
+  animation: competitors-slide-left 0.3s linear;
+  transition: competitors-slide-left ease-in;
+}
+
+@keyframes competitors-slide-left {
+  0% {
+    transform: translate(100%) rotate(180deg);
+  }
+  20% {
+    transform: translate(80%) rotate(250deg);
+  }
+  100% {
+    transform: translate(0) rotate(360deg);
+  }
+}
+
+@keyframes comp-form-slide-right {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes competitors-form-slide-down {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
 }
