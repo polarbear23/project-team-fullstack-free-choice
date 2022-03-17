@@ -95,7 +95,12 @@ export const App = () => {
                                 element={<CreateSeason />}
                             />
                             <Route path="*" element={<Homepage />} />
-                            <Route path="/create" element={<Competitors />} />
+
+
+                            <Route path="/:user/create" element={<Competitors />} />
+
+                            {/* Route for creating a round within a season */}
+                            <Route path="/:user/:competitionId/:seasonId:/create" element={<Homepage />} />
                         </>
                     )}
                 </Routes>

@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import './styling/season.css';
 
@@ -6,38 +8,44 @@ import { CardTag } from './card/CardTag';
 import { RoundPodium } from './card/RoundPodium';
 
 import { StoreContext } from '../utils/store';
+import { STORE_ACTIONS } from '../config'
 
 export const Season = () => {
-    const { state } = useContext(StoreContext);
+    const navigate = useNavigate();
 
-    const { competitions } = state;
+    const { state, dispatch } = useContext(StoreContext);
 
-    const [selectedSeason, SetSelectedSeason] = useState([]);
-    const [selectedRound, setSelectedRound] = useState([]);
+    const { user, selectedCompetition, selectedSeason, selectedRound } = state;
+
     const [sortedParticipants, setSortedPartitcipants] = useState([]);
 
-    console.log('states', { selectedSeason, selectedRound, sortedParticipants });
+    const params = useParams();
+
+    const handleDispatch = (type, payload) => {
+        dispatch({
+            type: type,
+            payload: payload,
+        });
+    };
 
     useEffect(() => {
-        const id = 2;
+        const seasonId = Number(params.seasonId);
 
-        const filteredSeason = competitions[0].seasons.filter((season) => season.id === id);
+        const filteredSeason = selectedCompetition[0].seasons.filter((season) => season.id === seasonId);
 
-        SetSelectedSeason(filteredSeason);
+        handleDispatch(STORE_ACTIONS.SELECTED_SEASON, filteredSeason);
     }, []);
 
     useEffect(() => {
         if (!selectedSeason.length) return;
 
-        setSelectedRound([selectedSeason[0].rounds[0]]);
+        handleDispatch(STORE_ACTIONS.SELECTED_ROUND, [selectedSeason[0].rounds[0]]);
     }, [selectedSeason]);
 
     const onChangeHandler = (event) => {
-        console.log(event.target.value);
-
         const filteredRound = selectedSeason[0].rounds.filter((round) => round.id === Number(event.target.value));
 
-        setSelectedRound(filteredRound);
+        handleDispatch(STORE_ACTIONS.SELECTED_ROUND, filteredRound);
     };
 
     useEffect(() => {
@@ -61,13 +69,17 @@ export const Season = () => {
         setSortedPartitcipants(array);
     }, [selectedRound]);
 
+    const handleClick = () => {
+        navigate(`/${user}/${selectedCompetition[0].id}/${selectedSeason[0].id}/create`)
+    }
+
     return (
         <>
             {selectedSeason.length && (
                 <div className="season-page">
-                    <h2>{competitions[0].title}</h2>
+                    <h2>{selectedCompetition[0].title}</h2>
                     <h1>{selectedSeason[0].title}</h1>
-
+                    <button onClick={() => handleClick()}>New Round</button>
                     <select className="select-round-dropdown" name="rounds" onChange={onChangeHandler}>
                         {selectedSeason[0].rounds.map((round) => (
                             <option className="dropdown-option" value={round.id} key={round.id}>
@@ -87,11 +99,12 @@ export const Season = () => {
                                     <h4>Points</h4>
                                 </div>
                                 {sortedParticipants.map((element, index) => (
-                                    <RoundPodium element={element} index={index} key={index} season={selectedSeason[0]} round={selectedRound}/>
+                                    <RoundPodium element={element} index={index} key={index} season={selectedSeason[0]} round={selectedRound} />
                                 ))}
                             </div>
                         </div>
                     )}
+                    
                 </div>
             )}
         </>

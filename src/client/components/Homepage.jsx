@@ -3,13 +3,15 @@ import { Link } from 'react-router-dom';
 
 import { CompetitionCard } from './CompetitionCard';
 
-import { API_URL, HTTP_METHOD, LOCAL_STORAGE, STORE_ACTIONS } from '../config';
 import { StoreContext } from '../utils/store';
+import { API_URL, HTTP_METHOD, LOCAL_STORAGE, STORE_ACTIONS } from '../config';
+
 
 import './styling/homepage.css';
 
 export const Homepage = () => {
     const { state, dispatch } = useContext(StoreContext);
+    const { user } = state;
 
     const { competitions } = state;
 
@@ -40,7 +42,7 @@ export const Homepage = () => {
 
     return (
         <main className="app-homepage">
-            <Link to="/create">
+            <Link to={`/${user}/create`} >
                 <button className="create-competition-button">
                     Create Competition
                 </button>

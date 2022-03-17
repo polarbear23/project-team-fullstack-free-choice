@@ -7,6 +7,9 @@ export const StoreContext = createContext();
 export const initialState = {
     competitions: [],
     user: '',
+    selectedCompetition: [],
+    selectedSeason: [],
+    selectedRound: [],
 };
 
 export const reducer = (state, action) => {
@@ -20,6 +23,21 @@ export const reducer = (state, action) => {
             return {
                 ...state,
                 user: action.payload,
+            };
+        case STORE_ACTIONS.SELECTED_COMPETITION:
+            return {
+                ...state,
+                selectedCompetition: action.payload,
+            };
+        case STORE_ACTIONS.SELECTED_SEASON:
+            return {
+                ...state,
+                selectedSeason: action.payload,
+            };
+        case STORE_ACTIONS.SELECTED_ROUND:
+            return {
+                ...state,
+                selectedRound: action.payload,
             };
         default:
             throw new Error(`Unknown action type: ${action.type}`);

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { PodiumParticipant } from './card/PodiumParticipant';
+import { API_URL } from '../config';
 
 import './styling/competitors.css';
 
@@ -35,7 +36,7 @@ export const Competitors = () => {
       competitors: competitors,
     };
     try {
-      const response = await fetch('http://localhost:4000/competition', {
+      const response = await fetch(API_URL.COMPETITION_POST, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

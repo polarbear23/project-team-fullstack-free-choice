@@ -6,6 +6,7 @@ const API_URL = {
     ADMIN_REGISTER: `${SERVER_URL}/admin/register`,
     ADMIN_LOGIN: `${SERVER_URL}/admin/login`,
     COMPETITION_GET: `${SERVER_URL}/competition`,
+    COMPETITION_POST: `${SERVER_URL}/competition`,
     SEASON_POST: `${SERVER_URL}/season/create`
 };
 
@@ -22,8 +23,11 @@ const LOCAL_STORAGE = {
 };
 
 const STORE_ACTIONS = {
-    COMPETITION: 'competition',
-    USER: 'user'
+    COMPETITIONS: 'competition',
+    USER: 'user',
+    SELECTED_COMPETITION: 'selectedCompetition',
+    SELECTED_SEASON: 'selectedSeason',
+    SELECTED_ROUND: 'selectedRound'
 }
 
 module.exports = {
