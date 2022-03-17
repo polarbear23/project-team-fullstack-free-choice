@@ -117,3 +117,9 @@
     grid-template-columns: 100px 1fr;
     align-items: center;
 }
+
+.round-breakdown {
+    width: 100%;
+    display: flex;
+    gap: 20px;
+}

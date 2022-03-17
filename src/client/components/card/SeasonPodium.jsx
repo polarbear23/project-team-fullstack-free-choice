@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 import { PodiumParticipant } from './PodiumParticipant';
 
+import '../styling/competition.css';
+
 export const SeasonPodium = (props) => {
     const { season } = props;
 
@@ -17,11 +19,7 @@ export const SeasonPodium = (props) => {
     //     map array
 
     useEffect(() => {
-        console.log('season', { participants, positionMappings, rounds });
-
-        const standings = [];
-
-        participants.map((participant) => {
+        let standings = participants.map((participant) => {
             let participantPositions = [];
 
             participant.placements.map((placement) => participantPositions.push(placement.position));
@@ -43,7 +41,7 @@ export const SeasonPodium = (props) => {
                 points: pointsTotal,
             };
 
-            standings.push(pointsTotalforParticipant);
+            return pointsTotalforParticipant;
         });
 
         standings.sort((a, b) => b.points - a.points);
@@ -51,47 +49,38 @@ export const SeasonPodium = (props) => {
         setSeasonStandings(standings);
     }, [season]);
 
-    // for each participant, get rounds, each round in its own array, populate with position
+    //     for each participant, get position per round
 
-    // const generateDataForRounds = (standing) => {
-    //     console.log('seasonStandings', { seasonStandings });
-
-    //     seasonStandings.map((standing) => {
-    //         console.log('id', standing.participant.id);
-
-    //         let array = [];
-
-    //         rounds.forEach((round) => {
-    //             console.log('round', round);
-
-    //             const placement = round.placements.filter((element) => element.participantId === standing.participant.id);
-
-    //             array.push(placement);
-
-    //             console.log('array', array);
-    //         });
-    //     });
-    // };
+    const generateDataForRounds = (standing) =>
+        rounds.map((round) => round.placements.filter((placement) => placement.participantId === standing.participant.id));
 
     return (
         <>
-            {seasonStandings.map((standing, index) => {
-                return (
-                    <>
-                        <div className="podium season-podium">
-                            <PodiumParticipant participant={standing.participant.competitor} index={index} />
-
-                            <div className="round-breakdown">
-                                <h4>{index + 1}</h4>
-                            </div>
-
-                            <div className="participant-score">
-                                <h3>{standing.points}</h3>
-                            </div>
-                        </div>
-                    </>
-                );
-            })}
+            {seasonStandings.length > 0 && (
+                <>
+                    {seasonStandings.map((standing, index) => {
+                        return (
+                            <>
+                                <div className="podium season-podium" key={standing.id}>
+                                    <PodiumParticipant participant={standing.participant.competitor} index={index} />
+                                    <div className="round-breakdown">
+                                        {generateDataForRounds(standing).map((round) => {
+                                            return (
+                                                <>
+                                                    <h4 key={round.id}>{round[0].position}</h4>
+                                                </>
+                                            );
+                                        })}
+                                    </div>
+                                    <div className="participant-score">
+                                        <h3>{standing.points}</h3>
+                                    </div>
+                                </div>
+                            </>
+                        );
+                    })}
+                </>
+            )}
         </>
     );
 };

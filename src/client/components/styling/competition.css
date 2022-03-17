@@ -19,7 +19,8 @@
 .create-season h2 {
     font-size: 2.5rem;
     font-weight: 300;
-    color: var(--clr-black-2)
+    color: var(--clr-black-2);
+    margin-bottom: 1.5rem;
 }
 
 .competition-page > button {
