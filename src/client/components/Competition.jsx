@@ -16,7 +16,6 @@ export const Competition = () => {
 
     const [currentSeason, setCurrentSeason] = useState([]);
     const [previousSeasons, setPreviousSeasons] = useState([]);
-    console.log(selectedCompetition);
 
     const navigate = useNavigate();
 
